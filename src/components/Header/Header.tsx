@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getAccessToken } from '../../helpers/api';
+import { ActivityData } from '../../helpers/strava';
 
 function Header() {
+  const [loading, setLoading] = useState(true);
+  const [activities, setActivities] = useState<ActivityData[]>([]);
+  useEffect(() => {
+    getAccessToken({ setLoading, setActivities });
+  }, []);
+  if (loading) {
+    return <p>LOADING</p>;
+  }
   return (
-    <header>
-      <div>
-        <div>
-          <a href="/">HOME</a>
-          <a href="/">ABOUT</a>
-          <a href="/">CONTACT</a>
-        </div>
-        <div>
-          <a href="/">Facebook</a>
-          <a href="/">Twitter</a>
-          <a href="/">Github</a>
-        </div>
-      </div>
-      <div>
-        <img src="./src/images/logo.png" alt="uk runner logo" />
-      </div>
-    </header>
+    <div>
+      {activities.map((activity) => (
+        <p key={activity.id}>{activity.id}</p>
+      ))}
+    </div>
   );
 }
 
