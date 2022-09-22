@@ -6,6 +6,18 @@ export const Text = styled.a`
   line-height: 30px;
   display: block;
   display: inline;
+  &:hover {
+    color: #ffaa00;
+  }
+  &:after {
+    content: '|';
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #666;
+  }
+  &:last-child:after {
+    content: '';
+  }
 `;
 
 export const Section = styled.section<{ top?: boolean }>`
@@ -23,14 +35,3 @@ export const Section = styled.section<{ top?: boolean }>`
       height: 30px;
     `}
 `;
-
-// .top_bar a:hover {
-//   color: #ffaa00;
-// }
-
-// .top_bar p:after {
-//   content: "|";
-//   padding-left: 10px;
-//   padding-right: 10px;
-//   color: #666;
-// }
