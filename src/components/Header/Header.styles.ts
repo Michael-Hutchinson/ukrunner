@@ -1,9 +1,5 @@
 import styled, { css } from 'styled-components';
 
-interface TopBar {
-  top?: boolean;
-}
-
 export const Text = styled.a`
   color: #fff;
   font-size: 11px;
@@ -12,7 +8,7 @@ export const Text = styled.a`
   display: inline;
 `;
 
-export const Section = styled.section<TopBar>`
+export const Section = styled.section<{ top?: boolean }>`
   display: flex;
   justify-content: space-evenly;
 
