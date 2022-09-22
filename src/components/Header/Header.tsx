@@ -1,23 +1,24 @@
 import React from 'react';
+import { Section, Text } from './Header.styles';
 
 function Header() {
   return (
     <header>
-      <div>
+      <Section top>
         <div>
-          <a href="/">HOME</a>
-          <a href="/">ABOUT</a>
-          <a href="/">CONTACT</a>
+          <Text href="/">HOME</Text>
+          <Text href="/">ABOUT</Text>
+          <Text href="/">CONTACT</Text>
         </div>
         <div>
-          <a href="/">Facebook</a>
-          <a href="/">Twitter</a>
-          <a href="/">Github</a>
+          <Text href="/">Facebook</Text>
+          <Text href="/">Twitter</Text>
+          <Text href="/">Github</Text>
         </div>
-      </div>
-      <div>
+      </Section>
+      <Section>
         <img src="./src/images/logo.png" alt="uk runner logo" />
-      </div>
+      </Section>
     </header>
   );
 }
