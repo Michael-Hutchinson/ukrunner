@@ -1,4 +1,5 @@
 import React from 'react';
+import { Facebook, Twitter, Github } from '@styled-icons/boxicons-logos';
 import { Section, Text } from './Header.styles';
 
 function Header() {
@@ -11,9 +12,9 @@ function Header() {
           <Text href="/">CONTACT</Text>
         </div>
         <div>
-          <Text href="/">Facebook</Text>
-          <Text href="/">Twitter</Text>
-          <Text href="/">Github</Text>
+          <Facebook size="48" title="Facebook" />
+          <Twitter size="48" title="Twitter" />
+          <Github size="48" title="Github" />
         </div>
       </Section>
       <Section>
