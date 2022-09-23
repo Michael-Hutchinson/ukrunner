@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background: var(--white);
     font-family: var(--font-sans);
+    margin: 0;
   }
   h1 {
     color: #353535;
