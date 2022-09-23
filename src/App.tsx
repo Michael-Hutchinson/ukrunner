@@ -1,5 +1,6 @@
 import React from 'react';
 import GlobalStyle from './App.styles';
+import Activities from './components/Activities/Activities';
 import Header from './components/Header/Header';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <GlobalStyle />
       <Header />
+      <Activities />
     </div>
   );
 }
