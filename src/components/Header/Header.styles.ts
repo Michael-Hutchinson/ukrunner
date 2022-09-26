@@ -1,11 +1,10 @@
 import styled, { css } from 'styled-components';
+import { StyledIconBase } from '@styled-icons/styled-icon';
 
 export const Text = styled.a`
   color: #fff;
   font-size: 11px;
   line-height: 30px;
-  display: block;
-  display: inline;
   &:hover {
     color: #ffaa00;
   }
@@ -34,4 +33,12 @@ export const Section = styled.section<{ top?: boolean }>`
       vertical-align: middle;
       height: 30px;
     `}
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  ${StyledIconBase} {
+    cursor: pointer;
+  }
 `;

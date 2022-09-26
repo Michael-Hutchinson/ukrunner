@@ -1,6 +1,6 @@
 import React from 'react';
 import { Facebook, Twitter, Github } from '@styled-icons/boxicons-logos';
-import { Section, Text } from './Header.styles';
+import { IconWrapper, Section, Text } from './Header.styles';
 
 function Header() {
   return (
@@ -11,11 +11,17 @@ function Header() {
           <Text href="/">ABOUT</Text>
           <Text href="/">CONTACT</Text>
         </div>
-        <div>
-          <Facebook size="48" title="Facebook" />
-          <Twitter size="48" title="Twitter" />
-          <Github size="48" title="Github" />
-        </div>
+        <IconWrapper>
+          <Text href="/">
+            <Facebook size="15" title="Facebook" />
+          </Text>
+          <Text href="/">
+            <Twitter size="15" title="Twitter" />
+          </Text>
+          <Text href="/">
+            <Github size="15" title="Github" />
+          </Text>
+        </IconWrapper>
       </Section>
       <Section>
         <img src="./src/images/logo.png" alt="uk runner logo" />
