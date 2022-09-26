@@ -5,6 +5,7 @@ export const Text = styled.a`
   color: #fff;
   font-size: 11px;
   line-height: 30px;
+  text-decoration: none;
   &:hover {
     color: #ffaa00;
   }
