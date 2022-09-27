@@ -17,6 +17,7 @@ export const getActivities = ({
     .then((res) => res.json())
     .then((data) => {
       if (data.message === 'Authorization Error') {
+        localStorage.removeItem('accessToken');
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         getAccessToken({ setLoading, setActivities });
       } else {
