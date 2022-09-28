@@ -60,7 +60,23 @@ export const Links = styled.a`
   text-transform: uppercase;
   text-decoration: none;
   font-weight: 600;
+  :after {
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: relative;
+    background: #ffaa00;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
   &:hover {
     color: #ffaa00;
+    :after {
+      width: 100%;
+      left: 0;
+      top: 5px;
+    }
   }
 `;
