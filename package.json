@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@styled-icons/boxicons-logos": "^10.46.0",
+    "@styled-icons/boxicons-regular": "^10.46.0",
     "@styled-icons/styled-icon": "^10.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
