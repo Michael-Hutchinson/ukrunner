@@ -6,11 +6,9 @@ function Navbar() {
   return (
     <Nav>
       <Input id="nav-responsive" />
-      <div>
-        <Label htmlFor="nav-responsive">
-          <Menu size="20" title="Menu" />
-        </Label>
-      </div>
+      <Label htmlFor="nav-responsive">
+        <Menu size="20" title="Menu" />
+      </Label>
       <MobileLinks>
         <Links href="/">Home</Links>
         <Links href="/">About</Links>
