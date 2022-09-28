@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-  background-color: #f8f8f8;
-  border: 0.063rem solid #e7e7e7;
+  background-color: var(--grey);
+  border: 0.063rem solid var(--lightGrey);
   min-height: 3.125rem;
   align-items: center;
   display: flex;
@@ -18,8 +18,8 @@ export const Nav = styled.nav`
 export const MobileLinks = styled.div`
   display: flex;
   @media (max-width: 48rem) {
-    background-color: #f8f8f8;
-    border-bottom: 0.063rem solid #e7e7e7;
+    background-color: var(--grey);
+    border-bottom: 0.063rem solid var(--lightGrey);
     flex-direction: column;
     overflow-y: auto;
     position: absolute;
@@ -64,19 +64,19 @@ export const Links = styled.a`
     bottom: 0;
     content: '';
     display: block;
-    height: 2px;
+    height: 0.125rem;
     left: 50%;
     position: relative;
-    background: #ffaa00;
+    background: var(--yellow);
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
   }
   &:hover {
-    color: #ffaa00;
+    color: var(--yellow);
     :after {
       width: 100%;
       left: 0;
-      top: 5px;
+      top: 0.313rem;
     }
   }
 `;
