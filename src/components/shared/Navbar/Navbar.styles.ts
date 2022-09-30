@@ -2,16 +2,15 @@ import styled from 'styled-components';
 
 export const Nav = styled.nav`
   background-color: var(--grey);
-  border: 0.063rem solid var(--lightGrey);
+  border: 1px solid var(--lightGrey);
   min-height: 3.125rem;
   align-items: center;
   display: flex;
   justify-content: center;
-  position: relative;
   width: 100%;
-  z-index: 99;
   @media (max-width: 48rem) {
-    justify-content: flex-end;
+    justify-content: center;
+    flex-direction: column;
   }
 `;
 
@@ -19,13 +18,9 @@ export const MobileLinks = styled.div`
   display: flex;
   @media (max-width: 48rem) {
     background-color: var(--grey);
-    border-bottom: 0.063rem solid var(--lightGrey);
+    border-bottom: 1px solid var(--lightGrey);
     flex-direction: column;
-    overflow-y: auto;
-    position: absolute;
     text-align: center;
-    top: 100%;
-    width: 100%;
   }
 `;
 
@@ -41,11 +36,18 @@ export const Input = styled.input.attrs({
 `;
 
 export const Label = styled.label`
+  @media (max-width: 48rem) {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    min-height: 3.125rem;
+    align-items: center;
+  }
   svg {
     display: none;
       @media (max-width: 48rem) {
         cursor: pointer;
-        display: block;
+        display: flex;
         margin-right: 0.938rem;
       }
     }
