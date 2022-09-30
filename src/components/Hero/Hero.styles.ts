@@ -29,7 +29,5 @@ export const Image = styled.img`
 
 export const ImageBox = styled.div`
   display: grid;
-  grid-template-columns: repeat(1fr, 4);
-  grid-template-rows: 1fr 1fr;
   grid-template-areas: 'news news about about' 'race events training shop';
 `;
