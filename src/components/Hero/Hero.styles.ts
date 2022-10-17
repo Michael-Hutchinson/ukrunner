@@ -39,7 +39,15 @@ export const ImageBox = styled.div`
   display: grid;
   grid-template-areas: 'news news about about' 'race events training shop';
   padding: 20px 0 20px;
-  width: 85%;
+  @media (min-width: 48rem) {
+    width: 46.875rem;
+  }
+  @media (min-width: 62rem) {
+    width: 60.625rem;
+  }
+  @media (min-width: 75rem) {
+    width: 73.125rem;
+  }
 `;
 
 export const Caption = styled.div`
