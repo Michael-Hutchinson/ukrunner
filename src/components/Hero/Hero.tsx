@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Carousel from '../shared/Carousel/Carousel';
+import MobileCarousel from '../shared/Carousel/Carousel';
 import ImageGrid from '../shared/ImageGrid/ImageGrid';
 
 function Hero() {
@@ -15,7 +15,7 @@ function Hero() {
   if (width > breakpoint) {
     return <ImageGrid />;
   }
-  return <Carousel />;
+  return <MobileCarousel />;
 }
 
 export default Hero;
