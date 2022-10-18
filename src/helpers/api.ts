@@ -1,8 +1,9 @@
-import { ActivityData } from './strava';
+import { ActivityData, AthleteData } from './strava';
 
 const clientID = import.meta.env.VITE_CLIENTID;
 const clientSecret = import.meta.env.VITE_CLIENTSECRET;
 const callActivities = `https://www.strava.com/api/v3/athlete/activities?access_token=`;
+const callAthlete = 'https://www.strava.com/api/v3/athlete?access_token=';
 
 export const getActivities = ({
   accessToken,
@@ -27,12 +28,37 @@ export const getActivities = ({
     });
 };
 
+export const getAthlete = ({
+  accessToken,
+  setLoading,
+  setAthlete,
+}: {
+  accessToken: string;
+  setLoading: (state: boolean) => void;
+  setAthlete: (state: AthleteData) => void;
+}) => {
+  fetch(`${callAthlete}${accessToken}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.message === 'Authorization Error') {
+        localStorage.removeItem('accessToken');
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        getAccessToken({ setLoading, setAthlete });
+      } else {
+        setAthlete(data);
+        setLoading(false);
+      }
+    });
+};
+
 export const getAccessToken = ({
   setLoading,
   setActivities,
+  setAthlete,
 }: {
   setLoading: (state: boolean) => void;
-  setActivities: (state: ActivityData[]) => void;
+  setActivities?: (state: ActivityData[]) => void;
+  setAthlete?: (state: AthleteData) => void;
 }) => {
   const refreshToken = import.meta.env.VITE_REFRESHTOKEN;
   const callRefresh = `https://www.strava.com/oauth/token?client_id=${clientID}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
@@ -44,9 +70,19 @@ export const getAccessToken = ({
       .then((res) => res.json())
       .then((result) => {
         localStorage.setItem('accessToken', result.access_token);
-        getActivities({ accessToken: result.access_token, setLoading, setActivities });
+        if (setActivities) {
+          getActivities({ accessToken: result.access_token, setLoading, setActivities });
+        }
+        if (setAthlete) {
+          getAthlete({ accessToken: result.access_token, setLoading, setAthlete });
+        }
       });
   } else {
-    getActivities({ accessToken: currentAccessToken, setLoading, setActivities });
+    if (setActivities) {
+      getActivities({ accessToken: currentAccessToken, setLoading, setActivities });
+    }
+    if (setAthlete) {
+      getAthlete({ accessToken: currentAccessToken, setLoading, setAthlete });
+    }
   }
 };
