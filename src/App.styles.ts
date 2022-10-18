@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
@@ -39,6 +40,12 @@ export const GlobalStyle = createGlobalStyle`
     color: #757575;
     font-size: 1rem;
     line-height: 1.563rem;
+  }
+  .carousel .slide .legend {
+    opacity: 1;
+    background: rgba(255, 170, 0, 0.5);
+    text-transform: uppercase;
+    border-radius: 0;
   }
 `;
 

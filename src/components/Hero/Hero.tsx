@@ -1,19 +1,21 @@
-import React from 'react';
-import { Image, ImageBox, Section } from './Hero.styles';
+import React, { useState, useEffect } from 'react';
+import MobileCarousel from '../shared/Carousel/Carousel';
+import ImageGrid from '../shared/ImageGrid/ImageGrid';
 
 function Hero() {
-  return (
-    <Section>
-      <ImageBox>
-        <Image id="news" alt="" src="./src/images/homepage/news.png" />
-        <Image id="about" alt="" src="./src/images/homepage/about.png" />
-        <Image id="race" alt="" src="./src/images/homepage/race.png" />
-        <Image id="events" alt="" src="./src/images/homepage/events.png" />
-        <Image id="training" alt="" src="./src/images/homepage/training.png" />
-        <Image id="shop" alt="" src="./src/images/homepage/shop.png" />
-      </ImageBox>
-    </Section>
-  );
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 768;
+  useEffect(() => {
+    const handleResizeWindow = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResizeWindow);
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow);
+    };
+  }, []);
+  if (width > breakpoint) {
+    return <ImageGrid />;
+  }
+  return <MobileCarousel />;
 }
 
 export default Hero;
