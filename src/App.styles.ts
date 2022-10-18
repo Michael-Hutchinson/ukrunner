@@ -25,6 +25,7 @@ export const GlobalStyle = createGlobalStyle`
     color: #454545;
     font-size: 1.563rem;
     margin-top: 0;
+    margin-bottom: 0.625rem;
   }
   h3 {
     font-size: 1.25rem;

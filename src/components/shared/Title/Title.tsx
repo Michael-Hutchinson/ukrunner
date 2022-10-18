@@ -1,4 +1,5 @@
 import React from 'react';
+import { Section, SubHeading } from './Title.styles';
 
 interface ITitleProps {
   h2Text: string;
@@ -7,10 +8,10 @@ interface ITitleProps {
 
 function Title({ h2Text, smallText }: ITitleProps) {
   return (
-    <div>
+    <Section>
       <h2>{h2Text}</h2>
-      <small>{smallText}</small>
-    </div>
+      <SubHeading>{smallText}</SubHeading>
+    </Section>
   );
 }
 
