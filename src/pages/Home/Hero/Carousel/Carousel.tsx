@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function MobileCarousel() {
   return (
     <Carousel showArrows showThumbs={false} showStatus={false} autoPlay stopOnHover infiniteLoop swipeable>
-      <Link id="news" to="/news">
+      <Link id="news" to="/blog">
         <img alt="" src="./src/images/homepage/news.png" />
         <p className="legend">Latest News</p>
       </Link>

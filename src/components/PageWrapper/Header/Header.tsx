@@ -8,8 +8,8 @@ function Header() {
       <Section top>
         <div>
           <Text href="/">HOME</Text>
-          <Text href="/">ABOUT</Text>
-          <Text href="/">CONTACT</Text>
+          <Text href="/about">ABOUT</Text>
+          <Text href="/contact">CONTACT</Text>
         </div>
         <IconWrapper>
           <Text href="/">
