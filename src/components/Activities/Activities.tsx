@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { getAccessToken } from '../../helpers/api';
-import { ActivityData } from '../../helpers/strava';
+import React, { useContext } from 'react';
+import { StravaContext } from '../../helpers/context';
 
 function Activities() {
-  const [loading, setLoading] = useState(true);
-  const [activities, setActivities] = useState<ActivityData[]>([]);
-  useEffect(() => {
-    getAccessToken({ setLoading, setActivities });
-  }, []);
-  if (loading) {
-    return <p>LOADING</p>;
-  }
+  const activityData = useContext(StravaContext);
   return (
     <div>
-      {activities.map((activity) => (
+      {activityData?.activities?.map((activity) => (
         <p key={activity.id}>{activity.id}</p>
       ))}
     </div>
