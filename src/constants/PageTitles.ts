@@ -9,7 +9,7 @@ const PageTitles = {
   Events: `Events ${defaultTitle}`,
   Shop: `Shop ${defaultTitle}`,
   Contact: `Contact ${defaultTitle}`,
-  Error: `Page not found ${defaultTitle}`,
+  PageNotFound: `Page not found ${defaultTitle}`,
 };
 
 export default PageTitles;
