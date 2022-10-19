@@ -42,6 +42,14 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     line-height: 1.563rem;
   }
+  a {
+    text-decoration: none;
+    color: var(--white);
+    transition: 0.5s;
+    :hover {
+      color: var(--yellow);
+    }
+  }
   .carousel .slide .legend {
     opacity: 1;
     background: rgba(255, 170, 0, 0.5);

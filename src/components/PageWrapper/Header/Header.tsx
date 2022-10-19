@@ -18,7 +18,7 @@ function Header() {
           <Text href="/">
             <Twitter size="15" title="Twitter" />
           </Text>
-          <Text href="/">
+          <Text href="https://github.com/Michael-Hutchinson">
             <Github size="15" title="Github" />
           </Text>
         </IconWrapper>
