@@ -1,24 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import GlobalStyle from './App.styles';
-import Activities from './components/Activities/Activities';
-import Header from './components/Header/Header';
-import Navbar from './components/shared/Navbar/Navbar';
-import Hero from './components/Hero/Hero';
-import Athlete from './components/Athlete/Athlete';
+import PageTitles from './constants/PageTitles';
+import RouteHandler from './routes/Routes';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <GlobalStyle />
-        <Header />
-        <Navbar />
-        <Athlete />
-        <Hero />
-        <Activities />
-      </div>
-    </Router>
+    <HelmetProvider>
+      <Helmet>
+        <title>{PageTitles.Home}</title>
+      </Helmet>
+      <GlobalStyle />
+      <RouteHandler />
+    </HelmetProvider>
   );
 }
 
