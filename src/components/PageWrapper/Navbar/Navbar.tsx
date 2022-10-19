@@ -11,13 +11,13 @@ function Navbar() {
       </Label>
       <MobileLinks>
         <Links href="/">Home</Links>
-        <Links href="/">About</Links>
-        <Links href="/">Blog</Links>
-        <Links href="/">Race History</Links>
-        <Links href="/">Training</Links>
-        <Links href="/">Events</Links>
-        <Links href="/">Shop</Links>
-        <Links href="/">Contact</Links>
+        <Links href="/about">About</Links>
+        <Links href="/blog">Blog</Links>
+        <Links href="/race">Race History</Links>
+        <Links href="/training">Training</Links>
+        <Links href="/events">Events</Links>
+        <Links href="/shop">Shop</Links>
+        <Links href="/contact">Contact</Links>
       </MobileLinks>
     </Nav>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MobileCarousel from '../shared/Carousel/Carousel';
-import ImageGrid from '../shared/ImageGrid/ImageGrid';
+import MobileCarousel from './Carousel/Carousel';
+import ImageGrid from './ImageGrid/ImageGrid';
 
 function Hero() {
   const [width, setWidth] = useState(window.innerWidth);
