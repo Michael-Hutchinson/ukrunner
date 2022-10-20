@@ -10,6 +10,8 @@ const PageTitles = {
   Shop: `Shop ${defaultTitle}`,
   Contact: `Contact ${defaultTitle}`,
   PageNotFound: `Page not found ${defaultTitle}`,
+  Login: `Login ${defaultTitle}`,
+  Admin: `Admin ${defaultTitle}`,
 };
 
 export default PageTitles;
