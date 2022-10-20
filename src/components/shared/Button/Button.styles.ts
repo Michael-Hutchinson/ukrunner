@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Cta = styled.button`
   border: 2px solid #e9e9e9;
+  margin-top: 0.938rem;
   color: #888;
   letter-spacing: 0.188rem;
   padding: 0.625rem 1.25rem;
