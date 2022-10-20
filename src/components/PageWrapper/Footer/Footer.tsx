@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Cog } from '@styled-icons/boxicons-regular';
 import Title from '../../shared/Title/Title';
 import { PageFooter, Bottom, List } from './Footer.styles';
 
@@ -34,9 +35,6 @@ function Footer() {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
         </List>
       </section>
       <section>
@@ -56,7 +54,10 @@ function Footer() {
       <Bottom>
         <p>Copyright © {new Date().getFullYear()} UK Runner</p>
         <p>
-          Website designed & built by <a href="https://www.michaelhutchinson.me">Michael Hutchinson</a>
+          Website designed & built by <a href="https://www.michaelhutchinson.me">Michael Hutchinson</a> |{' '}
+          <Link to="/login">
+            <Cog size="20" title="Cog" />
+          </Link>
         </p>
       </Bottom>
     </PageFooter>
