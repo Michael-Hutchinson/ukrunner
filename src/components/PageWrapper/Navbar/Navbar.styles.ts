@@ -8,6 +8,8 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: center;
   width: 100%;
+  border-left: none;
+  border-right: none;
   @media (max-width: 48rem) {
     justify-content: center;
     flex-direction: column;
