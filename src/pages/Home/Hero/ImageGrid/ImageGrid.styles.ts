@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const Section = styled.section`
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid var(--lightGrey);
 `;
 
 export const NavLink = styled(Link)`
