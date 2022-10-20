@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Title from '../../shared/Title/Title';
 import { PageFooter, Bottom, List } from './Footer.styles';
 
@@ -13,25 +14,28 @@ function Footer() {
         <Title h2Text="Useful Links" smallText="Navigate using the links below" />
         <List>
           <li>
-            <a href="/about">About</a>
+            <Link to="/about">About</Link>
           </li>
           <li>
-            <a href="/blog">Blog</a>
+            <Link to="/blog">Blog</Link>
           </li>
           <li>
-            <a href="/race">Race History</a>
+            <Link to="/race">Race History</Link>
           </li>
           <li>
-            <a href="/training">Training</a>
+            <Link to="/training">Training</Link>
           </li>
           <li>
-            <a href="/events">Events</a>
+            <Link to="/events">Events</Link>
           </li>
           <li>
-            <a href="/shop">Shop</a>
+            <Link to="/shop">Shop</Link>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+            <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
           </li>
         </List>
       </section>
