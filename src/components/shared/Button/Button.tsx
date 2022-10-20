@@ -1,17 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Cta from './Button.styles';
 
 interface IButtonProps {
   buttonType: 'button' | 'submit' | 'reset';
   buttonText: string;
-  link: string;
+  onClick?: () => void;
 }
 
-function Button({ buttonType, buttonText, link }: IButtonProps) {
-  const navigate = useNavigate();
+function Button({ buttonType, buttonText, onClick }: IButtonProps) {
   return (
-    <Cta type={buttonType} onClick={() => navigate(link)}>
+    <Cta
+      type={buttonType}
+      onClick={() => {
+        if (onClick) onClick();
+      }}
+    >
       {buttonText}
     </Cta>
   );
