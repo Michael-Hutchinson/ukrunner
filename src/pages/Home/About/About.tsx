@@ -14,7 +14,6 @@ function About() {
         <Text>This reflects alot with Running everyone has to start somewhere</Text>
         <Text>This website documents my running journey as everyones journey is different.</Text>
         <Button buttonType="button" buttonText="Learn More" onClick={() => navigate('/about')} />
-        <Button buttonType="button" buttonText="Learn More" link="about" />
       </div>
       <div>
         <Title h2Text="Strava" smallText="Follow me on strava" />
