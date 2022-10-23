@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
+import { getFirestore } from 'firebase/firestore';
 
 const apiKey = import.meta.env.VITE_APIKEY;
 const authDomain = import.meta.env.VITE_AUTHDOMAIN;
@@ -24,3 +25,4 @@ const firebaseConfig = {
 export const firebase = initializeApp(firebaseConfig);
 export const auth = getAuth(firebase);
 export const database = getDatabase(firebase);
+export const db = getFirestore(firebase);
