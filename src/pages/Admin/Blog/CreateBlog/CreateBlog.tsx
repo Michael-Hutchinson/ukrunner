@@ -19,7 +19,7 @@ function CreateBlog() {
   return (
     <PageWrapper title={PageTitles.Admin}>
       <>
-        <Title h2Text="Create Blog" smallText="Create new blog posts here" />
+        <Title h1Text="Add New Blog Posts Here" smallText="Here you can add new blog posts" />
         <form
           onSubmit={(e) => {
             e.preventDefault();
