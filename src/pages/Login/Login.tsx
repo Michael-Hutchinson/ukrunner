@@ -84,7 +84,11 @@ function Login() {
               />
               <FormControlLabel control={<Checkbox value="remember" />} label="Remember me" />
               <Button buttonType="submit" buttonText="Sign in" fullWidth />
-              {error && <Alert severity="error">{ErrorMessages[error.code as keyof typeof ErrorMessages]}</Alert>}
+              {error && (
+                <Alert sx={{ mb: 2 }} severity="error">
+                  {ErrorMessages[error.code as keyof typeof ErrorMessages]}
+                </Alert>
+              )}
             </FormBody>
             <FormFooter />
           </FormContainer>
