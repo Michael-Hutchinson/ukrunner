@@ -24,7 +24,7 @@ function Header() {
         </IconWrapper>
       </Section>
       <Section>
-        <img src="./src/images/logo.png" alt="uk runner logo" />
+        <img src="/src/images/logo.png" alt="uk runner logo" />
       </Section>
     </header>
   );
