@@ -48,7 +48,7 @@ function AdminBlog() {
           <ul>
             {value.docs.map((post) => (
               <li key={post.id}>
-                <Link style={{ color: 'red' }} to={`/admin/blog/edit/${post.id}`}>
+                <Link style={{ color: 'blue' }} to={`/admin/blog/edit/${post.id}`}>
                   {post.data().title}
                 </Link>
               </li>
