@@ -13,6 +13,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.10",
     "@styled-icons/boxicons-logos": "^10.46.0",
     "@styled-icons/boxicons-regular": "^10.46.0",
     "@styled-icons/styled-icon": "^10.7.0",
