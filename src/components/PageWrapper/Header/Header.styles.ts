@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
-import { StyledIconBase } from '@styled-icons/styled-icon';
 
-export const Text = styled.a`
+export const Text = styled.a<{ icon?: boolean }>`
   color: var(--white);
   font-size: 0.625rem;
   line-height: 1.875rem;
@@ -18,6 +17,14 @@ export const Text = styled.a`
   &:last-child:after {
     content: '';
   }
+
+  ${(props) =>
+    props.icon &&
+    css`
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+    `}
 `;
 
 export const Section = styled.section<{ top?: boolean }>`
@@ -39,7 +46,4 @@ export const Section = styled.section<{ top?: boolean }>`
 export const IconWrapper = styled.div`
   display: flex;
   align-items: center;
-  ${StyledIconBase} {
-    cursor: pointer;
-  }
 `;
