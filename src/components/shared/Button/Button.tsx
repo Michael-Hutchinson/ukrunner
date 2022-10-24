@@ -5,12 +5,14 @@ interface IButtonProps {
   buttonType: 'button' | 'submit' | 'reset';
   buttonText: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-function Button({ buttonType, buttonText, onClick }: IButtonProps) {
+function Button({ buttonType, buttonText, onClick, disabled }: IButtonProps) {
   return (
     <Cta
       type={buttonType}
+      disabled={disabled}
       onClick={() => {
         if (onClick) onClick();
       }}
