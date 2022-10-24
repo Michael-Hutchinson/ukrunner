@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PageWrapper from '../../../../components/PageWrapper/PageWrapper/PageWrapper';
 import Button from '../../../../components/shared/Button/Button';
+import Title from '../../../../components/shared/Title/Title';
 import PageTitles from '../../../../constants/PageTitles';
 import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
 
@@ -38,8 +39,7 @@ function EditBlog() {
   return (
     <PageWrapper title={PageTitles.Admin}>
       <>
-        <h1>Edit Blog</h1>
-        <p>hello</p>
+        <Title h1Text="Edit Blog Post" smallText="You can edit blog posts here" />
         <form
           onSubmit={(e) => {
             e.preventDefault();
