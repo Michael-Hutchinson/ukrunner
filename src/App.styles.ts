@@ -32,6 +32,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   h4 {
     color: #505050;
+    margin: 0;
   }
   h5 {
     color: #656565;

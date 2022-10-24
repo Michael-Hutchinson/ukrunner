@@ -3,14 +3,16 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import { Alert } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { Container } from '@mui/material';
 import PageWrapper from '../../components/PageWrapper/PageWrapper/PageWrapper';
 import Button from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';
 import { firebase } from '../../helpers/firebase';
-import FormContainer from './Login.styles';
+import { FormBody, FormContainer, FormFooter, FormHeader, UserIcon } from './Login.styles';
 
 enum ErrorMessages {
   'auth/wrong-password' = 'You have entered the wrong password',
@@ -38,47 +40,55 @@ function Login() {
     <PageWrapper title={PageTitles.Login}>
       <>
         <Title h2Text="Login" smallText="Login to your UK Runner account here" />
-        <FormContainer maxWidth="xs">
-          <Box
-            component="form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              signInWithEmailAndPassword(email, password);
-            }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              type="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
+        <Container maxWidth="xs">
+          <FormContainer>
+            <FormHeader component="section">
+              <UserIcon size="20" title="User" />
+              <h4>Please Login below</h4>
+            </FormHeader>
+            <FormBody
+              component="form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                signInWithEmailAndPassword(email, password);
               }}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <Button buttonType="submit" buttonText="Sign in" fullWidth />
-            {error && <Alert severity="error">{ErrorMessages[error.code as keyof typeof ErrorMessages]}</Alert>}
-          </Box>
-        </FormContainer>
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <FormControlLabel control={<Checkbox value="remember" />} label="Remember me" />
+              <Button buttonType="submit" buttonText="Sign in" fullWidth />
+              {error && <Alert severity="error">{ErrorMessages[error.code as keyof typeof ErrorMessages]}</Alert>}
+            </FormBody>
+            <FormFooter />
+          </FormContainer>
+        </Container>
       </>
     </PageWrapper>
   );
