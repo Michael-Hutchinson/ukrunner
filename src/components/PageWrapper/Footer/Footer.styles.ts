@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const PageFooter = styled.footer`
@@ -10,6 +11,10 @@ export const PageFooter = styled.footer`
   @media (max-width: 48rem) {
     grid-template-columns: auto;
   }
+`;
+
+export const Icon = styled(Link)`
+  vertical-align: middle;
 `;
 
 export const Bottom = styled.section`

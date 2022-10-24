@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Cog } from '@styled-icons/boxicons-regular';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import Title from '../../shared/Title/Title';
-import { PageFooter, Bottom, List } from './Footer.styles';
+import { PageFooter, Bottom, List, Icon } from './Footer.styles';
 
 function Footer() {
   return (
@@ -55,9 +55,9 @@ function Footer() {
         <p>Copyright © {new Date().getFullYear()} UK Runner</p>
         <p>
           Website designed & built by <a href="https://www.michaelhutchinson.me">Michael Hutchinson</a> |{' '}
-          <Link to="/login">
-            <Cog size="20" title="Cog" />
-          </Link>
+          <Icon to="/login">
+            <EngineeringIcon fontSize="small" />
+          </Icon>
         </p>
       </Bottom>
     </PageFooter>
