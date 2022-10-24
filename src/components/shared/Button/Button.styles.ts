@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
-const Cta = styled.button`
+const Cta = styled(Button)`
   border: 2px solid #e9e9e9;
   margin-top: 0.938rem;
   color: #888;
