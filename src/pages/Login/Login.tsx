@@ -43,7 +43,7 @@ function Login() {
         <Container maxWidth="xs">
           <FormContainer>
             <FormHeader component="section">
-              <UserIcon size="20" title="User" />
+              <UserIcon fontSize="small" />
               <h4>Please Login below</h4>
             </FormHeader>
             <FormBody

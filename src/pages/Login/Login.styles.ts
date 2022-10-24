@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { User } from '@styled-icons/boxicons-regular';
+import PersonIcon from '@mui/icons-material/Person';
 import Box from '@mui/material/Box';
 
 export const FormContainer = styled(Box)`
@@ -28,6 +28,6 @@ export const FormFooter = styled(Box)`
   background-color: #f5f5f5;
 `;
 
-export const UserIcon = styled(User)`
+export const UserIcon = styled(PersonIcon)`
   padding-right: 10px;
 `;
