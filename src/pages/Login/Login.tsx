@@ -39,7 +39,7 @@ function Login() {
   return (
     <PageWrapper title={PageTitles.Login}>
       <>
-        <Title h2Text="Login" smallText="Login to your UK Runner account here" />
+        <Title h1Text="Login" smallText="Login to your UK Runner account here" />
         <Container maxWidth="xs">
           <FormContainer>
             <FormHeader component="section">
