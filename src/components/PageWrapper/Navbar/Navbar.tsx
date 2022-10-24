@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from '@styled-icons/boxicons-regular';
+import MenuIcon from '@mui/icons-material/Menu';
 import { Input, Label, Links, MobileLinks, Nav } from './Navbar.styles';
 
 function Navbar() {
@@ -7,7 +7,7 @@ function Navbar() {
     <Nav>
       <Input id="nav-responsive" />
       <Label htmlFor="nav-responsive">
-        <Menu size="20" title="Menu" />
+        <MenuIcon fontSize="small" />
       </Label>
       <MobileLinks>
         <Links href="/">Home</Links>
