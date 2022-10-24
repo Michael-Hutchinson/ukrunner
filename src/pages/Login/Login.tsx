@@ -7,7 +7,7 @@ import Alert from '@mui/material/Alert';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Container } from '@mui/material';
-import PageWrapper from '../../components/PageWrapper/PageWrapper/PageWrapper';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection } from 'firebase/firestore';
-import PageWrapper from '../../components/PageWrapper/PageWrapper/PageWrapper';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import PageTitles from '../../constants/PageTitles';
 import { db } from '../../helpers/firebase';
 import Title from '../../components/shared/Title/Title';

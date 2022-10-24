@@ -1,5 +1,5 @@
 import React from 'react';
-import PageWrapper from '../../components/PageWrapper/PageWrapper/PageWrapper';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import PageTitles from '../../constants/PageTitles';
 
 function PageNotFound() {

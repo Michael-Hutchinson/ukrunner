@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PageWrapper from '../../../../components/PageWrapper/PageWrapper/PageWrapper';
+import PageWrapper from '../../../../components/PageWrapper/PageWrapper';
 import Button from '../../../../components/shared/Button/Button';
 import Title from '../../../../components/shared/Title/Title';
 import PageTitles from '../../../../constants/PageTitles';
