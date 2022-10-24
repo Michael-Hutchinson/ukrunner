@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Cog } from '@styled-icons/boxicons-regular';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import Title from '../../shared/Title/Title';
-import { PageFooter, Bottom, List } from './Footer.styles';
+import { PageFooter, Bottom, List, Icon } from './Footer.styles';
 
 function Footer() {
   return (
     <PageFooter>
       <section>
         <Title h2Text="UK Runner" smallText="A Place for all runners" />
-        <img src="./src/images/logo-small.png" alt="uk runner small logo" />
+        <img src="/src/images/logo-small.png" alt="uk runner small logo" />
       </section>
       <section>
         <Title h2Text="Useful Links" smallText="Navigate using the links below" />
@@ -55,9 +55,9 @@ function Footer() {
         <p>Copyright © {new Date().getFullYear()} UK Runner</p>
         <p>
           Website designed & built by <a href="https://www.michaelhutchinson.me">Michael Hutchinson</a> |{' '}
-          <Link to="/login">
-            <Cog size="20" title="Cog" />
-          </Link>
+          <Icon to="/login">
+            <EngineeringIcon fontSize="small" />
+          </Icon>
         </p>
       </Bottom>
     </PageFooter>

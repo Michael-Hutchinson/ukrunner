@@ -1,5 +1,7 @@
 import React from 'react';
-import { Facebook, Twitter, Github } from '@styled-icons/boxicons-logos';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
 import { IconWrapper, Section, Text } from './Header.styles';
 
 function Header() {
@@ -12,19 +14,19 @@ function Header() {
           <Text href="/contact">CONTACT</Text>
         </div>
         <IconWrapper>
-          <Text href="/">
-            <Facebook size="15" title="Facebook" />
+          <Text icon href="/">
+            <FacebookIcon fontSize="small" />
           </Text>
-          <Text href="/">
-            <Twitter size="15" title="Twitter" />
+          <Text icon href="/">
+            <TwitterIcon fontSize="small" />
           </Text>
-          <Text href="https://github.com/Michael-Hutchinson">
-            <Github size="15" title="Github" />
+          <Text icon href="https://github.com/Michael-Hutchinson">
+            <GitHubIcon fontSize="small" />
           </Text>
         </IconWrapper>
       </Section>
       <Section>
-        <img src="./src/images/logo.png" alt="uk runner logo" />
+        <img src="/src/images/logo.png" alt="uk runner logo" />
       </Section>
     </header>
   );

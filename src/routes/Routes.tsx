@@ -14,6 +14,9 @@ import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import Login from '../pages/Login/Login';
 import { auth } from '../helpers/firebase';
 import Admin from '../pages/Admin/Admin';
+import CreateBlog from '../pages/Admin/Blog/CreateBlog/CreateBlog';
+import AdminBlog from '../pages/Admin/Blog/AdminBlog';
+import EditBlog from '../pages/Admin/Blog/EditBlog/EditBlog';
 
 interface Error {
   cause?: unknown;
@@ -63,6 +66,10 @@ function RouteHandler() {
       </Route>
       <Route element={<PrivateWrapper user={user} loading={loading} error={error} />}>
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/blog" element={<AdminBlog />} />
+        <Route path="/admin/blog/create" element={<CreateBlog />} />
+        <Route path="/admin/blog/edit" element={<Navigate to="/admin/blog" />} />
+        <Route path="/admin/blog/edit/:slug" element={<EditBlog />} />
       </Route>
     </Routes>
   );

@@ -19,7 +19,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   h1 {
     color: #353535;
-    font-size: 1.875rem;
+    font-size: 1.563rem;
+    margin-bottom: 0.625rem;
   }
   h2 {
     color: #454545;
@@ -32,6 +33,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   h4 {
     color: #505050;
+    margin: 0;
   }
   h5 {
     color: #656565;
