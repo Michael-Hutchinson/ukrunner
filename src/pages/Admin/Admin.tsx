@@ -17,6 +17,9 @@ function Admin() {
             <Link style={{ color: 'red' }} to="/admin/blog">
               view blogs
             </Link>
+            <Link style={{ color: 'red' }} to="/admin/blog/create">
+              create blog
+            </Link>
           </li>
         </ul>
       </>
