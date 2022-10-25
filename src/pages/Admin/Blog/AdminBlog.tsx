@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection } from 'firebase/firestore';
 import PageWrapper from '../../../components/PageWrapper/PageWrapper';
 import PageTitles from '../../../constants/PageTitles';
-import { db } from '../../../helpers/firebase';
 import Title from '../../../components/shared/Title/Title';
 import Button from '../../../components/shared/Button/Button';
+import { getBlogs } from '../../Blog/Blog.utils';
+import { IBlog } from '../../../types/Blog.types';
 
 function AdminBlog() {
   const navigate = useNavigate();
-  const [value, loading, error] = useCollection(collection(db, 'blog'));
+  const [blogs, setBlogs] = useState<IBlog[]>();
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   useEffect(() => {
@@ -26,6 +25,7 @@ function AdminBlog() {
     if (successMsg) {
       setSuccessMessage(successMsg);
     }
+    getBlogs(setBlogs);
   }, []);
   return (
     <PageWrapper title={PageTitles.Admin}>
@@ -42,19 +42,15 @@ function AdminBlog() {
           </Alert>
         </Snackbar>
         <Button buttonType="button" buttonText="Add New Post" onClick={() => navigate('/admin/blog/create')} />
-        {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Loading...</span>}
-        {value && (
-          <ul>
-            {value.docs.map((post) => (
-              <li key={post.id}>
-                <Link style={{ color: 'red' }} to={`/admin/blog/edit/${post.id}`}>
-                  {post.data().title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul>
+          {blogs?.map((blog) => (
+            <li key={blog.title}>
+              <Link style={{ color: 'red' }} to={`/admin/blog/edit/${blog.title.replaceAll(' ', '-')}`}>
+                {blog.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </>
     </PageWrapper>
   );
