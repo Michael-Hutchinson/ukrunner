@@ -4,6 +4,7 @@ import PageWrapper from '../../../../components/PageWrapper/PageWrapper';
 import Button from '../../../../components/shared/Button/Button';
 import Title from '../../../../components/shared/Title/Title';
 import PageTitles from '../../../../constants/PageTitles';
+import { IBlog } from '../../../../types/Blog.types';
 import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
 
 function EditBlog() {
@@ -12,7 +13,7 @@ function EditBlog() {
   const [titles, setTitles] = useState<string[]>([]);
   const [valid, setValid] = useState<boolean | null>(null);
   const [originalTitle, setOriginalTitle] = useState('');
-  const [blog, setBlog] = useState<{ title: string; body: string; date: Date }>();
+  const [blog, setBlog] = useState<IBlog>();
   useEffect(() => {
     getBlogTitles(setTitles);
   }, []);
