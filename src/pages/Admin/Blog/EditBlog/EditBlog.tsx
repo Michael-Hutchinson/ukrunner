@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PageWrapper from '../../../../components/PageWrapper/PageWrapper';
+import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import Button from '../../../../components/shared/Button/Button';
 import Title from '../../../../components/shared/Title/Title';
 import PageTitles from '../../../../constants/PageTitles';
-import { IBlog } from '../../../../types/Blog.types';
 import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
 
 function EditBlog() {
@@ -13,7 +13,8 @@ function EditBlog() {
   const [titles, setTitles] = useState<string[]>([]);
   const [valid, setValid] = useState<boolean | null>(null);
   const [originalTitle, setOriginalTitle] = useState('');
-  const [blog, setBlog] = useState<IBlog>();
+  const [title, setTitle] = useState<string>();
+  const [body, setBody] = useState<string>();
   useEffect(() => {
     getBlogTitles(setTitles);
   }, []);
@@ -31,7 +32,7 @@ function EditBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(slug, setBlog, setOriginalTitle);
+      getBlog(slug, setTitle, setBody, setOriginalTitle);
     }
     if (valid === false) {
       navigate('/admin/blog');
@@ -44,33 +45,25 @@ function EditBlog() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (blog) {
-              if (originalTitle === blog.title) {
-                saveBlog(blog.title, blog.body, navigate, 'blog updated');
+            if (title) {
+              if (originalTitle === title) {
+                saveBlog(title, body || '', navigate, 'blog updated');
               } else {
-                editBlog(blog.title, blog.body, navigate, originalTitle);
+                editBlog(title, body || '', navigate, originalTitle);
               }
             }
           }}
         >
           <input
-            value={blog?.title}
+            value={title}
             onChange={(e) => {
-              setBlog({ title: e.target.value || '', body: blog?.body || '', date: blog?.date || new Date() });
+              setTitle(e.target.value);
             }}
             type="text"
             name="title"
             required
           />
-          <input
-            value={blog?.body}
-            onChange={(e) => {
-              setBlog({ title: blog?.title || '', body: e.target.value || '', date: blog?.date || new Date() });
-            }}
-            type="text"
-            name="body"
-            required
-          />
+          <ReactQuillEditor value={body} onChange={setBody} />
           <Button buttonType="submit" buttonText="Edit" />
         </form>
       </>

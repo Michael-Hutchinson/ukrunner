@@ -6,6 +6,7 @@ import Button from '../../../../components/shared/Button/Button';
 import Title from '../../../../components/shared/Title/Title';
 import PageTitles from '../../../../constants/PageTitles';
 import { getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
+import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 
 function CreateBlog() {
   const [title, setTitle] = useState('');
@@ -40,14 +41,7 @@ function CreateBlog() {
             name="title"
             required
           />
-          <textarea
-            value={body}
-            onChange={(e) => {
-              setBody(e.target.value);
-            }}
-            name="body"
-            required
-          />
+          <ReactQuillEditor value={body} onChange={setBody} />
           <Button buttonType="submit" buttonText="Create Blog" disabled={validation} />
           {validation && <Alert severity="error">Title already exists!</Alert>}
         </form>

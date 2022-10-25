@@ -32,20 +32,23 @@ export const editBlog = (title: string, body: string, navigate: NavigateFunction
 
 export const getBlog = (
   blogID: string,
-  setBlog: (blog: IBlog) => void,
-  setOriginalTitle: (originalTitle: string) => void,
+  setTitle: (title: string) => void,
+  setBody: (body: string) => void,
+  setOriginalTitle?: (originalTitle: string) => void,
+  setDate?: (date: string) => void,
 ) => {
   const docRef = doc(db, 'blog', blogID);
   getDoc(docRef).then((response) => {
     if (response.data()) {
       const blogData = response.data();
-      const blog = {
-        title: blogData?.title,
-        body: blogData?.body,
-        date: blogData?.date,
-      };
-      setBlog(blog);
-      setOriginalTitle(blogData?.title);
+      setTitle(blogData?.title);
+      setBody(blogData?.body);
+      if (setOriginalTitle) {
+        setOriginalTitle(blogData?.title);
+      }
+      if (setDate) {
+        setDate(blogData?.date);
+      }
     }
   });
 };
