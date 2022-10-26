@@ -3,12 +3,14 @@ import Alert from '@mui/material/Alert';
 import PersonIcon from '@mui/icons-material/Person';
 import ModeIcon from '@mui/icons-material/Mode';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+import EditIcon from '@mui/icons-material/Edit';
 import Button, { ButtonTypes } from '../shared/Button/Button';
 import { FormBody, FormContainer, FormFooter, FormHeader } from './FormWrapper.styles';
 
 export const Icons = {
   User: <PersonIcon fontSize="small" />,
   Create: <NewspaperIcon fontSize="small" />,
+  Edit: <EditIcon fontSize="small" />,
 };
 
 interface IFormWrapper {
