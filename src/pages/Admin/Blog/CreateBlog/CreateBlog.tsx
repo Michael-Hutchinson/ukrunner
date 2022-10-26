@@ -44,7 +44,7 @@ function CreateBlog() {
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
-              if (titles.includes(e.target.value.toLowerCase())) {
+              if (titles.includes(e.target.value.toLowerCase().trim())) {
                 setValidation(true);
               } else {
                 setValidation(false);
