@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PageWrapper from '../../../../components/PageWrapper/PageWrapper';
 import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
-import Button from '../../../../components/shared/Button/Button';
+import Button, { ButtonTypes } from '../../../../components/shared/Button/Button';
 import Title from '../../../../components/shared/Title/Title';
 import PageTitles from '../../../../constants/PageTitles';
 import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
@@ -64,7 +64,7 @@ function EditBlog() {
             required
           />
           <ReactQuillEditor value={body} onChange={setBody} />
-          <Button buttonType="submit" buttonText="Edit" />
+          <Button buttonType={ButtonTypes.submit} buttonText="Edit" />
         </form>
       </>
     </PageWrapper>

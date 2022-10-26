@@ -1,5 +1,4 @@
 import { styled } from '@mui/material/styles';
-import PersonIcon from '@mui/icons-material/Person';
 import Box from '@mui/material/Box';
 
 export const FormContainer = styled(Box)`
@@ -16,6 +15,9 @@ export const FormHeader = styled(Box)`
   border-bottom: 1px solid #ddd;
   padding: 15px;
   display: flex;
+  svg {
+    padding-right: 10px;
+  }
 `;
 
 export const FormBody = styled(Box)`
@@ -26,8 +28,4 @@ export const FormFooter = styled(Box)`
   padding: 10px 0;
   border-top: 1px solid #ddd;
   background-color: #f5f5f5;
-`;
-
-export const UserIcon = styled(PersonIcon)`
-  padding-right: 10px;
 `;
