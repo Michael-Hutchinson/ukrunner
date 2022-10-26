@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PageWrapper from '../../../../components/PageWrapper/PageWrapper';
+import TextField from '@mui/material/TextField';
+import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
+import FormWrapper, { Icons } from '../../../../components/FormWrapper/FormWrapper';
 import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
-import Button, { ButtonTypes } from '../../../../components/shared/Button/Button';
-import Title from '../../../../components/shared/Title/Title';
+import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import PageTitles from '../../../../constants/PageTitles';
 import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
 
@@ -15,6 +16,7 @@ function EditBlog() {
   const [originalTitle, setOriginalTitle] = useState('');
   const [title, setTitle] = useState<string>();
   const [body, setBody] = useState<string>();
+  const [validation, setValidation] = useState(false);
   useEffect(() => {
     getBlogTitles(setTitles);
   }, []);
@@ -39,35 +41,51 @@ function EditBlog() {
     }
   }, [valid, slug, navigate]);
   return (
-    <PageWrapper title={PageTitles.Admin}>
-      <>
-        <Title h1Text="Edit Blog Post" smallText="You can edit blog posts here" />
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (title) {
-              if (originalTitle === title) {
-                saveBlog(title, body || '', navigate, 'blog updated');
-              } else {
-                editBlog(title, body || '', navigate, originalTitle);
-              }
+    <AdminWrapper title={PageTitles.Admin} h1Text="Edit Blog Post" smallText="You can edit blog posts here">
+      <FormWrapper
+        icon={Icons.Edit}
+        headerText="Edit blog post below"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (title) {
+            if (originalTitle === title) {
+              saveBlog(title, body || '', navigate, 'blog updated');
+            } else {
+              editBlog(title, body || '', navigate, originalTitle);
             }
-          }}
-        >
-          <input
-            value={title}
+          }
+        }}
+        buttonType={ButtonTypes.submit}
+        buttonText="Edit"
+        disabled={validation}
+        error={validation ? 'Blog already has this title!' : undefined}
+      >
+        <>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="title"
+            label="Blog Title"
+            name="title"
+            type="text"
+            autoComplete="title"
+            autoFocus
+            value={title || ''}
+            defaultValue={title}
             onChange={(e) => {
+              if (titles.includes(e.target.value.toLowerCase()) && originalTitle !== e.target.value) {
+                setValidation(true);
+              } else {
+                setValidation(false);
+              }
               setTitle(e.target.value);
             }}
-            type="text"
-            name="title"
-            required
           />
           <ReactQuillEditor value={body} onChange={setBody} />
-          <Button buttonType={ButtonTypes.submit} buttonText="Edit" />
-        </form>
-      </>
-    </PageWrapper>
+        </>
+      </FormWrapper>
+    </AdminWrapper>
   );
 }
 
