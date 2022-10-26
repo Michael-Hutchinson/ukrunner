@@ -27,7 +27,7 @@ export const getBlogTitles = (setTitles: (titles: string[]) => void) => {
 
 export const editBlog = (title: string, body: string, navigate: NavigateFunction, originalTitle: string) => {
   const newTitle = originalTitle.toLowerCase().replaceAll(' ', '-');
-  saveBlog(title, body, navigate, 'blog edited');
+  saveBlog(title.trim(), body, navigate, 'blog edited');
   deleteDoc(doc(db, 'blog', newTitle));
 };
 

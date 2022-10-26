@@ -48,8 +48,8 @@ function EditBlog() {
         onSubmit={(e) => {
           e.preventDefault();
           if (title) {
-            if (originalTitle === title) {
-              saveBlog(title, body || '', navigate, 'blog updated');
+            if (originalTitle.trim() === title.trim()) {
+              saveBlog(title.trim(), body || '', navigate, 'blog updated');
             } else {
               editBlog(title, body || '', navigate, originalTitle);
             }
@@ -74,7 +74,7 @@ function EditBlog() {
             value={title || ''}
             defaultValue={title}
             onChange={(e) => {
-              if (titles.includes(e.target.value.toLowerCase()) && originalTitle !== e.target.value) {
+              if (titles.includes(e.target.value.toLowerCase().trim()) && originalTitle !== e.target.value.trim()) {
                 setValidation(true);
               } else {
                 setValidation(false);
