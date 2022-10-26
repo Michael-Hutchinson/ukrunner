@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
-import Button, { ButtonTypes } from '../../../../components/shared/Button/Button';
+import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import PageTitles from '../../../../constants/PageTitles';
 import { getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
 import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
+import FormWrapper, { Icons } from '../../../../components/FormWrapper/FormWrapper';
 
 function CreateBlog() {
   const [title, setTitle] = useState('');
@@ -18,30 +19,41 @@ function CreateBlog() {
   const navigate = useNavigate();
   return (
     <AdminWrapper title={PageTitles.Admin} h1Text="Add New Blog Posts Here" smallText="Here you can add new blog posts">
-      <form
+      <FormWrapper
+        icon={Icons.Create}
+        headerText="Add a new blog post below"
         onSubmit={(e) => {
           e.preventDefault();
           saveBlog(title, body, navigate, 'blog created');
         }}
+        buttonType={ButtonTypes.submit}
+        buttonText="Create blog"
+        disabled={validation}
+        error={validation ? 'Title already exists!' : undefined}
       >
-        <input
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-            if (titles.includes(e.target.value.toLowerCase())) {
-              setValidation(true);
-            } else {
-              setValidation(false);
-            }
-          }}
-          type="text"
-          name="title"
-          required
-        />
-        <ReactQuillEditor value={body} onChange={setBody} />
-        <Button buttonType={ButtonTypes.submit} buttonText="Create Blog" disabled={validation} />
-        {validation && <Alert severity="error">Title already exists!</Alert>}
-      </form>
+        <>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="title"
+            label="Blog Title"
+            name="title"
+            type="text"
+            autoComplete="title"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (titles.includes(e.target.value.toLowerCase())) {
+                setValidation(true);
+              } else {
+                setValidation(false);
+              }
+            }}
+          />
+          <ReactQuillEditor value={body} onChange={setBody} placeholder="Blog body text" />
+        </>
+      </FormWrapper>
     </AdminWrapper>
   );
 }
