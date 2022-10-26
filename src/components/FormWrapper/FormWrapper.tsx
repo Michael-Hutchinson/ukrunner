@@ -2,11 +2,13 @@ import React, { FormEvent, ReactElement } from 'react';
 import Alert from '@mui/material/Alert';
 import PersonIcon from '@mui/icons-material/Person';
 import ModeIcon from '@mui/icons-material/Mode';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import Button, { ButtonTypes } from '../shared/Button/Button';
 import { FormBody, FormContainer, FormFooter, FormHeader } from './FormWrapper.styles';
 
 export const Icons = {
   User: <PersonIcon fontSize="small" />,
+  Create: <NewspaperIcon fontSize="small" />,
 };
 
 interface IFormWrapper {
