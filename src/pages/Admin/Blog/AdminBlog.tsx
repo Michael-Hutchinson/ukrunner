@@ -45,7 +45,7 @@ function AdminBlog() {
         <ul>
           {blogs?.map((blog) => (
             <li key={blog.title}>
-              <Link style={{ color: 'red' }} to={`/admin/blog/edit/${blog.title.replaceAll(' ', '-')}`}>
+              <Link style={{ color: 'red' }} to={`/admin/blog/edit/${blog.title.toLowerCase().replaceAll(' ', '-')}`}>
                 {blog.title}
               </Link>
             </li>

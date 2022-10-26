@@ -4,7 +4,7 @@ import { db } from '../../helpers/firebase';
 import { IBlog } from '../../types/Blog.types';
 
 export const saveBlog = (title: string, body: string, navigate: NavigateFunction, message: string) => {
-  const splitTitle = title.replaceAll(' ', '-');
+  const splitTitle = title.toLowerCase().replaceAll(' ', '-');
   const docData = {
     title,
     body,
