@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 interface IQuillProps {
@@ -9,7 +9,10 @@ interface IQuillProps {
 }
 
 function ReactQuillEditor({ value, onChange, placeholder }: IQuillProps) {
-  return <ReactQuill theme="snow" value={value} onChange={onChange} placeholder={placeholder} />;
+  const modules = {
+    toolbar: [[{ header: [2, 3, false] }], ['bold', 'italic', 'underline', 'blockquote'], ['link', 'image'], ['clean']],
+  };
+  return <ReactQuill theme="snow" value={value} onChange={onChange} modules={modules} placeholder={placeholder} />;
 }
 
 export default ReactQuillEditor;
