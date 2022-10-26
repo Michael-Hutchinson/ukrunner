@@ -24,7 +24,7 @@ function CreateBlog() {
         headerText="Add a new blog post below"
         onSubmit={(e) => {
           e.preventDefault();
-          saveBlog(title, body, navigate, 'blog created');
+          saveBlog(title.trim(), body, navigate, 'blog created');
         }}
         buttonType={ButtonTypes.submit}
         buttonText="Create blog"

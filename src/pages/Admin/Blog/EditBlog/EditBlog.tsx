@@ -48,8 +48,8 @@ function EditBlog() {
         onSubmit={(e) => {
           e.preventDefault();
           if (title) {
-            if (originalTitle === title) {
-              saveBlog(title, body || '', navigate, 'blog updated');
+            if (originalTitle.trim() === title.trim()) {
+              saveBlog(title.trim(), body || '', navigate, 'blog updated');
             } else {
               editBlog(title, body || '', navigate, originalTitle);
             }
