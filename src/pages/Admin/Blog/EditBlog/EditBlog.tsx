@@ -74,7 +74,7 @@ function EditBlog() {
             value={title || ''}
             defaultValue={title}
             onChange={(e) => {
-              if (titles.includes(e.target.value.toLowerCase()) && originalTitle !== e.target.value) {
+              if (titles.includes(e.target.value.toLowerCase().trim()) && originalTitle !== e.target.value.trim()) {
                 setValidation(true);
               } else {
                 setValidation(false);
