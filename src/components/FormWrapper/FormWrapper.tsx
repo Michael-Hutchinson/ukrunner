@@ -1,13 +1,14 @@
 import React, { FormEvent, ReactElement } from 'react';
 import Alert from '@mui/material/Alert';
-import { Container } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import ModeIcon from '@mui/icons-material/Mode';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import Button, { ButtonTypes } from '../shared/Button/Button';
 import { FormBody, FormContainer, FormFooter, FormHeader } from './FormWrapper.styles';
 
 export const Icons = {
   User: <PersonIcon fontSize="small" />,
+  Create: <NewspaperIcon fontSize="small" />,
 };
 
 interface IFormWrapper {
@@ -18,30 +19,40 @@ interface IFormWrapper {
   buttonText: string;
   error?: string;
   icon?: ReactElement;
+  disabled?: boolean;
+  fullWidth?: boolean;
 }
 
-function FormWrapper({ children, headerText, onSubmit, buttonType, buttonText, error, icon }: IFormWrapper) {
+function FormWrapper({
+  children,
+  headerText,
+  onSubmit,
+  buttonType,
+  buttonText,
+  error,
+  icon,
+  disabled,
+  fullWidth,
+}: IFormWrapper) {
   return (
-    <Container maxWidth="xs">
-      <FormContainer>
-        <FormHeader component="section">
-          <>
-            {icon || <ModeIcon fontSize="small" />}
-            <h4>{headerText}</h4>
-          </>
-        </FormHeader>
-        <FormBody component="form" onSubmit={onSubmit}>
-          {children}
-          <Button buttonType={buttonType} buttonText={buttonText} fullWidth />
-          {error && (
-            <Alert sx={{ mb: 2 }} severity="error">
-              {error}
-            </Alert>
-          )}
-        </FormBody>
-        <FormFooter />
-      </FormContainer>
-    </Container>
+    <FormContainer>
+      <FormHeader component="section">
+        <>
+          {icon || <ModeIcon fontSize="small" />}
+          <h4>{headerText}</h4>
+        </>
+      </FormHeader>
+      <FormBody component="form" onSubmit={onSubmit}>
+        {children}
+        <Button buttonType={buttonType} buttonText={buttonText} disabled={disabled} fullWidth={fullWidth} />
+        {error && (
+          <Alert sx={{ mb: 2 }} severity="error">
+            {error}
+          </Alert>
+        )}
+      </FormBody>
+      <FormFooter />
+    </FormContainer>
   );
 }
 

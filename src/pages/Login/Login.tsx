@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { Container } from '@mui/material';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
@@ -38,50 +39,53 @@ function Login() {
     <PageWrapper title={PageTitles.Login}>
       <>
         <Title h1Text="Login" smallText="Login to your UK Runner account here" />
-        <FormWrapper
-          icon={Icons.User}
-          headerText="Please Login below"
-          onSubmit={(e) => {
-            e.preventDefault();
-            signInWithEmailAndPassword(email, password);
-          }}
-          buttonType={ButtonTypes.submit}
-          buttonText="Sign in"
-          error={error ? ErrorMessages[error.code as keyof typeof ErrorMessages] : undefined}
-        >
-          <>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              type="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <FormControlLabel control={<Checkbox value="remember" />} label="Remember me" />
-          </>
-        </FormWrapper>
+        <Container maxWidth="xs">
+          <FormWrapper
+            icon={Icons.User}
+            headerText="Please Login below"
+            onSubmit={(e) => {
+              e.preventDefault();
+              signInWithEmailAndPassword(email, password);
+            }}
+            buttonType={ButtonTypes.submit}
+            buttonText="Sign in"
+            fullWidth
+            error={error ? ErrorMessages[error.code as keyof typeof ErrorMessages] : undefined}
+          >
+            <>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <FormControlLabel control={<Checkbox value="remember" />} label="Remember me" />
+            </>
+          </FormWrapper>
+        </Container>
       </>
     </PageWrapper>
   );
