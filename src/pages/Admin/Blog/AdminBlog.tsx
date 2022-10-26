@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import PageWrapper from '../../../components/PageWrapper/PageWrapper';
 import PageTitles from '../../../constants/PageTitles';
 import Title from '../../../components/shared/Title/Title';
-import Button from '../../../components/shared/Button/Button';
+import Button, { ButtonTypes } from '../../../components/shared/Button/Button';
 import { getBlogs } from '../../Blog/Blog.utils';
 import { IBlog } from '../../../types/Blog.types';
 
@@ -41,7 +41,11 @@ function AdminBlog() {
             {successMessage}
           </Alert>
         </Snackbar>
-        <Button buttonType="button" buttonText="Add New Post" onClick={() => navigate('/admin/blog/create')} />
+        <Button
+          buttonType={ButtonTypes.button}
+          buttonText="Add New Post"
+          onClick={() => navigate('/admin/blog/create')}
+        />
         <ul>
           {blogs?.map((blog) => (
             <li key={blog.title}>

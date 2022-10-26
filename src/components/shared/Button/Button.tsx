@@ -1,8 +1,14 @@
 import React from 'react';
 import Cta from './Button.styles';
 
+export enum ButtonTypes {
+  button = 'button',
+  submit = 'submit',
+  reset = 'reset',
+}
+
 interface IButtonProps {
-  buttonType: 'button' | 'submit' | 'reset';
+  buttonType: ButtonTypes;
   buttonText: string;
   onClick?: () => void;
   disabled?: boolean;
