@@ -59,6 +59,9 @@ function EditBlog() {
         buttonText="Edit"
         disabled={validation}
         error={validation ? 'Blog already has this title!' : undefined}
+        cancelClick={() => {
+          navigate('/admin/blog');
+        }}
       >
         <>
           <TextField

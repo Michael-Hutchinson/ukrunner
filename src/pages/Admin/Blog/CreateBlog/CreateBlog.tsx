@@ -30,12 +30,16 @@ function CreateBlog() {
         buttonText="Create blog"
         disabled={validation}
         error={validation ? 'Title already exists!' : undefined}
+        cancelClick={() => {
+          navigate('/admin/blog');
+        }}
       >
         <>
           <TextField
             margin="normal"
             required
             fullWidth
+            autoFocus
             id="title"
             label="Blog Title"
             name="title"
