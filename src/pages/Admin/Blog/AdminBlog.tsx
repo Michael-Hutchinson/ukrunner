@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 import Snackbar from '@mui/material/Snackbar';
+import { Grid, CardMedia, Typography } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import { Link, useNavigate } from 'react-router-dom';
-import PageWrapper from '../../../components/PageWrapper/PageWrapper';
+import { useNavigate } from 'react-router-dom';
 import PageTitles from '../../../constants/PageTitles';
-import Title from '../../../components/shared/Title/Title';
 import Button, { ButtonTypes } from '../../../components/shared/Button/Button';
 import { deleteBlog, getBlogs } from '../../../utils/Blog.utils';
 import { IBlog } from '../../../types/Blog.types';
+import AdminWrapper from '../../../components/AdminWrapper/AdminWrapper';
+import Icons from '../../../constants/Icons';
+import { BlogContent, ButtonSection, Section, Wrapper } from './AdminBlog.styles';
 
 function AdminBlog() {
   const navigate = useNavigate();
@@ -33,9 +36,12 @@ function AdminBlog() {
     }
   }, [success]);
   return (
-    <PageWrapper title={PageTitles.Admin}>
+    <AdminWrapper
+      h1Text="All News Posts"
+      smallText="All news posts can be viewed, edited and deleted here"
+      title={PageTitles.Admin}
+    >
       <>
-        <Title h1Text="All News Posts" smallText="All news posts can be viewed, edited and deleted here" />
         <Snackbar
           open={success}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -47,26 +53,46 @@ function AdminBlog() {
           </Alert>
         </Snackbar>
         <Button
+          margin
           buttonType={ButtonTypes.button}
           buttonText="Add New Post"
           onClick={() => navigate('/admin/blog/create')}
         />
-        <ul>
+        <Wrapper container spacing={2}>
           {blogs?.map((blog) => (
-            <li key={blog.title}>
-              <Link style={{ color: 'red' }} to={`/admin/blog/edit/${blog.title.toLowerCase().replaceAll(' ', '-')}`}>
-                {blog.title}
-              </Link>
-              <Button
-                buttonType={ButtonTypes.button}
-                buttonText="delete"
-                onClick={() => deleteBlog(blog.title.toLowerCase().replaceAll(' ', '-'), setSuccessMessage, setSuccess)}
-              />
-            </li>
+            <Grid item key={blog.title} xs={12} sm={6} md={6} lg={4}>
+              <Section>
+                {/* TODO - Add blog images when functionality is created */}
+                <CardMedia component="img" image="https://source.unsplash.com/random" alt="random" />
+                <BlogContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {blog.title}
+                  </Typography>
+                  <Typography>{parse(blog.body)}</Typography>
+                </BlogContent>
+                <ButtonSection>
+                  <Button icon={Icons.View} buttonType={ButtonTypes.button} />
+                  <Button
+                    icon={Icons.Edit}
+                    buttonType={ButtonTypes.button}
+                    onClick={() => {
+                      navigate(`/admin/blog/edit/${blog.title.toLowerCase().replaceAll(' ', '-')}`);
+                    }}
+                  />
+                  <Button
+                    icon={Icons.Delete}
+                    buttonType={ButtonTypes.button}
+                    onClick={() =>
+                      deleteBlog(blog.title.toLowerCase().replaceAll(' ', '-'), setSuccessMessage, setSuccess)
+                    }
+                  />
+                </ButtonSection>
+              </Section>
+            </Grid>
           ))}
-        </ul>
+        </Wrapper>
       </>
-    </PageWrapper>
+    </AdminWrapper>
   );
 }
 

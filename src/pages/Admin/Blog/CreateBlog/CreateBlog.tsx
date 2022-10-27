@@ -6,7 +6,8 @@ import PageTitles from '../../../../constants/PageTitles';
 import { getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
 import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
-import FormWrapper, { Icons } from '../../../../components/FormWrapper/FormWrapper';
+import FormWrapper from '../../../../components/FormWrapper/FormWrapper';
+import Icons from '../../../../constants/Icons';
 
 function CreateBlog() {
   const [title, setTitle] = useState('');

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
-import FormWrapper, { Icons } from '../../../../components/FormWrapper/FormWrapper';
+import FormWrapper from '../../../../components/FormWrapper/FormWrapper';
 import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import PageTitles from '../../../../constants/PageTitles';
 import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
+import Icons from '../../../../constants/Icons';
 
 function EditBlog() {
   const navigate = useNavigate();
