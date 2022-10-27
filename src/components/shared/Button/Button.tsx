@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Cta from './Button.styles';
 
 export enum ButtonTypes {
@@ -9,13 +9,14 @@ export enum ButtonTypes {
 
 interface IButtonProps {
   buttonType: ButtonTypes;
-  buttonText: string;
+  buttonText?: string;
+  icon?: ReactElement;
   onClick?: () => void;
   disabled?: boolean;
   fullWidth?: boolean;
 }
 
-function Button({ buttonType, buttonText, onClick, disabled, fullWidth }: IButtonProps) {
+function Button({ buttonType, buttonText, onClick, disabled, fullWidth, icon }: IButtonProps) {
   return (
     <Cta
       type={buttonType}
@@ -25,6 +26,7 @@ function Button({ buttonType, buttonText, onClick, disabled, fullWidth }: IButto
         if (onClick) onClick();
       }}
     >
+      {icon}
       {buttonText}
     </Cta>
   );
