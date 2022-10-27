@@ -58,6 +58,9 @@ export const GlobalStyle = createGlobalStyle`
     text-transform: uppercase;
     border-radius: 0;
   }
+  .ql-editor {
+    min-height: 200px;
+  }
 `;
 
 export default GlobalStyle;

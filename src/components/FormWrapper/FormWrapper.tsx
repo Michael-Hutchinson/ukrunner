@@ -5,7 +5,7 @@ import ModeIcon from '@mui/icons-material/Mode';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import EditIcon from '@mui/icons-material/Edit';
 import Button, { ButtonTypes } from '../shared/Button/Button';
-import { FormBody, FormContainer, FormFooter, FormHeader } from './FormWrapper.styles';
+import { ButtonSection, FormBody, FormContainer, FormFooter, FormHeader } from './FormWrapper.styles';
 
 export const Icons = {
   User: <PersonIcon fontSize="small" />,
@@ -23,6 +23,7 @@ interface IFormWrapper {
   icon?: ReactElement;
   disabled?: boolean;
   fullWidth?: boolean;
+  cancelClick?: () => void;
 }
 
 function FormWrapper({
@@ -35,6 +36,7 @@ function FormWrapper({
   icon,
   disabled,
   fullWidth,
+  cancelClick,
 }: IFormWrapper) {
   return (
     <FormContainer>
@@ -46,7 +48,12 @@ function FormWrapper({
       </FormHeader>
       <FormBody component="form" onSubmit={onSubmit}>
         {children}
-        <Button buttonType={buttonType} buttonText={buttonText} disabled={disabled} fullWidth={fullWidth} />
+        <ButtonSection>
+          {cancelClick && (
+            <Button onClick={cancelClick} buttonType={ButtonTypes.button} buttonText="Cancel" fullWidth={fullWidth} />
+          )}
+          <Button buttonType={buttonType} buttonText={buttonText} disabled={disabled} fullWidth={fullWidth} />
+        </ButtonSection>
         {error && (
           <Alert sx={{ mb: 2 }} severity="error">
             {error}
