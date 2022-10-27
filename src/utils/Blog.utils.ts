@@ -1,7 +1,7 @@
 import { doc, setDoc, Timestamp, collection, getDocs, deleteDoc, getDoc } from 'firebase/firestore';
 import { NavigateFunction } from 'react-router-dom';
-import { db } from '../../helpers/firebase';
-import { IBlog } from '../../types/Blog.types';
+import { db } from '../helpers/firebase';
+import { IBlog } from '../types/Blog.types';
 
 export const saveBlog = (title: string, body: string, navigate: NavigateFunction, message: string) => {
   const splitTitle = title.toLowerCase().replaceAll(' ', '-');
@@ -68,4 +68,18 @@ export const getBlogs = (setBlogs: (blog: IBlog[]) => void) => {
     });
     setBlogs(blogs);
   });
+};
+
+export const deleteBlog = (
+  title: string,
+  setSuccessMessage: (message: string) => void,
+  setSuccess: (success: boolean) => void,
+) => {
+  const alert = confirm('Are you sure you want to delete?');
+  if (alert) {
+    deleteDoc(doc(db, 'blog', title)).then(() => {
+      setSuccessMessage('Blog post deleted');
+      setSuccess(true);
+    });
+  }
 };
