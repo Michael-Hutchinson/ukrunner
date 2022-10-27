@@ -14,14 +14,16 @@ interface IButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   fullWidth?: boolean;
+  margin?: boolean;
 }
 
-function Button({ buttonType, buttonText, onClick, disabled, fullWidth, icon }: IButtonProps) {
+function Button({ buttonType, buttonText, onClick, disabled, fullWidth, icon, margin }: IButtonProps) {
   return (
     <Cta
       type={buttonType}
       disabled={disabled}
       fullWidth={fullWidth}
+      margin={margin}
       onClick={() => {
         if (onClick) onClick();
       }}

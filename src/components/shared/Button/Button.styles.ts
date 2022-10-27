@@ -1,7 +1,7 @@
-import { styled } from '@mui/material/styles';
+import { styled, css } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
-const Cta = styled(Button)`
+const Cta = styled(Button)<{ margin?: boolean }>`
   border: 2px solid #e9e9e9;
   margin-top: 0.938rem;
   margin-bottom: 0.938rem;
@@ -18,6 +18,12 @@ const Cta = styled(Button)`
     color: var(--white);
     background-color: var(--yellow);
   }
+  ${(props) =>
+    props.margin &&
+    css`
+      margin-top: 0;
+      margin-bottom: 0;
+    `}
 `;
 
 export default Cta;
