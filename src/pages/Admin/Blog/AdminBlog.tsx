@@ -6,7 +6,7 @@ import PageWrapper from '../../../components/PageWrapper/PageWrapper';
 import PageTitles from '../../../constants/PageTitles';
 import Title from '../../../components/shared/Title/Title';
 import Button, { ButtonTypes } from '../../../components/shared/Button/Button';
-import { getBlogs } from '../../Blog/Blog.utils';
+import { deleteBlog, getBlogs } from '../../../utils/Blog.utils';
 import { IBlog } from '../../../types/Blog.types';
 
 function AdminBlog() {
@@ -27,6 +27,11 @@ function AdminBlog() {
     }
     getBlogs(setBlogs);
   }, []);
+  useEffect(() => {
+    if (success) {
+      getBlogs(setBlogs);
+    }
+  }, [success]);
   return (
     <PageWrapper title={PageTitles.Admin}>
       <>
@@ -52,6 +57,11 @@ function AdminBlog() {
               <Link style={{ color: 'red' }} to={`/admin/blog/edit/${blog.title.toLowerCase().replaceAll(' ', '-')}`}>
                 {blog.title}
               </Link>
+              <Button
+                buttonType={ButtonTypes.button}
+                buttonText="delete"
+                onClick={() => deleteBlog(blog.title.toLowerCase().replaceAll(' ', '-'), setSuccessMessage, setSuccess)}
+              />
             </li>
           ))}
         </ul>
