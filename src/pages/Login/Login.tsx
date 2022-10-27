@@ -11,7 +11,8 @@ import { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';
 import { firebase } from '../../helpers/firebase';
-import FormWrapper, { Icons } from '../../components/FormWrapper/FormWrapper';
+import FormWrapper from '../../components/FormWrapper/FormWrapper';
+import Icons from '../../constants/Icons';
 
 enum ErrorMessages {
   'auth/wrong-password' = 'You have entered the wrong password',
