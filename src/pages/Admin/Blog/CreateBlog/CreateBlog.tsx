@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import PageTitles from '../../../../constants/PageTitles';
-import { getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
+import { getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
 import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
 import FormWrapper, { Icons } from '../../../../components/FormWrapper/FormWrapper';

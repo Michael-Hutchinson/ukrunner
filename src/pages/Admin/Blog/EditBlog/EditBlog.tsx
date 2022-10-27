@@ -6,7 +6,7 @@ import FormWrapper, { Icons } from '../../../../components/FormWrapper/FormWrapp
 import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import PageTitles from '../../../../constants/PageTitles';
-import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../Blog/Blog.utils';
+import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
 
 function EditBlog() {
   const navigate = useNavigate();
