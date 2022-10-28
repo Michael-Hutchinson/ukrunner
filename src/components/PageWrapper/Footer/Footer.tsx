@@ -1,8 +1,9 @@
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import EngineeringIcon from '@mui/icons-material/Engineering';
+
 import Title from '../../shared/Title/Title';
-import { PageFooter, Bottom, List, Icon } from './Footer.styles';
+import { Bottom, Icon, List, PageFooter } from './Footer.styles';
 
 function Footer() {
   return (

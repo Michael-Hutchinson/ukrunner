@@ -1,5 +1,6 @@
-import React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
+import React from 'react';
+
 import { Input, Label, Links, MobileLinks, Nav } from './Navbar.styles';
 
 function Navbar() {

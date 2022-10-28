@@ -1,17 +1,18 @@
-import React from 'react';
-import { Divider, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import HomeIcon from '@mui/icons-material/Home';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import StarIcon from '@mui/icons-material/Star';
-import EventIcon from '@mui/icons-material/Event';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import TimelineIcon from '@mui/icons-material/Timeline';
+import EventIcon from '@mui/icons-material/Event';
+import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Side from './Sidebar.styles';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import StarIcon from '@mui/icons-material/Star';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import { Divider, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
+import { signOut } from 'firebase/auth';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { auth } from '../../../helpers/firebase';
+import Side from './Sidebar.styles';
 
 function Sidebar() {
   return (

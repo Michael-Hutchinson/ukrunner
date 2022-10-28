@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import parse from 'html-react-parser';
-import Snackbar from '@mui/material/Snackbar';
-import { Grid, CardMedia, Typography } from '@mui/material';
+import { CardMedia, Grid, Typography } from '@mui/material';
 import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import parse from 'html-react-parser';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PageTitles from '../../../constants/PageTitles';
-import Button, { ButtonTypes } from '../../../components/shared/Button/Button';
-import { deleteBlog, getBlogs } from '../../../utils/Blog.utils';
-import { IBlog } from '../../../types/Blog.types';
+
 import AdminWrapper from '../../../components/AdminWrapper/AdminWrapper';
+import Button, { ButtonTypes } from '../../../components/shared/Button/Button';
 import Icons from '../../../constants/Icons';
+import PageTitles from '../../../constants/PageTitles';
+import { IBlog } from '../../../types/Blog.types';
+import { deleteBlog, getBlogs } from '../../../utils/Blog.utils';
 import { BlogContent, ButtonSection, Section, Wrapper } from './AdminBlog.styles';
 
 function AdminBlog() {

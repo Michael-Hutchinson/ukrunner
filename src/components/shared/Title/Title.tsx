@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Section, SubHeading } from './Title.styles';
 
 interface ITitleProps {

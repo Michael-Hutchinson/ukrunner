@@ -1,8 +1,8 @@
-import { styled } from '@mui/material/styles';
-import CardActions from '@mui/material/CardActions';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
 
 export const ButtonSection = styled(CardActions)`
   justify-content: space-evenly;

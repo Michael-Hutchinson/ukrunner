@@ -1,5 +1,6 @@
-import { doc, setDoc, Timestamp, collection, getDocs, deleteDoc, getDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, Timestamp } from 'firebase/firestore';
 import { NavigateFunction } from 'react-router-dom';
+
 import { db } from '../helpers/firebase';
 import { IBlog } from '../types/Blog.types';
 

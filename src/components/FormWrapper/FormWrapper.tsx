@@ -1,6 +1,7 @@
-import React, { FormEvent, ReactElement } from 'react';
-import Alert from '@mui/material/Alert';
 import ModeIcon from '@mui/icons-material/Mode';
+import Alert from '@mui/material/Alert';
+import React, { FormEvent, ReactElement } from 'react';
+
 import Button, { ButtonTypes } from '../shared/Button/Button';
 import { ButtonSection, FormBody, FormContainer, FormFooter, FormHeader } from './FormWrapper.styles';
 

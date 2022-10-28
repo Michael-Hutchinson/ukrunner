@@ -1,22 +1,23 @@
-import React from 'react';
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { User } from 'firebase/auth';
-import About from '../pages/About/About';
-import Home from '../pages/Home/Home';
-import Blog from '../pages/Blog/Blog';
-import Race from '../pages/Race/Race';
-import Training from '../pages/Training/Training';
-import Events from '../pages/Events/Events';
-import Shop from '../pages/Shop/Shop';
-import Contact from '../pages/Contact/Contact';
-import PageNotFound from '../pages/PageNotFound/PageNotFound';
-import Login from '../pages/Login/Login';
+import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+
 import { auth } from '../helpers/firebase';
+import About from '../pages/About/About';
 import Admin from '../pages/Admin/Admin';
-import CreateBlog from '../pages/Admin/Blog/CreateBlog/CreateBlog';
 import AdminBlog from '../pages/Admin/Blog/AdminBlog';
+import CreateBlog from '../pages/Admin/Blog/CreateBlog/CreateBlog';
 import EditBlog from '../pages/Admin/Blog/EditBlog/EditBlog';
+import Blog from '../pages/Blog/Blog';
+import Contact from '../pages/Contact/Contact';
+import Events from '../pages/Events/Events';
+import Home from '../pages/Home/Home';
+import Login from '../pages/Login/Login';
+import PageNotFound from '../pages/PageNotFound/PageNotFound';
+import Race from '../pages/Race/Race';
+import Shop from '../pages/Shop/Shop';
+import Training from '../pages/Training/Training';
 
 interface Error {
   cause?: unknown;

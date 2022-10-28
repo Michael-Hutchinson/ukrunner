@@ -1,7 +1,8 @@
-import React from 'react';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import React from 'react';
+
 import { IconWrapper, Section, Text } from './Header.styles';
 
 function Header() {

@@ -1,6 +1,7 @@
 import React from 'react';
-import PageTitles from '../../constants/PageTitles';
+
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
+import PageTitles from '../../constants/PageTitles';
 
 function Admin() {
   return (

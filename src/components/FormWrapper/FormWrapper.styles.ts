@@ -1,6 +1,6 @@
+import Box from '@mui/material/Box';
 import { styled as muistyled } from '@mui/material/styles';
 import styled from 'styled-components';
-import Box from '@mui/material/Box';
 
 export const FormContainer = muistyled(Box)`
   margin-bottom: 20px;

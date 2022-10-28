@@ -1,18 +1,19 @@
+import { Container } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import TextField from '@mui/material/TextField';
+import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { Container } from '@mui/material';
+
+import FormWrapper from '../../components/FormWrapper/FormWrapper';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
+import Icons from '../../constants/Icons';
 import PageTitles from '../../constants/PageTitles';
 import { firebase } from '../../helpers/firebase';
-import FormWrapper from '../../components/FormWrapper/FormWrapper';
-import Icons from '../../constants/Icons';
 
 enum ErrorMessages {
   'auth/wrong-password' = 'You have entered the wrong password',

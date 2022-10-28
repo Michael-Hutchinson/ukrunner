@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, NavLink, ImageBox, Section, Caption, Heading, SubHeading } from './ImageGrid.styles';
+
+import { Caption, Heading, Image, ImageBox, NavLink, Section, SubHeading } from './ImageGrid.styles';
 
 function ImageGrid() {
   return (
