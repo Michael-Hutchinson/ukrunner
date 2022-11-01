@@ -33,7 +33,7 @@ function Blog() {
         <Title h1Text="Blog" smallText="Keep up to date with my blog and all things happening in my life here" />
         <Container>
           <Grid container spacing={2}>
-            <Grid item md={8}>
+            <Grid item md={8} sm={12} xs={12}>
               {blogs?.map((blog) => (
                 <BlogCard key={blog.title}>
                   <ImageCard component="img" image="https://source.unsplash.com/random" alt="random" />
@@ -50,7 +50,7 @@ function Blog() {
                 </BlogCard>
               ))}
             </Grid>
-            <Grid item md={4}>
+            <Grid item md={4} sm={12} xs={12}>
               <FormContainer>
                 <FormHeader component="section">
                   <SearchIcon fontSize="small" /> <h4>Search</h4>
