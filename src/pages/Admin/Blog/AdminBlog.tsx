@@ -54,7 +54,7 @@ function AdminBlog() {
           </Alert>
         </Snackbar>
         <Button
-          margin
+          margin="inherit"
           buttonType={ButtonTypes.button}
           buttonText="Add New Post"
           onClick={() => navigate('/admin/blog/create')}
@@ -69,7 +69,7 @@ function AdminBlog() {
                   <Typography gutterBottom variant="h5" component="h2">
                     {blog.title}
                   </Typography>
-                  <Typography>{parse(blog.body)}</Typography>
+                  {parse(blog.body)}
                 </BlogContent>
                 <ButtonSection>
                   <Button icon={Icons.View} buttonType={ButtonTypes.button} />

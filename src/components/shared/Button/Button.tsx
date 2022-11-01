@@ -15,7 +15,7 @@ interface IButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   fullWidth?: boolean;
-  margin?: boolean;
+  margin?: string;
 }
 
 function Button({ buttonType, buttonText, onClick, disabled, fullWidth, icon, margin }: IButtonProps) {

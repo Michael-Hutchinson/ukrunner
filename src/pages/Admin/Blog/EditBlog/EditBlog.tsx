@@ -1,3 +1,9 @@
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,7 +14,7 @@ import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import Icons from '../../../../constants/Icons';
 import PageTitles from '../../../../constants/PageTitles';
-import { editBlog, getBlog, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
+import { editBlog, getBlog, getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
 
 function EditBlog() {
   const navigate = useNavigate();
@@ -18,9 +24,18 @@ function EditBlog() {
   const [originalTitle, setOriginalTitle] = useState('');
   const [title, setTitle] = useState<string>();
   const [body, setBody] = useState<string>();
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [validation, setValidation] = useState(false);
+  const handleChange = (event: SelectChangeEvent<typeof selectedCategories>) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCategories(typeof value === 'string' ? value.split(',') : value);
+  };
   useEffect(() => {
     getBlogTitles(setTitles);
+    getBlogCategories(setCategories);
   }, []);
   useEffect(() => {
     if (slug) {
@@ -36,7 +51,7 @@ function EditBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(slug, setTitle, setBody, setOriginalTitle);
+      getBlog(slug, setTitle, setBody, setSelectedCategories, setOriginalTitle);
     }
     if (valid === false) {
       navigate('/admin/blog');
@@ -51,9 +66,9 @@ function EditBlog() {
           e.preventDefault();
           if (title) {
             if (originalTitle.trim() === title.trim()) {
-              saveBlog(title.trim(), body || '', navigate, 'blog updated');
+              saveBlog(title.trim(), body || '', selectedCategories, navigate, 'blog updated');
             } else {
-              editBlog(title, body || '', navigate, originalTitle);
+              editBlog(title, body || '', selectedCategories, navigate, originalTitle);
             }
           }
         }}
@@ -88,6 +103,31 @@ function EditBlog() {
             }}
           />
           <ReactQuillEditor value={body} onChange={setBody} />
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="select-label">Categories</InputLabel>
+            <Select
+              labelId="select-label"
+              id="select"
+              multiple
+              defaultValue={selectedCategories || []}
+              value={selectedCategories || []}
+              onChange={handleChange}
+              renderValue={(selected) => selected.join(', ')}
+              label="Categories"
+            >
+              {categories.map((cat) => {
+                if (cat !== 'all') {
+                  return (
+                    <MenuItem key={cat} value={cat}>
+                      <Checkbox checked={selectedCategories?.indexOf(cat) > -1} />
+                      <ListItemText primary={cat} />
+                    </MenuItem>
+                  );
+                }
+                return null;
+              })}
+            </Select>
+          </FormControl>
         </>
       </FormWrapper>
     </AdminWrapper>

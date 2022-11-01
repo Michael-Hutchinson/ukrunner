@@ -4,11 +4,18 @@ import { NavigateFunction } from 'react-router-dom';
 import { db } from '../helpers/firebase';
 import { IBlog } from '../types/Blog.types';
 
-export const saveBlog = (title: string, body: string, navigate: NavigateFunction, message: string) => {
+export const saveBlog = (
+  title: string,
+  body: string,
+  categories: string[],
+  navigate: NavigateFunction,
+  message: string,
+) => {
   const splitTitle = title.toLowerCase().replaceAll(' ', '-');
   const docData = {
     title,
     body,
+    categories,
     date: Timestamp.fromDate(new Date()),
   };
   setDoc(doc(db, 'blog', splitTitle), docData).then(() => {
@@ -26,9 +33,15 @@ export const getBlogTitles = (setTitles: (titles: string[]) => void) => {
   });
 };
 
-export const editBlog = (title: string, body: string, navigate: NavigateFunction, originalTitle: string) => {
+export const editBlog = (
+  title: string,
+  body: string,
+  categories: string[],
+  navigate: NavigateFunction,
+  originalTitle: string,
+) => {
   const newTitle = originalTitle.toLowerCase().replaceAll(' ', '-');
-  saveBlog(title.trim(), body, navigate, 'blog edited');
+  saveBlog(title.trim(), body, categories, navigate, 'blog edited');
   deleteDoc(doc(db, 'blog', newTitle));
 };
 
@@ -36,6 +49,7 @@ export const getBlog = (
   blogID: string,
   setTitle: (title: string) => void,
   setBody: (body: string) => void,
+  setCategories?: (categories: string[]) => void,
   setOriginalTitle?: (originalTitle: string) => void,
   setDate?: (date: string) => void,
 ) => {
@@ -45,6 +59,9 @@ export const getBlog = (
       const blogData = response.data();
       setTitle(blogData?.title);
       setBody(blogData?.body);
+      if (setCategories) {
+        setCategories(blogData?.categories);
+      }
       if (setOriginalTitle) {
         setOriginalTitle(blogData?.title);
       }
@@ -86,9 +103,9 @@ export const deleteBlog = (
   }
 };
 
-export const getBlogCategories = (setCategory: (category: string[]) => void) => {
+export const getBlogCategories = (setCategories: (categories: string[]) => void) => {
   getDoc(doc(db, 'blog_options', 'categories')).then((response) => {
-    const category: string[] = response.data()?.categories;
-    setCategory(category);
+    const categories: string[] = response.data()?.categories;
+    setCategories(categories);
   });
 };
