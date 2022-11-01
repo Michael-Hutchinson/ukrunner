@@ -25,8 +25,10 @@ import {
 function Blog() {
   const [blogs, setBlogs] = useState<IBlog[]>();
   const [category, setCategory] = useState<string[]>([]);
+  const [search, setSearch] = useState('');
   const [filters, setFilters] = useState('all');
   const [filteredBlogs, setFilteredBlogs] = useState<IBlog[]>();
+  const results = filteredBlogs?.filter((blog) => blog.title.toLowerCase().includes(search.toLowerCase()));
   useEffect(() => {
     getBlogs(setBlogs);
     getBlogCategories(setCategory);
@@ -49,7 +51,7 @@ function Blog() {
         <Container>
           <Grid container spacing={2}>
             <Grid item md={8} sm={12} xs={12}>
-              {filteredBlogs?.map((blog) => (
+              {results?.map((blog) => (
                 <BlogCard key={blog.title}>
                   <ImageCard component="img" image="https://source.unsplash.com/random" alt="random" />
                   <CardContent>
@@ -71,7 +73,16 @@ function Blog() {
                   <SearchIcon fontSize="small" /> <h4>Search</h4>
                 </FormHeader>
                 <FormBody>
-                  <TextField id="search" fullWidth type="search" label="Search blog..." />
+                  <TextField
+                    id="search"
+                    fullWidth
+                    type="search"
+                    label="Search blog..."
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
+                  />
                 </FormBody>
                 <FormFooter />
               </FormContainer>
