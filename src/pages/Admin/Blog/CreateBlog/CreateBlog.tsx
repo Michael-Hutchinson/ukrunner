@@ -1,3 +1,9 @@
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,15 +14,24 @@ import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import Icons from '../../../../constants/Icons';
 import PageTitles from '../../../../constants/PageTitles';
-import { getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
+import { getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
 
 function CreateBlog() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [titles, setTitles] = useState<string[]>([]);
   const [validation, setValidation] = useState(false);
+  const handleChange = (event: SelectChangeEvent<typeof selectedCategories>) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCategories(typeof value === 'string' ? value.split(',') : value);
+  };
   useEffect(() => {
     getBlogTitles(setTitles);
+    getBlogCategories(setCategories);
   }, []);
   const navigate = useNavigate();
   return (
@@ -26,7 +41,7 @@ function CreateBlog() {
         headerText="Add a new blog post below"
         onSubmit={(e) => {
           e.preventDefault();
-          saveBlog(title.trim(), body, navigate, 'blog created');
+          saveBlog(title.trim(), body, selectedCategories, navigate, 'blog created');
         }}
         buttonType={ButtonTypes.submit}
         buttonText="Create blog"
@@ -58,6 +73,31 @@ function CreateBlog() {
             }}
           />
           <ReactQuillEditor value={body} onChange={setBody} placeholder="Blog body text" />
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="select-label">Categories</InputLabel>
+            <Select
+              labelId="select-label"
+              id="select"
+              multiple
+              defaultValue={selectedCategories}
+              value={selectedCategories}
+              onChange={handleChange}
+              renderValue={(selected) => selected.join(', ')}
+              label="Categories"
+            >
+              {categories.map((cat) => {
+                if (cat !== 'all') {
+                  return (
+                    <MenuItem key={cat} value={cat}>
+                      <Checkbox checked={selectedCategories.indexOf(cat) > -1} />
+                      <ListItemText primary={cat} />
+                    </MenuItem>
+                  );
+                }
+                return null;
+              })}
+            </Select>
+          </FormControl>
         </>
       </FormWrapper>
     </AdminWrapper>
