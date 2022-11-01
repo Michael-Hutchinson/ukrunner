@@ -1,4 +1,7 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import SearchIcon from '@mui/icons-material/Search';
+import { CardContent, Container, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
 
@@ -8,6 +11,16 @@ import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';
 import { IBlog } from '../../types/Blog.types';
 import { getBlogs } from '../../utils/Blog.utils';
+import {
+  BlogCard,
+  BlogFooter,
+  FooterText,
+  FormBody,
+  FormContainer,
+  FormFooter,
+  FormHeader,
+  ImageCard,
+} from './Blog.styles';
 
 function Blog() {
   const [blogs, setBlogs] = useState<IBlog[]>();
@@ -18,32 +31,54 @@ function Blog() {
     <PageWrapper title={PageTitles.Blog}>
       <>
         <Title h1Text="Blog" smallText="Keep up to date with my blog and all things happening in my life here" />
-        {blogs?.map((blog) => (
-          <Grid key={blog.title} item xs={12} md={6}>
-            <CardActionArea component="a" href="#">
-              <Card sx={{ display: 'flex', flexDirection: 'column' }}>
-                <CardMedia
-                  component="img"
-                  sx={{ height: 160, display: { xs: 'none', sm: 'block' } }}
-                  image="https://source.unsplash.com/random"
-                  alt="random"
-                />
-                <CardContent sx={{ flex: 1 }}>
-                  <Typography component="h2" variant="h5">
-                    {blog.title}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {blog.date.toDate().toDateString()}
-                  </Typography>
-                  <Typography variant="subtitle1" paragraph>
+        <Container>
+          <Grid container spacing={2}>
+            <Grid item md={8}>
+              {blogs?.map((blog) => (
+                <BlogCard key={blog.title}>
+                  <ImageCard component="img" image="https://source.unsplash.com/random" alt="random" />
+                  <CardContent>
+                    <Typography component="h2" variant="h5">
+                      {blog.title}
+                    </Typography>
                     {parse(blog.body)}
-                  </Typography>
-                  <Button buttonType={ButtonTypes.button} buttonText="Read More" />
-                </CardContent>
-              </Card>
-            </CardActionArea>
+                    <Button buttonType={ButtonTypes.button} buttonText="Read More" />
+                  </CardContent>
+                  <BlogFooter>
+                    <FooterText component="p">Last updated on {blog.date.toDate().toDateString()}.</FooterText>
+                  </BlogFooter>
+                </BlogCard>
+              ))}
+            </Grid>
+            <Grid item md={4}>
+              <FormContainer>
+                <FormHeader component="section">
+                  <SearchIcon fontSize="small" /> <h4>Search</h4>
+                </FormHeader>
+                <FormBody>
+                  <TextField id="search" fullWidth type="search" label="Search blog..." />
+                </FormBody>
+                <FormFooter />
+              </FormContainer>
+              <FormContainer>
+                <FormHeader component="section">
+                  <InventoryIcon fontSize="small" /> <h4>Categories</h4>
+                </FormHeader>
+                <FormBody>
+                  <FormControl fullWidth>
+                    <InputLabel id="select-label">Categories</InputLabel>
+                    <Select labelId="select-label" id="select" label="Categories">
+                      <MenuItem value={10}>Running</MenuItem>
+                      <MenuItem value={20}>Fitness</MenuItem>
+                      <MenuItem value={30}>Races</MenuItem>
+                    </Select>
+                  </FormControl>
+                </FormBody>
+                <FormFooter />
+              </FormContainer>
+            </Grid>
           </Grid>
-        ))}
+        </Container>
       </>
     </PageWrapper>
   );
