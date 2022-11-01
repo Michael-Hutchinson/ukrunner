@@ -1,7 +1,7 @@
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import EditIcon from '@mui/icons-material/Edit';
-import PersonIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const Icons = {

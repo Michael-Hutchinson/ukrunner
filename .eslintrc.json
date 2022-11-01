@@ -20,7 +20,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["simple-import-sort", "react", "@typescript-eslint", "prettier"],
   "rules": {
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
@@ -29,6 +29,8 @@
     "import/no-named-as-default": "off",
     "react/button-has-type": "off",
     "react/require-default-props": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "no-restricted-globals": "off",
     "no-alert": "off"
   }

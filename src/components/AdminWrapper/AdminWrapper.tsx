@@ -1,5 +1,6 @@
 import { Container, Grid } from '@mui/material';
 import React, { ReactElement } from 'react';
+
 import PageWrapper from '../PageWrapper/PageWrapper';
 import Title from '../shared/Title/Title';
 import Sidebar from './Sidebar/Sidebar';
@@ -16,7 +17,7 @@ function AdminWrapper({ children, h1Text, smallText, title }: IAdminWrapperProps
     <PageWrapper title={title}>
       <>
         <Title h1Text={h1Text} smallText={smallText} />
-        <Container maxWidth="xl">
+        <Container>
           <Grid container spacing={2}>
             <Grid item lg={3} md={4} xs={12}>
               <Sidebar />

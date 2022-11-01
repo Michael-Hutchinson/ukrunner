@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 import GlobalStyle from './App.styles';
 import PageTitles from './constants/PageTitles';
 import RouteHandler from './routes/Routes';

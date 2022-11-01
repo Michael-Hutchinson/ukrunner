@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+
 import Cta from './Button.styles';
 
 export enum ButtonTypes {

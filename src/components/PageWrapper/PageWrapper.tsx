@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Navbar from './Navbar/Navbar';
-import Header from './Header/Header';
+
 import Footer from './Footer/Footer';
+import Header from './Header/Header';
+import Navbar from './Navbar/Navbar';
 
 interface IPageWrapperProps {
   title: string;

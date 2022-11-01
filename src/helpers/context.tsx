@@ -1,4 +1,5 @@
 import React, { createContext, ReactElement, useEffect, useMemo, useState } from 'react';
+
 import { getAccessToken } from './api';
 import { ActivityData, AthleteData } from './strava';
 
