@@ -9,7 +9,7 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button, { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';
-import { IBlog, IBlogCategory } from '../../types/Blog.types';
+import { IBlog } from '../../types/Blog.types';
 import { getBlogCategories, getBlogs } from '../../utils/Blog.utils';
 import {
   BlogCard,
@@ -24,11 +24,24 @@ import {
 
 function Blog() {
   const [blogs, setBlogs] = useState<IBlog[]>();
-  const [category, setCategory] = useState<IBlogCategory[]>([]);
+  const [category, setCategory] = useState<string[]>([]);
+  const [filters, setFilters] = useState('all');
+  const [filteredBlogs, setFilteredBlogs] = useState<IBlog[]>();
   useEffect(() => {
     getBlogs(setBlogs);
     getBlogCategories(setCategory);
   }, []);
+  useEffect(() => {
+    setFilteredBlogs(blogs);
+  }, [blogs]);
+  useEffect(() => {
+    if (filters === 'all') {
+      setFilteredBlogs(blogs);
+    } else {
+      const filtered = blogs?.filter((blog) => blog.categories?.includes(filters));
+      setFilteredBlogs(filtered);
+    }
+  }, [blogs, filters]);
   return (
     <PageWrapper title={PageTitles.Blog}>
       <>
@@ -36,7 +49,7 @@ function Blog() {
         <Container>
           <Grid container spacing={2}>
             <Grid item md={8} sm={12} xs={12}>
-              {blogs?.map((blog) => (
+              {filteredBlogs?.map((blog) => (
                 <BlogCard key={blog.title}>
                   <ImageCard component="img" image="https://source.unsplash.com/random" alt="random" />
                   <CardContent>
@@ -69,10 +82,19 @@ function Blog() {
                 <FormBody>
                   <FormControl fullWidth>
                     <InputLabel id="select-label">Categories</InputLabel>
-                    <Select labelId="select-label" id="select" defaultValue="" label="Categories">
-                      {category?.map((cat) => (
-                        <MenuItem key={cat.id} value={cat.id}>
-                          {cat.value}
+                    <Select
+                      labelId="select-label"
+                      id="select"
+                      defaultValue={filters}
+                      value={filters}
+                      onChange={(e) => {
+                        setFilters(e.target.value);
+                      }}
+                      label="Categories"
+                    >
+                      {category.map((cat) => (
+                        <MenuItem key={cat} value={cat}>
+                          {cat}
                         </MenuItem>
                       ))}
                     </Select>

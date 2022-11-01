@@ -2,7 +2,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, Timestamp } from '
 import { NavigateFunction } from 'react-router-dom';
 
 import { db } from '../helpers/firebase';
-import { IBlog, IBlogCategory } from '../types/Blog.types';
+import { IBlog } from '../types/Blog.types';
 
 export const saveBlog = (title: string, body: string, navigate: NavigateFunction, message: string) => {
   const splitTitle = title.toLowerCase().replaceAll(' ', '-');
@@ -64,6 +64,7 @@ export const getBlogs = (setBlogs: (blog: IBlog[]) => void) => {
         title: singleBlog?.title,
         body: singleBlog?.body,
         date: singleBlog?.date,
+        categories: singleBlog?.categories,
       };
       blogs.push(blogData);
     });
@@ -85,16 +86,9 @@ export const deleteBlog = (
   }
 };
 
-export const getBlogCategories = (setCategory: (category: IBlogCategory[]) => void) => {
-  getDocs(collection(db, 'blog_category')).then((response) => {
-    const category: IBlogCategory[] = [];
-    response.forEach((docs) => {
-      const blogCategory = {
-        id: docs.data().id,
-        value: docs.data().value,
-      };
-      category.push(blogCategory);
-    });
+export const getBlogCategories = (setCategory: (category: string[]) => void) => {
+  getDoc(doc(db, 'blog_options', 'categories')).then((response) => {
+    const category: string[] = response.data()?.categories;
     setCategory(category);
   });
 };

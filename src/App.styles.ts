@@ -3,7 +3,6 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
   :root {
     --black: #000000;
     --white: #FFFFFF;
