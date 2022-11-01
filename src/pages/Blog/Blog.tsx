@@ -9,8 +9,8 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button, { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';
-import { IBlog } from '../../types/Blog.types';
-import { getBlogs } from '../../utils/Blog.utils';
+import { IBlog, IBlogCategory } from '../../types/Blog.types';
+import { getBlogCategories, getBlogs } from '../../utils/Blog.utils';
 import {
   BlogCard,
   BlogFooter,
@@ -24,8 +24,10 @@ import {
 
 function Blog() {
   const [blogs, setBlogs] = useState<IBlog[]>();
+  const [category, setCategory] = useState<IBlogCategory[]>([]);
   useEffect(() => {
     getBlogs(setBlogs);
+    getBlogCategories(setCategory);
   }, []);
   return (
     <PageWrapper title={PageTitles.Blog}>
@@ -67,10 +69,12 @@ function Blog() {
                 <FormBody>
                   <FormControl fullWidth>
                     <InputLabel id="select-label">Categories</InputLabel>
-                    <Select labelId="select-label" id="select" label="Categories">
-                      <MenuItem value={10}>Running</MenuItem>
-                      <MenuItem value={20}>Fitness</MenuItem>
-                      <MenuItem value={30}>Races</MenuItem>
+                    <Select labelId="select-label" id="select" defaultValue="" label="Categories">
+                      {category?.map((cat) => (
+                        <MenuItem key={cat.id} value={cat.id}>
+                          {cat.value}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </FormBody>
