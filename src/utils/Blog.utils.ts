@@ -64,6 +64,7 @@ export const getBlogs = (setBlogs: (blog: IBlog[]) => void) => {
         title: singleBlog?.title,
         body: singleBlog?.body,
         date: singleBlog?.date,
+        categories: singleBlog?.categories,
       };
       blogs.push(blogData);
     });
