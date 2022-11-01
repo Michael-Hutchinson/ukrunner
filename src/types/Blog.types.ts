@@ -9,3 +9,8 @@ export interface IBlog {
   body: string;
   date: Date;
 }
+
+export interface IBlogCategory {
+  id: number;
+  value: string;
+}
