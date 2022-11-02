@@ -24,6 +24,9 @@ function EditBlog() {
   const [originalTitle, setOriginalTitle] = useState('');
   const [title, setTitle] = useState<string>();
   const [body, setBody] = useState<string>();
+  const [fileName, setFileName] = useState<string>();
+  const [file, setFile] = useState<File>();
+  const [imageURL, setImageURL] = useState<string>();
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [validation, setValidation] = useState(false);
@@ -51,7 +54,7 @@ function EditBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(slug, setTitle, setBody, setSelectedCategories, setOriginalTitle);
+      getBlog(slug, setTitle, setBody, setSelectedCategories, setOriginalTitle, setImageURL, setFileName);
     }
     if (valid === false) {
       navigate('/admin/blog');
@@ -66,9 +69,29 @@ function EditBlog() {
           e.preventDefault();
           if (title) {
             if (originalTitle.trim() === title.trim()) {
-              saveBlog(title.trim(), body || '', selectedCategories, navigate, 'blog updated');
+              saveBlog({
+                title: title.trim(),
+                body: body || '',
+                categories: selectedCategories,
+                navigate,
+                message: 'blog updated',
+                file,
+                fileName: `images/${slug}/${file?.name}`,
+                originalImageURL: imageURL,
+                originalFileName: fileName,
+              });
             } else {
-              editBlog(title, body || '', selectedCategories, navigate, originalTitle);
+              editBlog({
+                title,
+                body: body || '',
+                categories: selectedCategories,
+                navigate,
+                originalTitle,
+                file,
+                fileName: `images/${slug}/${file?.name}`,
+                originalImageURL: imageURL,
+                originalFileName: fileName,
+              });
             }
           }
         }}
@@ -101,6 +124,17 @@ function EditBlog() {
               }
               setTitle(e.target.value);
             }}
+          />
+          <img alt={fileName} src={imageURL} />
+          <input
+            type="file"
+            onChange={(e) => {
+              const { files } = e.target;
+              if (files) {
+                setFile(files[0]);
+              }
+            }}
+            accept=""
           />
           <ReactQuillEditor value={body} onChange={setBody} />
           <FormControl fullWidth margin="normal">
