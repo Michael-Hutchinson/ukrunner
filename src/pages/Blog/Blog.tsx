@@ -53,7 +53,7 @@ function Blog() {
             <Grid item md={8} sm={12} xs={12}>
               {results?.map((blog) => (
                 <BlogCard key={blog.title}>
-                  <ImageCard component="img" image="https://source.unsplash.com/random" alt="random" />
+                  <ImageCard component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
                   <CardContent>
                     <Typography component="h2" variant="h5">
                       {blog.title}
