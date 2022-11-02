@@ -42,7 +42,15 @@ function CreateBlog() {
         headerText="Add a new blog post below"
         onSubmit={(e) => {
           e.preventDefault();
-          saveBlog(title.trim(), body, selectedCategories, navigate, 'blog created', file, `images/${file?.name}`);
+          saveBlog({
+            title: title.trim(),
+            body,
+            categories: selectedCategories,
+            navigate,
+            message: 'blog created',
+            file,
+            fileName: `images/${title.replaceAll(' ', '-').trim().toLowerCase()}/${file?.name}`,
+          });
         }}
         buttonType={ButtonTypes.submit}
         buttonText="Create blog"
