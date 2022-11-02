@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 declare global {
   export interface Date {
     toDate: () => Date;
@@ -7,6 +9,8 @@ declare global {
 export interface IBlog {
   title: string;
   body: string;
-  date: Date;
+  date: Timestamp;
   categories: string[];
+  image?: string;
+  fileName?: string;
 }
