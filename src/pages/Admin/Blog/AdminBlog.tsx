@@ -84,7 +84,12 @@ function AdminBlog() {
                     icon={Icons.Delete}
                     buttonType={ButtonTypes.button}
                     onClick={() =>
-                      deleteBlog(blog.title.toLowerCase().replaceAll(' ', '-'), setSuccessMessage, setSuccess)
+                      deleteBlog(
+                        blog.title.toLowerCase().replaceAll(' ', '-'),
+                        setSuccessMessage,
+                        setSuccess,
+                        blog.fileName,
+                      )
                     }
                   />
                 </ButtonSection>
