@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage, ref } from 'firebase/storage';
+import { getStorage } from 'firebase/storage';
 
 const apiKey = import.meta.env.VITE_APIKEY;
 const authDomain = import.meta.env.VITE_AUTHDOMAIN;
@@ -28,4 +28,3 @@ export const auth = getAuth(firebase);
 export const database = getDatabase(firebase);
 export const db = getFirestore(firebase);
 export const storage = getStorage(firebase);
-export const blogImageRef = ref(storage, 'images');
