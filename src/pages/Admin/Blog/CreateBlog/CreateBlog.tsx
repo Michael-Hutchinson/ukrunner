@@ -19,6 +19,7 @@ import { getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Bl
 function CreateBlog() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [file, setFile] = useState<File | undefined>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [titles, setTitles] = useState<string[]>([]);
@@ -41,7 +42,7 @@ function CreateBlog() {
         headerText="Add a new blog post below"
         onSubmit={(e) => {
           e.preventDefault();
-          saveBlog(title.trim(), body, selectedCategories, navigate, 'blog created');
+          saveBlog(title.trim(), body, selectedCategories, navigate, 'blog created', file, `images/${file?.name}`);
         }}
         buttonType={ButtonTypes.submit}
         buttonText="Create blog"
@@ -71,6 +72,16 @@ function CreateBlog() {
                 setValidation(false);
               }
             }}
+          />
+          <input
+            type="file"
+            onChange={(e) => {
+              const { files } = e.target;
+              if (files) {
+                setFile(files[0]);
+              }
+            }}
+            accept=""
           />
           <ReactQuillEditor value={body} onChange={setBody} placeholder="Blog body text" />
           <FormControl fullWidth margin="normal">
