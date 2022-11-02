@@ -64,7 +64,7 @@ function AdminBlog() {
             <Grid item key={blog.title} xs={12} sm={6} md={6} lg={4}>
               <Section>
                 {/* TODO - Add blog images when functionality is created */}
-                <CardMedia component="img" image="https://source.unsplash.com/random" alt="random" />
+                <CardMedia component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
                 <BlogContent>
                   <Typography gutterBottom variant="h5" component="h2">
                     {blog.title}
@@ -84,7 +84,12 @@ function AdminBlog() {
                     icon={Icons.Delete}
                     buttonType={ButtonTypes.button}
                     onClick={() =>
-                      deleteBlog(blog.title.toLowerCase().replaceAll(' ', '-'), setSuccessMessage, setSuccess)
+                      deleteBlog(
+                        blog.title.toLowerCase().replaceAll(' ', '-'),
+                        setSuccessMessage,
+                        setSuccess,
+                        blog.fileName,
+                      )
                     }
                   />
                 </ButtonSection>

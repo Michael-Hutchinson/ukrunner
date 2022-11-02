@@ -1,26 +1,58 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, Timestamp } from 'firebase/firestore';
-import { NavigateFunction } from 'react-router-dom';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-import { db } from '../helpers/firebase';
-import { IBlog } from '../types/Blog.types';
+import { db, storage } from '../helpers/firebase';
+import { IBlog, IEditBlog, ISaveBlog } from '../types/Blog.types';
 
-export const saveBlog = (
-  title: string,
-  body: string,
-  categories: string[],
-  navigate: NavigateFunction,
-  message: string,
-) => {
+export const saveBlog = ({
+  title,
+  body,
+  categories,
+  navigate,
+  message,
+  file,
+  fileName,
+  originalImageURL,
+  originalFileName,
+}: ISaveBlog) => {
   const splitTitle = title.toLowerCase().replaceAll(' ', '-');
-  const docData = {
+  let docData: IBlog = {
     title,
     body,
     categories,
     date: Timestamp.fromDate(new Date()),
   };
-  setDoc(doc(db, 'blog', splitTitle), docData).then(() => {
-    navigate(`/admin/blog?success=true&message=${message}`);
-  });
+  if (file && fileName) {
+    const blogImageRef = ref(storage, fileName);
+    uploadBytes(blogImageRef, file).then(() => {
+      getDownloadURL(blogImageRef).then((imageURL) => {
+        docData = {
+          ...docData,
+          fileName,
+          image: imageURL,
+        };
+        if (originalFileName && originalImageURL) {
+          const deleteRef = ref(storage, originalFileName);
+          deleteObject(deleteRef);
+        }
+        setDoc(doc(db, 'blog', splitTitle), docData).then(() => {
+          navigate(`/admin/blog?success=true&message=${message}`);
+        });
+      });
+    });
+  } else {
+    docData = {
+      title,
+      body,
+      categories,
+      date: Timestamp.fromDate(new Date()),
+      fileName: originalFileName,
+      image: originalImageURL,
+    };
+    setDoc(doc(db, 'blog', splitTitle), docData).then(() => {
+      navigate(`/admin/blog?success=true&message=${message}`);
+    });
+  }
 };
 
 export const getBlogTitles = (setTitles: (titles: string[]) => void) => {
@@ -33,15 +65,29 @@ export const getBlogTitles = (setTitles: (titles: string[]) => void) => {
   });
 };
 
-export const editBlog = (
-  title: string,
-  body: string,
-  categories: string[],
-  navigate: NavigateFunction,
-  originalTitle: string,
-) => {
-  const newTitle = originalTitle.toLowerCase().replaceAll(' ', '-');
-  saveBlog(title.trim(), body, categories, navigate, 'blog edited');
+export const editBlog = ({
+  title,
+  body,
+  categories,
+  navigate,
+  originalTitle,
+  file,
+  fileName,
+  originalImageURL,
+  originalFileName,
+}: IEditBlog) => {
+  const newTitle = originalTitle?.toLowerCase().replaceAll(' ', '-');
+  saveBlog({
+    title: title.trim(),
+    body,
+    categories,
+    navigate,
+    message: 'blog edited',
+    file,
+    fileName,
+    originalImageURL,
+    originalFileName,
+  });
   deleteDoc(doc(db, 'blog', newTitle));
 };
 
@@ -51,6 +97,8 @@ export const getBlog = (
   setBody: (body: string) => void,
   setCategories?: (categories: string[]) => void,
   setOriginalTitle?: (originalTitle: string) => void,
+  setImageURL?: (imageURL: string) => void,
+  setFileName?: (fileName: string) => void,
   setDate?: (date: string) => void,
 ) => {
   const docRef = doc(db, 'blog', blogID);
@@ -64,6 +112,12 @@ export const getBlog = (
       }
       if (setOriginalTitle) {
         setOriginalTitle(blogData?.title);
+      }
+      if (setImageURL) {
+        setImageURL(blogData?.image);
+      }
+      if (setFileName) {
+        setFileName(blogData?.fileName);
       }
       if (setDate) {
         setDate(blogData?.date);
@@ -82,6 +136,8 @@ export const getBlogs = (setBlogs: (blog: IBlog[]) => void) => {
         body: singleBlog?.body,
         date: singleBlog?.date,
         categories: singleBlog?.categories,
+        image: singleBlog?.image,
+        fileName: singleBlog?.fileName,
       };
       blogs.push(blogData);
     });
@@ -93,6 +149,7 @@ export const deleteBlog = (
   title: string,
   setSuccessMessage: (message: string) => void,
   setSuccess: (success: boolean) => void,
+  fileName?: string,
 ) => {
   const alert = confirm('Are you sure you want to delete?');
   if (alert) {
@@ -100,6 +157,10 @@ export const deleteBlog = (
       setSuccessMessage('Blog post deleted');
       setSuccess(true);
     });
+    if (fileName) {
+      const deleteRef = ref(storage, fileName);
+      deleteObject(deleteRef);
+    }
   }
 };
 
