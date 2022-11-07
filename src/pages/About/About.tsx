@@ -1,13 +1,17 @@
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';
+import { StravaContext } from '../../helpers/context';
 import { Img, Section } from './About.styles';
 
 function About() {
+  const statsData = useContext(StravaContext);
+  const averageMovingTime =
+    (statsData?.stats?.all_run_totals.moving_time || 0) / (statsData?.stats?.all_run_totals.count || 0) / 60;
   return (
     <PageWrapper title={PageTitles.About}>
       <>
@@ -37,7 +41,9 @@ function About() {
           </Container>
         </Section>
         <section>
-          <p>hello</p>
+          <p>Stats</p>
+          <p>{statsData?.stats?.all_run_totals.count}</p>
+          <p>{averageMovingTime.toFixed(2)} minutes</p>
         </section>
       </>
     </PageWrapper>
