@@ -2,7 +2,7 @@ import { ActivityData, AthleteData, StatsData } from './strava';
 
 const clientID = import.meta.env.VITE_CLIENTID;
 const clientSecret = import.meta.env.VITE_CLIENTSECRET;
-const callActivities = `https://www.strava.com/api/v3/athlete/activities?per_page=200&access_token=`;
+const callActivities = `https://www.strava.com/api/v3/athlete/activities?per_page=30&access_token=`;
 const callStats = `https://www.strava.com/api/v3/athletes/7944495/stats?access_token=`;
 const callAthlete = 'https://www.strava.com/api/v3/athlete?access_token=';
 
