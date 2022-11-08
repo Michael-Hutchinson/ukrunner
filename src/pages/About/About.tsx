@@ -28,7 +28,7 @@ function About() {
         <Section>
           <Container>
             <Grid container spacing={2}>
-              <GridText item xs={7}>
+              <GridText item md={7} xs={12}>
                 <h2>Hello everyone! I&apos;m Michael, an incredibly average runner based in Manchester, UK.</h2>
                 <p>
                   If you want to know more just email me at michael@ukrunner.com or use the contact form found on the
@@ -43,7 +43,7 @@ function About() {
                   contact page.
                 </p>
               </GridText>
-              <Grid item xs={5}>
+              <Grid item md={5} xs={12}>
                 <Img alt="" src="./src/images/about.png" />
               </Grid>
             </Grid>
