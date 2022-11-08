@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import React, { useContext, useState } from 'react';
@@ -23,13 +23,19 @@ import {
 function About() {
   const statsData = useContext(StravaContext);
   const data = statsData?.stats;
-  const averageMovingTime = (data?.all_run_totals.moving_time || 0) / (data?.all_run_totals.count || 0) / 60;
   const runningActivities = data?.all_run_totals?.count || 0;
   const runningDistance = (data?.all_run_totals.distance || 0) / 1000;
-  const averageDistance = runningDistance / runningActivities;
-  const movingTime = (data?.all_run_totals.moving_time || 0) / 60;
-  const averagePace = movingTime / runningDistance;
-  const cyclingActivities = data?.all_ride_totals?.count;
+  const runMovingTime = (data?.all_run_totals.moving_time || 0) / 60;
+  const averageRunMovingTime = runMovingTime / runningActivities;
+  const averageRunDistance = runningDistance / runningActivities;
+  const averageRunPace = runMovingTime / runningDistance;
+  const cyclingActivities = data?.all_ride_totals?.count || 0;
+  const cyclingDistance = (data?.all_ride_totals.distance || 0) / 1000;
+  const cyclingMovingTime = (data?.all_ride_totals.moving_time || 0) / 60;
+  const averageCyclingMovingTime = cyclingMovingTime / cyclingActivities;
+  const averageCyclingDistance = cyclingDistance / cyclingActivities;
+  const longestRide = (data?.biggest_ride_distance || 0) / 1000;
+  const biggestClimb = data?.biggest_climb_elevation_gain || 0;
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -88,28 +94,63 @@ function About() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={4}>
                       <GridBox>
-                        <GridHeader>{averageMovingTime.toFixed(2).replace('.', ':')}</GridHeader>
+                        <GridHeader>{averageRunMovingTime.toFixed(2).replace('.', ':')}</GridHeader>
                         <GridSubHeader>Average moving time</GridSubHeader>
                       </GridBox>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={4}>
                       <GridBox>
-                        <GridHeader>{averageDistance.toFixed(2)}km</GridHeader>
+                        <GridHeader>{averageRunDistance.toFixed(2)}km</GridHeader>
                         <GridSubHeader>Average distance</GridSubHeader>
                       </GridBox>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={4}>
                       <GridBox>
-                        <GridHeader>{averagePace.toFixed(2)}min/km</GridHeader>
+                        <GridHeader>{averageRunPace.toFixed(2)}min/km</GridHeader>
                         <GridSubHeader>Average pace</GridSubHeader>
                       </GridBox>
                     </Grid>
                   </Grid>
                 )}
                 {value === 1 && (
-                  <GridBox>
-                    <Typography>{cyclingActivities}</Typography>
-                  </GridBox>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                      <GridBox>
+                        <GridHeader>{cyclingActivities}</GridHeader>
+                        <GridSubHeader>Total rides</GridSubHeader>
+                      </GridBox>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                      <GridBox>
+                        <GridHeader>{cyclingDistance.toFixed(0)}km</GridHeader>
+                        <GridSubHeader>Total distance</GridSubHeader>
+                      </GridBox>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                      <GridBox>
+                        <GridHeader>{averageCyclingMovingTime.toFixed(2).replace('.', ':')}</GridHeader>
+                        <GridSubHeader>Average moving time</GridSubHeader>
+                      </GridBox>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                      <GridBox>
+                        <GridHeader>{averageCyclingDistance.toFixed(2)}km</GridHeader>
+                        <GridSubHeader>Average distance</GridSubHeader>
+                      </GridBox>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                      <GridBox>
+                        <GridHeader>{longestRide.toFixed(0)}km</GridHeader>
+                        <GridSubHeader>Longest Ride</GridSubHeader>
+                      </GridBox>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                      <GridBox>
+                        <GridHeader>{biggestClimb.toFixed(0)}m</GridHeader>
+                        <GridSubHeader>Biggest Climb</GridSubHeader>
+                      </GridBox>
+                    </Grid>
+                  </Grid>
                 )}
               </Grid>
             </Box>
