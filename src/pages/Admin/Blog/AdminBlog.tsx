@@ -67,9 +67,9 @@ function AdminBlog() {
                 <CardMedia component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
                 <BlogContent>
                   <Typography gutterBottom variant="h5" component="h2">
-                    {blog.title}
+                    {blog.title.substring(0, 50)}
                   </Typography>
-                  {parse(blog.body)}
+                  {parse(`${blog.body.substring(0, 400)}...`)}
                 </BlogContent>
                 <ButtonSection>
                   <Button icon={Icons.View} buttonType={ButtonTypes.button} />
