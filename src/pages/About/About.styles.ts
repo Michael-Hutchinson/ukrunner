@@ -1,3 +1,4 @@
+import Grid from '@mui/material/Grid';
 import { styled as MUIStyled } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -33,4 +34,10 @@ export const ParentTab = MUIStyled(Tabs)`
   span {
     background-color: 2px solid var(--yellow);
   }
+`;
+
+export const GridText = MUIStyled(Grid)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
