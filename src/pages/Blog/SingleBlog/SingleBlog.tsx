@@ -1,3 +1,4 @@
+import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -11,7 +12,7 @@ function SingleBlog() {
   const [titles, setTitles] = useState<string[]>([]);
   const [valid, setValid] = useState<boolean | null>(null);
   const [title, setTitle] = useState<string>();
-  const [body, setBody] = useState<string>();
+  const [body, setBody] = useState<string>('');
   useEffect(() => {
     getBlogTitles(setTitles);
   }, []);
@@ -39,7 +40,7 @@ function SingleBlog() {
     <PageWrapper title={PageTitles.Blog}>
       <>
         <h1>{title}</h1>
-        <h2>{body}</h2>
+        {parse(body)}
       </>
     </PageWrapper>
   );
