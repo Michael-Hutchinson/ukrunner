@@ -6,7 +6,7 @@ function ImageGrid() {
   return (
     <Section>
       <ImageBox>
-        <NavLink id="news" to="/news">
+        <NavLink id="news" to="/blog">
           <Image alt="" src="./src/images/homepage/news.png" />
           <Caption>
             <Heading>Latest News</Heading>
