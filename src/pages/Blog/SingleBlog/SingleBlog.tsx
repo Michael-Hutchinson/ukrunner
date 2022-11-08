@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import PageWrapper from '../../../components/PageWrapper/PageWrapper';
+import Title from '../../../components/shared/Title/Title';
 import PageTitles from '../../../constants/PageTitles';
 import { getBlog, getBlogTitles } from '../../../utils/Blog.utils';
 
@@ -13,6 +14,7 @@ function SingleBlog() {
   const [valid, setValid] = useState<boolean | null>(null);
   const [title, setTitle] = useState<string>();
   const [body, setBody] = useState<string>('');
+  const [imageURL, setImageURL] = useState<string>();
   useEffect(() => {
     getBlogTitles(setTitles);
   }, []);
@@ -30,7 +32,7 @@ function SingleBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(slug, setTitle, setBody);
+      getBlog(slug, setTitle, setBody, setImageURL);
     }
     if (valid === false) {
       navigate('/blog');
@@ -39,7 +41,8 @@ function SingleBlog() {
   return (
     <PageWrapper title={PageTitles.Blog}>
       <>
-        <h1>{title}</h1>
+        <Title h1Text={title} smallText="Read the post below" />
+        <img src={imageURL} alt="placeholder" />
         {parse(body)}
       </>
     </PageWrapper>

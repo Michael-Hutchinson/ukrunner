@@ -95,9 +95,9 @@ export const getBlog = (
   blogID: string,
   setTitle: (title: string) => void,
   setBody: (body: string) => void,
+  setImageURL?: (imageURL: string) => void,
   setCategories?: (categories: string[]) => void,
   setOriginalTitle?: (originalTitle: string) => void,
-  setImageURL?: (imageURL: string) => void,
   setFileName?: (fileName: string) => void,
   setDate?: (date: string) => void,
 ) => {
@@ -107,14 +107,14 @@ export const getBlog = (
       const blogData = response.data();
       setTitle(blogData?.title);
       setBody(blogData?.body);
+      if (setImageURL) {
+        setImageURL(blogData?.image);
+      }
       if (setCategories) {
         setCategories(blogData?.categories);
       }
       if (setOriginalTitle) {
         setOriginalTitle(blogData?.title);
-      }
-      if (setImageURL) {
-        setImageURL(blogData?.image);
       }
       if (setFileName) {
         setFileName(blogData?.fileName);
