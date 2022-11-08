@@ -4,6 +4,7 @@ import { CardContent, Container, FormControl, Grid, InputLabel, MenuItem, Select
 import TextField from '@mui/material/TextField';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button, { ButtonTypes } from '../../components/shared/Button/Button';
@@ -23,6 +24,7 @@ import {
 } from './Blog.styles';
 
 function Blog() {
+  const navigate = useNavigate();
   const [blogs, setBlogs] = useState<IBlog[]>();
   const [category, setCategory] = useState<string[]>([]);
   const [search, setSearch] = useState('');
@@ -59,7 +61,13 @@ function Blog() {
                       {blog.title}
                     </Typography>
                     {parse(blog.body)}
-                    <Button buttonType={ButtonTypes.button} buttonText="Read More" />
+                    <Button
+                      buttonType={ButtonTypes.button}
+                      buttonText="Read More"
+                      onClick={() => {
+                        navigate(`/blog/${blog.title.toLowerCase().replaceAll(' ', '-')}`);
+                      }}
+                    />
                   </CardContent>
                   <BlogFooter>
                     <FooterText component="p">Last updated on {blog.date.toDate().toDateString()}.</FooterText>
