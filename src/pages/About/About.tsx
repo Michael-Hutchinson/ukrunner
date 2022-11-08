@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Tabs from '@mui/material/Tabs';
 import React, { useContext, useState } from 'react';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
@@ -9,7 +8,7 @@ import Title from '../../components/shared/Title/Title';
 import Icons from '../../constants/Icons';
 import PageTitles from '../../constants/PageTitles';
 import { StravaContext } from '../../helpers/context';
-import { ButtonTab, Img, Section, StatsSection } from './About.styles';
+import { ButtonTab, Img, ParentTab, Section, StatsSection } from './About.styles';
 
 function About() {
   const statsData = useContext(StravaContext);
@@ -58,7 +57,7 @@ function About() {
             <p>Total Rides: {data?.all_ride_totals.count}</p> */}
             <p>{averageMovingTime.toFixed(2)} minutes</p>
             <Box sx={{ display: 'flex' }}>
-              <Tabs
+              <ParentTab
                 value={value}
                 onChange={handleChange}
                 orientation="vertical"
@@ -66,7 +65,7 @@ function About() {
               >
                 <ButtonTab icon={Icons.Run} iconPosition="start" label="Running" />
                 <ButtonTab icon={Icons.Bike} iconPosition="start" label="Cycling" />
-              </Tabs>
+              </ParentTab>
               <Box sx={{ margin: 2 }}>
                 {value === 0 && (
                   <Box>

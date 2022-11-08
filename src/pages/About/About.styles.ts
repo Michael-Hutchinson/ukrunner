@@ -1,5 +1,6 @@
 import { styled as MUIStyled } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import styled from 'styled-components';
 
 export const Img = styled.img`
@@ -22,7 +23,14 @@ export const ButtonTab = MUIStyled(Tab)`
   padding-left: 0;
   &.Mui-selected {
     color: var(--yellow);
-    border-right: 2px solid var(--yellow);
-    z-index: 1;
+    span {
+      border-right: 2px solid var(--yellow);
+    }
+  }
+`;
+
+export const ParentTab = MUIStyled(Tabs)`
+  span {
+    background-color: 2px solid var(--yellow);
   }
 `;
