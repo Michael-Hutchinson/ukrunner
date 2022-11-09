@@ -89,7 +89,7 @@ function CreateBlog() {
                 setFile(files[0]);
               }
             }}
-            accept=""
+            accept="image/*"
           />
           <ReactQuillEditor value={body} onChange={setBody} placeholder="Blog body text" />
           <FormControl fullWidth margin="normal">
