@@ -5,7 +5,7 @@ import { styled as MUIStyled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 export const ImageCard = MUIStyled(CardMedia)({
-  height: '160px',
+  height: '350px',
 }) as typeof CardMedia;
 
 export const BlogFooter = MUIStyled(Box)`
