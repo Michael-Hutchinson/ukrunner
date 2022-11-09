@@ -134,7 +134,7 @@ function EditBlog() {
                 setFile(files[0]);
               }
             }}
-            accept=""
+            accept="image/*"
           />
           <ReactQuillEditor value={body} onChange={setBody} />
           <FormControl fullWidth margin="normal">
