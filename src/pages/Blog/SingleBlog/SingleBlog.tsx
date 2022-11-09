@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,6 +16,7 @@ function SingleBlog() {
   const [title, setTitle] = useState<string>();
   const [body, setBody] = useState<string>('');
   const [imageURL, setImageURL] = useState<string>();
+  const [date, setDate] = useState<Timestamp>();
   useEffect(() => {
     getBlogTitles(setTitles);
   }, []);
@@ -32,7 +34,7 @@ function SingleBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(slug, setTitle, setBody, setImageURL);
+      getBlog(slug, setTitle, setBody, setImageURL, undefined, undefined, undefined, setDate);
     }
     if (valid === false) {
       navigate('/blog');
@@ -42,6 +44,7 @@ function SingleBlog() {
     <PageWrapper title={PageTitles.Blog}>
       <>
         <Title h1Text={title} smallText="Read the post below" />
+        <p>{date?.toDate().toDateString()}</p>
         <img src={imageURL} alt="placeholder" />
         {parse(body)}
       </>
