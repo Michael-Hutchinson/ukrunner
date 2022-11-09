@@ -1,8 +1,10 @@
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
+import Chip from '@mui/material/Chip';
 import { styled as MUIStyled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import styled from 'styled-components';
 
 export const ImageCard = MUIStyled(CardMedia)({
   height: '350px',
@@ -53,4 +55,17 @@ export const FormFooter = MUIStyled(Box)`
   padding: 10px 0;
   border-top: 1px solid #ddd;
   background-color: #f5f5f5;
+`;
+
+export const ChipParent = styled.div`
+  position: absolute;
+`;
+
+export const ChipStyle = MUIStyled(Chip)`
+  background-color: #000000;
+  margin: 5px;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFFFFF;
 `;

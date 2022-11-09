@@ -15,6 +15,8 @@ import { getBlogCategories, getBlogs } from '../../utils/Blog.utils';
 import {
   BlogCard,
   BlogFooter,
+  ChipParent,
+  ChipStyle,
   FooterText,
   FormBody,
   FormContainer,
@@ -55,12 +57,17 @@ function Blog() {
             <Grid item md={8} sm={12} xs={12}>
               {results?.map((blog) => (
                 <BlogCard key={blog.title}>
+                  <ChipParent>
+                    {blog.categories.map((cat) => (
+                      <ChipStyle key={cat} label={cat} />
+                    ))}
+                  </ChipParent>
                   <ImageCard component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
                   <CardContent>
                     <Typography component="h2" variant="h5">
                       {blog.title}
                     </Typography>
-                    {parse(blog.body)}
+                    {parse(`${blog.body.substring(0, 400)}...`)}
                     <Button
                       buttonType={ButtonTypes.button}
                       buttonText="Read More"
