@@ -72,7 +72,13 @@ function AdminBlog() {
                   {parse(`${blog.body.substring(0, 400)}...`)}
                 </BlogContent>
                 <ButtonSection>
-                  <Button icon={Icons.View} buttonType={ButtonTypes.button} />
+                  <Button
+                    icon={Icons.View}
+                    buttonType={ButtonTypes.button}
+                    onClick={() => {
+                      navigate(`/blog/${blog.title.toLowerCase().replaceAll(' ', '-')}`);
+                    }}
+                  />
                   <Button
                     icon={Icons.Edit}
                     buttonType={ButtonTypes.button}
