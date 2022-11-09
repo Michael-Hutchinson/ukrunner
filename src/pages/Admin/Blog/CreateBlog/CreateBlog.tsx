@@ -15,6 +15,7 @@ import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import Icons from '../../../../constants/Icons';
 import PageTitles from '../../../../constants/PageTitles';
 import { getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
+import FileInput from './CreateBlog.styles';
 
 function CreateBlog() {
   const [title, setTitle] = useState('');
@@ -81,7 +82,7 @@ function CreateBlog() {
               }
             }}
           />
-          <input
+          <FileInput
             type="file"
             onChange={(e) => {
               const { files } = e.target;
