@@ -1,4 +1,4 @@
-import { CardMedia, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import parse from 'html-react-parser';
@@ -11,7 +11,7 @@ import Icons from '../../../constants/Icons';
 import PageTitles from '../../../constants/PageTitles';
 import { IBlog } from '../../../types/Blog.types';
 import { deleteBlog, getBlogs } from '../../../utils/Blog.utils';
-import { BlogContent, ButtonSection, Section, Wrapper } from './AdminBlog.styles';
+import { BlogContent, ButtonSection, ChipParent, ChipStyle, Image, Section, Wrapper } from './AdminBlog.styles';
 
 function AdminBlog() {
   const navigate = useNavigate();
@@ -63,16 +63,26 @@ function AdminBlog() {
           {blogs?.map((blog) => (
             <Grid item key={blog.title} xs={12} sm={6} md={6} lg={4}>
               <Section>
-                {/* TODO - Add blog images when functionality is created */}
-                <CardMedia component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
+                <ChipParent>
+                  {blog.categories.map((cat) => (
+                    <ChipStyle key={cat} label={cat} />
+                  ))}
+                </ChipParent>
+                <Image component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
                 <BlogContent>
                   <Typography gutterBottom variant="h5" component="h2">
-                    {blog.title}
+                    {blog.title.substring(0, 50)}
                   </Typography>
-                  {parse(blog.body)}
+                  {parse(`${blog.body.substring(0, 400)}...`)}
                 </BlogContent>
                 <ButtonSection>
-                  <Button icon={Icons.View} buttonType={ButtonTypes.button} />
+                  <Button
+                    icon={Icons.View}
+                    buttonType={ButtonTypes.button}
+                    onClick={() => {
+                      navigate(`/blog/${blog.title.toLowerCase().replaceAll(' ', '-')}`);
+                    }}
+                  />
                   <Button
                     icon={Icons.Edit}
                     buttonType={ButtonTypes.button}

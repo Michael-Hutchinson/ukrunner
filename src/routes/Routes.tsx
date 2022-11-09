@@ -10,6 +10,7 @@ import AdminBlog from '../pages/Admin/Blog/AdminBlog';
 import CreateBlog from '../pages/Admin/Blog/CreateBlog/CreateBlog';
 import EditBlog from '../pages/Admin/Blog/EditBlog/EditBlog';
 import Blog from '../pages/Blog/Blog';
+import SingleBlog from '../pages/Blog/SingleBlog/SingleBlog';
 import Contact from '../pages/Contact/Contact';
 import Events from '../pages/Events/Events';
 import Home from '../pages/Home/Home';
@@ -56,6 +57,7 @@ function RouteHandler() {
       <Route path="/" element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<SingleBlog />} />
       <Route path="/race" element={<Race />} />
       <Route path="/training" element={<Training />} />
       <Route path="/events" element={<Events />} />

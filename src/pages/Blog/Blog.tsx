@@ -4,6 +4,7 @@ import { CardContent, Container, FormControl, Grid, InputLabel, MenuItem, Select
 import TextField from '@mui/material/TextField';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button, { ButtonTypes } from '../../components/shared/Button/Button';
@@ -14,6 +15,8 @@ import { getBlogCategories, getBlogs } from '../../utils/Blog.utils';
 import {
   BlogCard,
   BlogFooter,
+  ChipParent,
+  ChipStyle,
   FooterText,
   FormBody,
   FormContainer,
@@ -23,6 +26,7 @@ import {
 } from './Blog.styles';
 
 function Blog() {
+  const navigate = useNavigate();
   const [blogs, setBlogs] = useState<IBlog[]>();
   const [category, setCategory] = useState<string[]>([]);
   const [search, setSearch] = useState('');
@@ -53,13 +57,24 @@ function Blog() {
             <Grid item md={8} sm={12} xs={12}>
               {results?.map((blog) => (
                 <BlogCard key={blog.title}>
+                  <ChipParent>
+                    {blog.categories.map((cat) => (
+                      <ChipStyle key={cat} label={cat} />
+                    ))}
+                  </ChipParent>
                   <ImageCard component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
                   <CardContent>
                     <Typography component="h2" variant="h5">
                       {blog.title}
                     </Typography>
-                    {parse(blog.body)}
-                    <Button buttonType={ButtonTypes.button} buttonText="Read More" />
+                    {parse(`${blog.body.substring(0, 400)}...`)}
+                    <Button
+                      buttonType={ButtonTypes.button}
+                      buttonText="Read More"
+                      onClick={() => {
+                        navigate(`/blog/${blog.title.toLowerCase().replaceAll(' ', '-')}`);
+                      }}
+                    />
                   </CardContent>
                   <BlogFooter>
                     <FooterText component="p">Last updated on {blog.date.toDate().toDateString()}.</FooterText>
