@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import { Timestamp } from 'firebase/firestore';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
@@ -7,6 +8,7 @@ import PageWrapper from '../../../components/PageWrapper/PageWrapper';
 import Title from '../../../components/shared/Title/Title';
 import PageTitles from '../../../constants/PageTitles';
 import { getBlog, getBlogTitles } from '../../../utils/Blog.utils';
+import Image from './SingleBlog.styles';
 
 function SingleBlog() {
   const navigate = useNavigate();
@@ -44,9 +46,11 @@ function SingleBlog() {
     <PageWrapper title={PageTitles.Blog}>
       <>
         <Title h1Text={title} smallText="Read the post below" />
-        <p>{date?.toDate().toDateString()}</p>
-        <img src={imageURL} alt="placeholder" />
-        {parse(body)}
+        <Container>
+          <p>{date?.toDate().toDateString()}</p>
+          <Image src={imageURL} alt="placeholder" />
+          {parse(body)}
+        </Container>
       </>
     </PageWrapper>
   );
