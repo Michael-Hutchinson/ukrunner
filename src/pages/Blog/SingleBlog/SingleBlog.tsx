@@ -1,4 +1,5 @@
-import { Container } from '@mui/material';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 import { Timestamp } from 'firebase/firestore';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
@@ -47,9 +48,10 @@ function SingleBlog() {
       <>
         <Title h1Text={title} smallText="Read the post below" />
         <Container>
-          <p>{date?.toDate().toDateString()}</p>
           <Image src={imageURL} alt="placeholder" />
           {parse(body)}
+          <Divider light />
+          <p>Last updated on {date?.toDate().toDateString()}</p>
         </Container>
       </>
     </PageWrapper>
