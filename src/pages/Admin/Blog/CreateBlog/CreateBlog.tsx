@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -5,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
@@ -15,6 +16,7 @@ import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import Icons from '../../../../constants/Icons';
 import PageTitles from '../../../../constants/PageTitles';
 import { getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
+import { BGImage, CloseButton, FileInput } from './CreateBlog.styles';
 
 function CreateBlog() {
   const [title, setTitle] = useState('');
@@ -24,6 +26,8 @@ function CreateBlog() {
   const [categories, setCategories] = useState<string[]>([]);
   const [titles, setTitles] = useState<string[]>([]);
   const [validation, setValidation] = useState(false);
+  const [imagePreview, setImagePreview] = useState('');
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
   const handleChange = (event: SelectChangeEvent<typeof selectedCategories>) => {
     const {
       target: { value },
@@ -81,12 +85,30 @@ function CreateBlog() {
               }
             }}
           />
-          <input
+          {imagePreview ? (
+            <BGImage background={imagePreview}>
+              <CloseButton
+                aria-label="edit"
+                onClick={() => {
+                  if (imageInputRef && imageInputRef.current) {
+                    imageInputRef.current.value = '';
+                    setImagePreview('');
+                  }
+                }}
+              >
+                <CloseIcon fontSize="small" />
+              </CloseButton>
+            </BGImage>
+          ) : null}
+          <FileInput
+            ref={imageInputRef}
             type="file"
             onChange={(e) => {
               const { files } = e.target;
               if (files) {
                 setFile(files[0]);
+                const objectURL = URL.createObjectURL(files[0]);
+                setImagePreview(objectURL);
               }
             }}
             accept="image/*"
