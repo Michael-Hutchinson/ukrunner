@@ -1,11 +1,7 @@
-import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
-import EventIcon from '@mui/icons-material/Event';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import StarIcon from '@mui/icons-material/Star';
-import TimelineIcon from '@mui/icons-material/Timeline';
 import { Divider, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
 import { signOut } from 'firebase/auth';
 import React from 'react';
@@ -32,39 +28,11 @@ function Sidebar() {
           <ListItemText>Blog</ListItemText>
         </MenuItem>
         <Divider />
-        <MenuItem component={Link} to="/admin/blog">
+        <MenuItem component={Link} to="/admin/profile">
           <ListItemIcon>
-            <StarIcon fontSize="small" />
+            <PersonIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Personal Bests</ListItemText>
-        </MenuItem>
-        <Divider />
-        <MenuItem component={Link} to="/admin/blog">
-          <ListItemIcon>
-            <EventIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Events</ListItemText>
-        </MenuItem>
-        <Divider />
-        <MenuItem component={Link} to="/admin/blog">
-          <ListItemIcon>
-            <DirectionsRunIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Race History</ListItemText>
-        </MenuItem>
-        <Divider />
-        <MenuItem component={Link} to="/admin/blog">
-          <ListItemIcon>
-            <ShoppingCartIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Shop</ListItemText>
-        </MenuItem>
-        <Divider />
-        <MenuItem component={Link} to="/admin">
-          <ListItemIcon>
-            <TimelineIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Training</ListItemText>
+          <ListItemText>User Profile</ListItemText>
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => signOut(auth)}>
