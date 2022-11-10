@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import PageWrapper from '../../../components/PageWrapper/PageWrapper';
 import Title from '../../../components/shared/Title/Title';
-import PageTitles from '../../../constants/PageTitles';
 import { getBlog, getBlogTitles } from '../../../utils/Blog.utils';
 import Image from './SingleBlog.styles';
 
@@ -44,7 +43,7 @@ function SingleBlog() {
     }
   }, [valid, slug, navigate]);
   return (
-    <PageWrapper title={PageTitles.Blog}>
+    <PageWrapper title={`${title} | UK Runner`}>
       <>
         <Title h1Text={title} smallText="Read the post below" />
         <Container>
