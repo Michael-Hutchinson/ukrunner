@@ -7,6 +7,7 @@ const getUser = (userID: string) => {
   getDoc(docRef).then((response) => {
     if (response.data()) {
       const userData = response.data();
+      // TODO - add users information here
       console.log(userData);
     }
   });
