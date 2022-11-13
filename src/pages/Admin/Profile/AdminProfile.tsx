@@ -18,9 +18,10 @@ function AdminProfile() {
   const [surname, setSurname] = useState<string>();
   const [fileName, setFileName] = useState<string>();
   const [profilePicture, setProfilePicture] = useState<string>();
+  const [bio, setBio] = useState<string>();
   useEffect(() => {
     if (user) {
-      getUser(user.uid, setFirstName, setSurname, setProfilePicture, setFileName);
+      getUser(user.uid, setFirstName, setSurname, setProfilePicture, setFileName, setBio);
     }
   }, [user]);
   return (
@@ -70,8 +71,23 @@ function AdminProfile() {
             }}
           />
           <img alt={fileName} src={profilePicture} />
-          <p>{firstName}</p>
-          <p>{surname}</p>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            multiline
+            rows={4}
+            id="bio"
+            label="Bio"
+            name="bio"
+            type="text"
+            autoComplete="bio"
+            value={bio || ''}
+            defaultValue={bio}
+            onChange={(e) => {
+              setBio(e.target.value);
+            }}
+          />
         </>
       </FormWrapper>
     </AdminWrapper>
