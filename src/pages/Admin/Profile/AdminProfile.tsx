@@ -16,9 +16,11 @@ function AdminProfile() {
   const [user] = useAuthState(auth);
   const [firstName, setFirstName] = useState<string>();
   const [surname, setSurname] = useState<string>();
+  const [fileName, setFileName] = useState<string>();
+  const [profilePicture, setProfilePicture] = useState<string>();
   useEffect(() => {
     if (user) {
-      getUser(user.uid, setFirstName, setSurname);
+      getUser(user.uid, setFirstName, setSurname, setProfilePicture, setFileName);
     }
   }, [user]);
   return (
@@ -67,6 +69,7 @@ function AdminProfile() {
               setSurname(e.target.value);
             }}
           />
+          <img alt={fileName} src={profilePicture} />
           <p>{firstName}</p>
           <p>{surname}</p>
         </>
