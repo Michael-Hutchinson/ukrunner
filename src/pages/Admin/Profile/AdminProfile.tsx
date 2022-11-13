@@ -1,3 +1,4 @@
+import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
@@ -14,9 +15,10 @@ function AdminProfile() {
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [firstName, setFirstName] = useState<string>();
+  const [surname, setSurname] = useState<string>();
   useEffect(() => {
     if (user) {
-      getUser(user.uid, setFirstName);
+      getUser(user.uid, setFirstName, setSurname);
     }
   }, [user]);
   return (
@@ -35,8 +37,38 @@ function AdminProfile() {
         }}
       >
         <>
-          {user?.uid}
-          {firstName}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="first name"
+            label="First Name"
+            name="first name"
+            type="text"
+            autoComplete="name"
+            value={firstName || ''}
+            defaultValue={firstName}
+            onChange={(e) => {
+              setFirstName(e.target.value);
+            }}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="last name"
+            label="Last Name"
+            name="last name"
+            type="text"
+            autoComplete="name"
+            value={surname || ''}
+            defaultValue={surname}
+            onChange={(e) => {
+              setSurname(e.target.value);
+            }}
+          />
+          <p>{firstName}</p>
+          <p>{surname}</p>
         </>
       </FormWrapper>
     </AdminWrapper>
