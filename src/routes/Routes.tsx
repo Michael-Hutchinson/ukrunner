@@ -9,6 +9,7 @@ import Admin from '../pages/Admin/Admin';
 import AdminBlog from '../pages/Admin/Blog/AdminBlog';
 import CreateBlog from '../pages/Admin/Blog/CreateBlog/CreateBlog';
 import EditBlog from '../pages/Admin/Blog/EditBlog/EditBlog';
+import AdminProfile from '../pages/Admin/Profile/AdminProfile';
 import Blog from '../pages/Blog/Blog';
 import SingleBlog from '../pages/Blog/SingleBlog/SingleBlog';
 import Contact from '../pages/Contact/Contact';
@@ -69,6 +70,7 @@ function RouteHandler() {
       </Route>
       <Route element={<PrivateWrapper user={user} loading={loading} error={error} />}>
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/profile" element={<AdminProfile />} />
         <Route path="/admin/blog" element={<AdminBlog />} />
         <Route path="/admin/blog/create" element={<CreateBlog />} />
         <Route path="/admin/blog/edit" element={<Navigate to="/admin/blog" />} />
