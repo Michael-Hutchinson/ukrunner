@@ -5,7 +5,7 @@ import { db } from '../helpers/firebase';
 const getUser = (
   userID: string,
   setFirstName?: (firstName: string) => void,
-  setLastName?: (lastName: string) => void,
+  setSurname?: (surname: string) => void,
   setProfilePicture?: (profilePicture: string) => void,
   setBio?: (bio: string) => void,
   setFileName?: (fileName: string) => void,
@@ -17,8 +17,8 @@ const getUser = (
       if (setFirstName) {
         setFirstName(userData?.firstName);
       }
-      if (setLastName) {
-        setLastName(userData?.lastName);
+      if (setSurname) {
+        setSurname(userData?.surname);
       }
       if (setProfilePicture) {
         setProfilePicture(userData?.profilePicture);
