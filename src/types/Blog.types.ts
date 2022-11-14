@@ -12,6 +12,7 @@ export interface IBlog {
   body: string;
   date: Timestamp;
   categories: string[];
+  author: string;
   image?: string;
   fileName?: string;
 }
@@ -21,6 +22,7 @@ type BlogProps = {
   body: string;
   categories: string[];
   navigate: NavigateFunction;
+  author: string;
   file?: File;
   fileName?: string;
   originalImageURL?: string;
