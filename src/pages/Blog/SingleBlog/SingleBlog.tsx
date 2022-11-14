@@ -19,6 +19,9 @@ function SingleBlog() {
   const [body, setBody] = useState<string>('');
   const [imageURL, setImageURL] = useState<string>();
   const [date, setDate] = useState<Timestamp>();
+  const [author, setAuthor] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [surname, setSurname] = useState<string>();
   useEffect(() => {
     getBlogTitles(setTitles);
   }, []);
@@ -36,7 +39,19 @@ function SingleBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(slug, setTitle, setBody, setImageURL, undefined, undefined, undefined, setDate);
+      getBlog(
+        slug,
+        setTitle,
+        setBody,
+        setImageURL,
+        undefined,
+        undefined,
+        undefined,
+        setDate,
+        setAuthor,
+        setFirstName,
+        setSurname,
+      );
     }
     if (valid === false) {
       navigate('/blog');
@@ -50,7 +65,9 @@ function SingleBlog() {
           <Image src={imageURL} alt="placeholder" />
           {parse(body)}
           <Divider light />
-          <p>Last updated on {date?.toDate().toDateString()}</p>
+          <p>
+            Last updated on {date?.toDate().toDateString()} by {firstName} {surname}
+          </p>
         </Container>
       </>
     </PageWrapper>

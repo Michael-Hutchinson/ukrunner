@@ -3,6 +3,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 
 import { db, storage } from '../helpers/firebase';
 import { IBlog, IEditBlog, ISaveBlog } from '../types/Blog.types';
+import { getUser } from './Users.utils';
 
 export const saveBlog = ({
   title,
@@ -100,6 +101,9 @@ export const getBlog = (
   setOriginalTitle?: (originalTitle: string) => void,
   setFileName?: (fileName: string) => void,
   setDate?: (date: Timestamp) => void,
+  setAuthor?: (author: string) => void,
+  setFirstName?: (firstName: string) => void,
+  setSurname?: (surname: string) => void,
 ) => {
   const docRef = doc(db, 'blog', blogID);
   getDoc(docRef).then((response) => {
@@ -121,6 +125,10 @@ export const getBlog = (
       }
       if (setDate) {
         setDate(blogData?.date);
+      }
+      if (setAuthor) {
+        getUser(blogData?.author, setFirstName, setSurname);
+        setAuthor(blogData?.author);
       }
     }
   });
