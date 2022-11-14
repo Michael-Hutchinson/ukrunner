@@ -1,3 +1,5 @@
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -9,16 +11,19 @@ import { ButtonTypes } from '../../../components/shared/Button/Button';
 import Icons from '../../../constants/Icons';
 import PageTitles from '../../../constants/PageTitles';
 import { auth } from '../../../helpers/firebase';
-import getUser from '../../../utils/Users.utils';
+import { editUser, getUser } from '../../../utils/Users.utils';
 
 function AdminProfile() {
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
-  const [firstName, setFirstName] = useState<string>();
-  const [surname, setSurname] = useState<string>();
-  const [fileName, setFileName] = useState<string>();
-  const [profilePicture, setProfilePicture] = useState<string>();
-  const [bio, setBio] = useState<string>();
+  const [firstName, setFirstName] = useState<string>('');
+  const [surname, setSurname] = useState<string>('');
+  const [file, setFile] = useState<File>();
+  const [fileName, setFileName] = useState<string>('');
+  const [profilePicture, setProfilePicture] = useState<string>('');
+  const [bio, setBio] = useState<string>('');
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   useEffect(() => {
     if (user) {
       getUser(user.uid, setFirstName, setSurname, setProfilePicture, setFileName, setBio);
@@ -31,7 +36,20 @@ function AdminProfile() {
         headerText="Edit your profile below"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log('edit innit');
+          if (user) {
+            editUser({
+              userID: user.uid,
+              firstName,
+              surname,
+              bio,
+              file,
+              fileName: `users/${user.uid}/${file?.name}`,
+              originalProfilePicture: profilePicture,
+              originalFileName: fileName,
+              setSuccess,
+              setSuccessMessage,
+            });
+          }
         }}
         buttonType={ButtonTypes.submit}
         buttonText="Edit"
@@ -40,6 +58,16 @@ function AdminProfile() {
         }}
       >
         <>
+          <Snackbar
+            open={success}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            autoHideDuration={6000}
+            onClose={() => setSuccess(false)}
+          >
+            <Alert onClose={() => setSuccess(false)} severity="success">
+              {successMessage}
+            </Alert>
+          </Snackbar>
           <TextField
             margin="normal"
             required
@@ -50,7 +78,6 @@ function AdminProfile() {
             type="text"
             autoComplete="name"
             value={firstName || ''}
-            defaultValue={firstName}
             onChange={(e) => {
               setFirstName(e.target.value);
             }}
@@ -65,12 +92,21 @@ function AdminProfile() {
             type="text"
             autoComplete="name"
             value={surname || ''}
-            defaultValue={surname}
             onChange={(e) => {
               setSurname(e.target.value);
             }}
           />
           <img alt={fileName} src={profilePicture} />
+          <input
+            type="file"
+            onChange={(e) => {
+              const { files } = e.target;
+              if (files) {
+                setFile(files[0]);
+              }
+            }}
+            accept="image/*"
+          />
           <TextField
             margin="normal"
             required
@@ -83,7 +119,6 @@ function AdminProfile() {
             type="text"
             autoComplete="bio"
             value={bio || ''}
-            defaultValue={bio}
             onChange={(e) => {
               setBio(e.target.value);
             }}
