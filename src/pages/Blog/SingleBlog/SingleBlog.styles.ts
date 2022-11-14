@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Image = styled.img`
+export const Image = styled.img`
   margin: 0 auto;
   display: flex;
   max-width: 100%;
@@ -11,4 +11,6 @@ const Image = styled.img`
   padding: 5px;
 `;
 
-export default Image;
+export const ALink = styled.a`
+  color: #757575;
+`;
