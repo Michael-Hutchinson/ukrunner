@@ -11,6 +11,7 @@ export const saveBlog = ({
   categories,
   navigate,
   message,
+  author,
   file,
   fileName,
   originalImageURL,
@@ -22,6 +23,7 @@ export const saveBlog = ({
     body,
     categories,
     date: Timestamp.fromDate(new Date()),
+    author,
   };
   if (file && fileName) {
     const blogImageRef = ref(storage, fileName);
@@ -47,6 +49,7 @@ export const saveBlog = ({
       body,
       categories,
       date: Timestamp.fromDate(new Date()),
+      author,
       fileName: originalFileName,
       image: originalImageURL,
     };
@@ -76,6 +79,7 @@ export const editBlog = ({
   fileName,
   originalImageURL,
   originalFileName,
+  author,
 }: IEditBlog) => {
   const newTitle = originalTitle?.toLowerCase().replaceAll(' ', '-');
   saveBlog({
@@ -88,6 +92,7 @@ export const editBlog = ({
     fileName,
     originalImageURL,
     originalFileName,
+    author,
   });
   deleteDoc(doc(db, 'blog', newTitle));
 };
@@ -146,6 +151,7 @@ export const getBlogs = (setBlogs: (blog: IBlog[]) => void) => {
         categories: singleBlog?.categories,
         image: singleBlog?.image,
         fileName: singleBlog?.fileName,
+        author: singleBlog?.author,
       };
       blogs.push(blogData);
     });
