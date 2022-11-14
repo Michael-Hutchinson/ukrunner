@@ -135,8 +135,11 @@ function EditBlog() {
             type="file"
             onChange={(e) => {
               const { files } = e.target;
-              if (files) {
+              if (files && files[0].size < 2097152) {
                 setFile(files[0]);
+              } else {
+                alert('File size is too big');
+                e.target.value = '';
               }
             }}
             accept="image/*"
