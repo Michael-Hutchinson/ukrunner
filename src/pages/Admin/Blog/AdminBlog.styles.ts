@@ -29,6 +29,7 @@ export const Wrapper = MUIStyled(Grid)`
 export const Image = MUIStyled(CardMedia)({
   height: '65%',
   minHeight: '75px',
+  maxHeight: '10em',
 }) as typeof CardMedia;
 
 export const ChipParent = styled.div`
