@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useRef, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 
 import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
@@ -15,10 +16,12 @@ import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import Icons from '../../../../constants/Icons';
 import PageTitles from '../../../../constants/PageTitles';
+import { auth } from '../../../../helpers/firebase';
 import { getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
 import { BGImage, CloseButton, FileInput } from './CreateBlog.styles';
 
 function CreateBlog() {
+  const [user] = useAuthState(auth);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [file, setFile] = useState<File | undefined>();
@@ -46,15 +49,18 @@ function CreateBlog() {
         headerText="Add a new blog post below"
         onSubmit={(e) => {
           e.preventDefault();
-          saveBlog({
-            title: title.trim(),
-            body,
-            categories: selectedCategories,
-            navigate,
-            message: 'blog created',
-            file,
-            fileName: `images/${title.replaceAll(' ', '-').trim().toLowerCase()}/${file?.name}`,
-          });
+          if (user) {
+            saveBlog({
+              title: title.trim(),
+              body,
+              categories: selectedCategories,
+              navigate,
+              message: 'blog created',
+              file,
+              fileName: `images/${title.replaceAll(' ', '-').trim().toLowerCase()}/${file?.name}`,
+              author: user.uid,
+            });
+          }
         }}
         buttonType={ButtonTypes.submit}
         buttonText="Create blog"

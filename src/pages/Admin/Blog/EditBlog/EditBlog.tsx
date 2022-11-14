@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import AdminWrapper from '../../../../components/AdminWrapper/AdminWrapper';
@@ -14,9 +15,11 @@ import ReactQuillEditor from '../../../../components/QuillEditor/QuillEditor';
 import { ButtonTypes } from '../../../../components/shared/Button/Button';
 import Icons from '../../../../constants/Icons';
 import PageTitles from '../../../../constants/PageTitles';
+import { auth } from '../../../../helpers/firebase';
 import { editBlog, getBlog, getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
 
 function EditBlog() {
+  const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const { slug } = useParams();
   const [titles, setTitles] = useState<string[]>([]);
@@ -67,7 +70,7 @@ function EditBlog() {
         headerText="Edit blog post below"
         onSubmit={(e) => {
           e.preventDefault();
-          if (title) {
+          if (title && user) {
             if (originalTitle.trim() === title.trim()) {
               saveBlog({
                 title: title.trim(),
@@ -79,6 +82,7 @@ function EditBlog() {
                 fileName: `images/${slug}/${file?.name}`,
                 originalImageURL: imageURL,
                 originalFileName: fileName,
+                author: user.uid,
               });
             } else {
               editBlog({
@@ -91,6 +95,7 @@ function EditBlog() {
                 fileName: `images/${slug}/${file?.name}`,
                 originalImageURL: imageURL,
                 originalFileName: fileName,
+                author: user.uid,
               });
             }
           }
