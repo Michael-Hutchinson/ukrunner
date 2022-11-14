@@ -12,6 +12,7 @@ import Icons from '../../../constants/Icons';
 import PageTitles from '../../../constants/PageTitles';
 import { auth } from '../../../helpers/firebase';
 import { editUser, getUser } from '../../../utils/Users.utils';
+import ProfileImg from './AdminProfile.styles';
 
 function AdminProfile() {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ function AdminProfile() {
               setSurname(e.target.value);
             }}
           />
-          <img alt={fileName} src={profilePicture} />
+          <ProfileImg alt={fileName} src={profilePicture} />
           <input
             type="file"
             onChange={(e) => {
