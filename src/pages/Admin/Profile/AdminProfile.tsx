@@ -103,7 +103,6 @@ function AdminProfile() {
           ) : (
             <ProfileImg alt={fileName || 'user profile'} src={profilePicture || '../src/images/default.jfif'} />
           )}
-          <ProfileImg alt={fileName} src={profilePicture} />
           <input
             type="file"
             onChange={(e) => {
