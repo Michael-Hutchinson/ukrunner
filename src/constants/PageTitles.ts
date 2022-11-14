@@ -12,6 +12,7 @@ const PageTitles = {
   PageNotFound: `Page not found ${defaultTitle}`,
   Login: `Login ${defaultTitle}`,
   Admin: `Admin ${defaultTitle}`,
+  Default: `UK Runner ${defaultTitle}`,
 };
 
 export default PageTitles;
