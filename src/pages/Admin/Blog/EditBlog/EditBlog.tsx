@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -5,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ import Icons from '../../../../constants/Icons';
 import PageTitles from '../../../../constants/PageTitles';
 import { auth } from '../../../../helpers/firebase';
 import { editBlog, getBlog, getBlogCategories, getBlogTitles, saveBlog } from '../../../../utils/Blog.utils';
+import { BGImage, CloseButton, FileInput } from './EditBlog.styles';
 
 function EditBlog() {
   const [user] = useAuthState(auth);
@@ -29,10 +31,12 @@ function EditBlog() {
   const [body, setBody] = useState<string>();
   const [fileName, setFileName] = useState<string>();
   const [file, setFile] = useState<File>();
-  const [imageURL, setImageURL] = useState<string>();
+  const [imageURL, setImageURL] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [validation, setValidation] = useState(false);
+  const [imagePreview, setImagePreview] = useState('');
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
   const handleChange = (event: SelectChangeEvent<typeof selectedCategories>) => {
     const {
       target: { value },
@@ -130,13 +134,32 @@ function EditBlog() {
               setTitle(e.target.value);
             }}
           />
-          <img alt={fileName} src={imageURL} />
-          <input
+          {imagePreview ? (
+            <BGImage background={imagePreview}>
+              <CloseButton
+                aria-label="edit"
+                onClick={() => {
+                  if (imageInputRef && imageInputRef.current) {
+                    imageInputRef.current.value = '';
+                    setImagePreview('');
+                  }
+                }}
+              >
+                <CloseIcon fontSize="small" />
+              </CloseButton>
+            </BGImage>
+          ) : (
+            <BGImage background={imageURL} />
+          )}
+          <FileInput
+            ref={imageInputRef}
             type="file"
             onChange={(e) => {
               const { files } = e.target;
               if (files && files[0].size < 2097152) {
                 setFile(files[0]);
+                const objectURL = URL.createObjectURL(files[0]);
+                setImagePreview(objectURL);
               } else {
                 alert('File size is too big');
                 e.target.value = '';
