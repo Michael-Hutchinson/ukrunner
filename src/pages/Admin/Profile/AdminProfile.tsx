@@ -22,6 +22,7 @@ function AdminProfile() {
   const [file, setFile] = useState<File>();
   const [fileName, setFileName] = useState<string>('');
   const [profilePicture, setProfilePicture] = useState<string>('');
+  const [imagePreview, setImagePreview] = useState<string>('');
   const [bio, setBio] = useState<string>('');
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -97,6 +98,11 @@ function AdminProfile() {
               setSurname(e.target.value);
             }}
           />
+          {imagePreview ? (
+            <ProfileImg alt={fileName} src={imagePreview} />
+          ) : (
+            <ProfileImg alt={fileName || 'user profile'} src={profilePicture || '../src/images/default.jfif'} />
+          )}
           <ProfileImg alt={fileName} src={profilePicture} />
           <input
             type="file"
@@ -104,6 +110,8 @@ function AdminProfile() {
               const { files } = e.target;
               if (files) {
                 setFile(files[0]);
+                const objectURL = URL.createObjectURL(files[0]);
+                setImagePreview(objectURL);
               }
             }}
             accept="image/*"
