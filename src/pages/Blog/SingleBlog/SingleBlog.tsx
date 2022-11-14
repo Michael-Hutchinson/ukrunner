@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PageWrapper from '../../../components/PageWrapper/PageWrapper';
 import Title from '../../../components/shared/Title/Title';
 import { getBlog, getBlogTitles } from '../../../utils/Blog.utils';
-import Image from './SingleBlog.styles';
+import { ALink, Image } from './SingleBlog.styles';
 
 function SingleBlog() {
   const navigate = useNavigate();
@@ -66,7 +66,10 @@ function SingleBlog() {
           {parse(body)}
           <Divider light />
           <p>
-            Last updated on {date?.toDate().toDateString()} by {firstName} {surname}
+            Last updated on {date?.toDate().toDateString()} by{' '}
+            <ALink href={`/profile/${author}`}>
+              {firstName} {surname}
+            </ALink>
           </p>
         </Container>
       </>
