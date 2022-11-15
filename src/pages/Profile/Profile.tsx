@@ -4,12 +4,14 @@ import Grid from '@mui/material/Grid/Grid';
 import Typography from '@mui/material/Typography';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button, { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
 import PageTitles from '../../constants/PageTitles';
+import { auth } from '../../helpers/firebase';
 import { IBlog } from '../../types/Blog.types';
 import { getBlogsByAuthor } from '../../utils/Blog.utils';
 import { getUser } from '../../utils/Users.utils';
@@ -17,6 +19,7 @@ import { BlogCard, BlogFooter, ChipParent, ChipStyle, FooterText, Image, ImageCa
 
 function Profile() {
   const navigate = useNavigate();
+  const [user] = useAuthState(auth);
   const { slug } = useParams();
   const [profilePicture, setProfilePicture] = useState<string>('');
   const [fileName, setFileName] = useState<string>('');
@@ -24,6 +27,7 @@ function Profile() {
   const [surname, setSurname] = useState<string>('');
   const [bio, setBio] = useState<string>('');
   const [blogs, setBlogs] = useState<IBlog[]>();
+  const isLoggedInUser = user?.uid === slug;
   useEffect(() => {
     if (slug) {
       getUser({ userID: slug, setProfilePicture, setFileName, setFirstName, setSurname, setBio, navigate });
@@ -37,11 +41,20 @@ function Profile() {
         <Container>
           <Grid container spacing={2}>
             <Grid item md={3} xs={12}>
-              <Image alt={fileName} src={profilePicture} />
+              <Image alt={fileName || 'user profile'} src={profilePicture || '../src/images/default.jfif'} />
               <h2>
                 {firstName} {surname}
               </h2>
               <p>{bio}</p>
+              {isLoggedInUser ? (
+                <Button
+                  buttonType={ButtonTypes.button}
+                  buttonText="Edit Profile"
+                  onClick={() => {
+                    navigate(`/admin/profile`);
+                  }}
+                />
+              ) : null}
             </Grid>
             <Grid item md={9} xs={12}>
               {blogs?.map((blog) => (
