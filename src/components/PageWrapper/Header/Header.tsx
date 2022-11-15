@@ -4,27 +4,27 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import React from 'react';
 
 import Logo from '../../../images/logo.png';
-import { IconWrapper, Section, Text } from './Header.styles';
+import { IconWrapper, LinkText, Section, Text } from './Header.styles';
 
 function Header() {
   return (
     <header>
       <Section top>
         <div>
-          <Text href="/">HOME</Text>
-          <Text href="/about">ABOUT</Text>
-          <Text href="/contact">CONTACT</Text>
+          <Text to="/">HOME</Text>
+          <Text to="/about">ABOUT</Text>
+          <Text to="/contact">CONTACT</Text>
         </div>
         <IconWrapper>
-          <Text icon href="/">
+          <LinkText icon href="/">
             <FacebookIcon fontSize="small" />
-          </Text>
-          <Text icon href="/">
+          </LinkText>
+          <LinkText icon href="/">
             <TwitterIcon fontSize="small" />
-          </Text>
-          <Text icon href="https://github.com/Michael-Hutchinson">
+          </LinkText>
+          <LinkText icon href="https://github.com/Michael-Hutchinson">
             <GitHubIcon fontSize="small" />
-          </Text>
+          </LinkText>
         </IconWrapper>
       </Section>
       <Section>
