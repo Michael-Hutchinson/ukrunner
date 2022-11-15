@@ -132,7 +132,7 @@ export const getBlog = (
         setDate(blogData?.date);
       }
       if (setAuthor) {
-        getUser(blogData?.author, setFirstName, setSurname);
+        getUser({ userID: blogData?.author, setFirstName, setSurname });
         setAuthor(blogData?.author);
       }
     }
