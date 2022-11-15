@@ -184,3 +184,24 @@ export const getBlogCategories = (setCategories: (categories: string[]) => void)
     setCategories(categories);
   });
 };
+
+export const getBlogsByAuthor = (setBlogs: (blog: IBlog[]) => void, authorID: string) => {
+  getDocs(collection(db, 'blog')).then(async (response) => {
+    const blogs: IBlog[] = [];
+    await response.forEach((blog) => {
+      const singleBlog = blog.data();
+      const blogData = {
+        title: singleBlog?.title,
+        body: singleBlog?.body,
+        date: singleBlog?.date,
+        categories: singleBlog?.categories,
+        image: singleBlog?.image,
+        fileName: singleBlog?.fileName,
+        author: singleBlog?.author,
+      };
+      blogs.push(blogData);
+    });
+    const filterBlogs = blogs.filter((thisBlog) => thisBlog.author === authorID);
+    setBlogs(filterBlogs);
+  });
+};
