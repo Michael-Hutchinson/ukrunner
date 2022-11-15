@@ -3,6 +3,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import React from 'react';
 
+import Logo from '../../../images/logo.png';
 import { IconWrapper, Section, Text } from './Header.styles';
 
 function Header() {
@@ -27,7 +28,7 @@ function Header() {
         </IconWrapper>
       </Section>
       <Section>
-        <img src="/src/images/logo.png" alt="uk runner logo" />
+        <img src={Logo} alt="uk runner logo" />
       </Section>
     </header>
   );
