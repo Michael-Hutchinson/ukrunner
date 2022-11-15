@@ -2,19 +2,22 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { db, storage } from '../helpers/firebase';
-import { EditUser, User } from '../types/Users.types';
+import { EditUser, GetUser, User } from '../types/Users.types';
 
-export const getUser = (
-  userID: string,
-  setFirstName?: (firstName: string) => void,
-  setSurname?: (surname: string) => void,
-  setProfilePicture?: (profilePicture: string) => void,
-  setFileName?: (fileName: string) => void,
-  setBio?: (bio: string) => void,
-) => {
+export const getUser = ({
+  userID,
+  setFirstName,
+  setSurname,
+  setProfilePicture,
+  setFileName,
+  setBio,
+  setUser,
+  navigate,
+}: GetUser) => {
   const docRef = doc(db, 'users', userID);
   getDoc(docRef).then((response) => {
     if (response.data()) {
+      const user = response.id;
       const userData = response.data();
       if (setFirstName) {
         setFirstName(userData?.firstName);
@@ -31,6 +34,11 @@ export const getUser = (
       if (setFileName) {
         setFileName(userData?.fileName);
       }
+      if (setUser) {
+        setUser(user);
+      }
+    } else if (navigate) {
+      navigate('/user-not-found');
     }
   });
 };
