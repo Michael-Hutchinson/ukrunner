@@ -28,7 +28,7 @@ function AdminProfile() {
   const [successMessage, setSuccessMessage] = useState('');
   useEffect(() => {
     if (user) {
-      getUser(user.uid, setFirstName, setSurname, setProfilePicture, setFileName, setBio);
+      getUser({ userID: user.uid, setFirstName, setSurname, setProfilePicture, setFileName, setBio });
     }
   }, [user]);
   return (
