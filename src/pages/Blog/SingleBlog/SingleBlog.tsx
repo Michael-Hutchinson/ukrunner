@@ -67,7 +67,7 @@ function SingleBlog() {
           <Divider light />
           <p>
             Last updated on {date?.toDate().toDateString()} by{' '}
-            <ALink href={`/profile/${author}`}>
+            <ALink to={`/profile/${author}`}>
               {firstName} {surname}
             </ALink>
           </p>

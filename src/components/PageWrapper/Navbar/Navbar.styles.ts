@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
@@ -56,7 +57,7 @@ export const Label = styled.label`
   }
 `;
 
-export const Links = styled.a`
+export const Links = styled(Link)`
   color: #000;
   font-size: 0.875rem;
   padding: 0.625rem;

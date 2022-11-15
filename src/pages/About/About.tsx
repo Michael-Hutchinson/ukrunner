@@ -8,6 +8,7 @@ import Title from '../../components/shared/Title/Title';
 import Icons from '../../constants/Icons';
 import PageTitles from '../../constants/PageTitles';
 import { StravaContext } from '../../helpers/context';
+import AboutImage from '../../images/about.png';
 import {
   ButtonTab,
   GridBox,
@@ -64,7 +65,7 @@ function About() {
                 </p>
               </GridText>
               <Grid item md={5} xs={12}>
-                <Img alt="" src="./src/images/about.png" />
+                <Img alt="me" src={AboutImage} />
               </Grid>
             </Grid>
           </Container>

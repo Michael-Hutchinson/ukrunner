@@ -11,14 +11,14 @@ function Navbar() {
         <MenuIcon fontSize="small" />
       </Label>
       <MobileLinks>
-        <Links href="/">Home</Links>
-        <Links href="/about">About</Links>
-        <Links href="/blog">Blog</Links>
-        <Links href="/race">Race History</Links>
-        <Links href="/training">Training</Links>
-        <Links href="/events">Events</Links>
-        <Links href="/shop">Shop</Links>
-        <Links href="/contact">Contact</Links>
+        <Links to="/">Home</Links>
+        <Links to="/about">About</Links>
+        <Links to="/blog">Blog</Links>
+        <Links to="/race">Race History</Links>
+        <Links to="/training">Training</Links>
+        <Links to="/events">Events</Links>
+        <Links to="/shop">Shop</Links>
+        <Links to="/contact">Contact</Links>
       </MobileLinks>
     </Nav>
   );

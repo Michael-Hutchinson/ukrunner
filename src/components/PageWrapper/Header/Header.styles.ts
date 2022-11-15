@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-export const Text = styled.a<{ icon?: boolean }>`
+export const Text = styled(Link)<{ icon?: boolean }>`
   color: var(--white);
   font-size: 0.625rem;
   line-height: 1.875rem;
@@ -46,4 +47,31 @@ export const Section = styled.section<{ top?: boolean }>`
 export const IconWrapper = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const LinkText = styled.a<{ icon?: boolean }>`
+  color: var(--white);
+  font-size: 0.625rem;
+  line-height: 1.875rem;
+  text-decoration: none;
+  &:hover {
+    color: var(--yellow);
+  }
+  &:after {
+    content: '|';
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    color: #666;
+  }
+  &:last-child:after {
+    content: '';
+  }
+
+  ${(props) =>
+    props.icon &&
+    css`
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+    `}
 `;

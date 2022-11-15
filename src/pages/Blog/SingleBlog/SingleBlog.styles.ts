@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Image = styled.img`
@@ -11,6 +12,6 @@ export const Image = styled.img`
   padding: 5px;
 `;
 
-export const ALink = styled.a`
+export const ALink = styled(Link)`
   color: #757575;
 `;
