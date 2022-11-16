@@ -38,6 +38,7 @@ export interface ActivityData {
   end_latlng: number[];
   average_speed: number;
   max_speed: number;
+  average_heartrate: number;
   average_cadence: number;
   has_heartrate: boolean;
   heartrate_opt_out: boolean;
