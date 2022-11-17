@@ -62,7 +62,17 @@ export const getAthlete = ({
     });
 };
 
-export const getPaginatedActivities = ({
+const getSingleAccessToken = async () => {
+  const refreshToken = import.meta.env.VITE_REFRESHTOKEN;
+  const callRefresh = `https://www.strava.com/oauth/token?client_id=${clientID}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
+  const accessToken = await fetch(callRefresh, {
+    method: 'POST',
+  });
+  const getAccess = await accessToken.json();
+  return getAccess.access_token;
+};
+
+const fetchAccessToken = ({
   accessToken,
   setActivities,
   pageNumber,
@@ -82,6 +92,28 @@ export const getPaginatedActivities = ({
       setActivities(allActivities);
       setLoading(false);
     });
+};
+
+export const getPaginatedActivities = ({
+  accessToken,
+  setActivities,
+  pageNumber,
+  currentActivities,
+  setLoading,
+}: {
+  accessToken: string;
+  setActivities: (state: ActivityData[]) => void;
+  pageNumber: number;
+  currentActivities: ActivityData[];
+  setLoading: (state: boolean) => void;
+}) => {
+  if (accessToken === '') {
+    getSingleAccessToken().then((newAccessToken) => {
+      fetchAccessToken({ accessToken: newAccessToken, setActivities, pageNumber, currentActivities, setLoading });
+    });
+  } else {
+    fetchAccessToken({ accessToken, setActivities, pageNumber, currentActivities, setLoading });
+  }
 };
 
 export const getAccessToken = ({
