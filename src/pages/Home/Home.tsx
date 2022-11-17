@@ -4,6 +4,7 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import PageTitles from '../../constants/PageTitles';
 import About from './About/About';
 import Hero from './Hero/Hero';
+import RecentActivities from './RecentActivities/RecentActivities';
 
 function Home() {
   return (
@@ -11,6 +12,7 @@ function Home() {
       <>
         <Hero />
         <About />
+        <RecentActivities />
       </>
     </PageWrapper>
   );

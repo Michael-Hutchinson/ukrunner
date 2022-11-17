@@ -15,8 +15,12 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@mapbox/polyline": "^1.1.1",
+    "@mapbox/sphericalmercator": "^1.2.0",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.10",
+    "@types/mapbox__polyline": "^1.0.2",
+    "@types/mapbox__sphericalmercator": "^1.2.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "firebase": "^9.12.1",
     "html-react-parser": "^3.0.4",

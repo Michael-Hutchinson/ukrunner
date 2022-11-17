@@ -23,11 +23,13 @@ export const getStats = ({ accessToken, setStats }: { accessToken: string; setSt
 export const getActivities = ({
   accessToken,
   setActivities,
+  pageNumber,
 }: {
   accessToken: string;
   setActivities: (state: ActivityData[]) => void;
+  pageNumber?: number;
 }) => {
-  fetch(`${callActivities}${accessToken}`)
+  fetch(`${callActivities}${accessToken}&page=${pageNumber || `1`}`)
     .then((res) => res.json())
     .then((data) => {
       if (data.message === 'Authorization Error') {
