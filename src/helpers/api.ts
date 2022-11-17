@@ -62,6 +62,28 @@ export const getAthlete = ({
     });
 };
 
+export const getPaginatedActivities = ({
+  accessToken,
+  setActivities,
+  pageNumber,
+  currentActivities,
+  setLoading,
+}: {
+  accessToken: string;
+  setActivities: (state: ActivityData[]) => void;
+  pageNumber: number;
+  currentActivities: ActivityData[];
+  setLoading: (state: boolean) => void;
+}) => {
+  fetch(`${callActivities}${accessToken}&page=${pageNumber}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const allActivities = [...currentActivities, ...data];
+      setActivities(allActivities);
+      setLoading(false);
+    });
+};
+
 export const getAccessToken = ({
   setActivities,
   setAthlete,
