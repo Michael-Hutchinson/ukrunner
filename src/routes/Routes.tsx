@@ -19,6 +19,7 @@ import Login from '../pages/Login/Login';
 import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import Profile from '../pages/Profile/Profile';
 import Race from '../pages/Race/Race';
+import Register from '../pages/Register/Register';
 import Shop from '../pages/Shop/Shop';
 import Training from '../pages/Training/Training';
 
@@ -69,6 +70,7 @@ function RouteHandler() {
       <Route path="*" element={<PageNotFound />} />
       <Route element={<ProtectedWrapper user={user} loading={loading} error={error} />}>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Route>
       <Route element={<PrivateWrapper user={user} loading={loading} error={error} />}>
         <Route path="/admin" element={<Admin />} />

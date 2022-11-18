@@ -11,6 +11,7 @@ const PageTitles = {
   Contact: `Contact ${defaultTitle}`,
   PageNotFound: `Page not found ${defaultTitle}`,
   Login: `Login ${defaultTitle}`,
+  Register: `Register ${defaultTitle}`,
   Admin: `Admin ${defaultTitle}`,
   Default: `UK Runner ${defaultTitle}`,
 };
