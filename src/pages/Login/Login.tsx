@@ -1,5 +1,5 @@
-import { Container } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import { getAuth } from 'firebase/auth';
