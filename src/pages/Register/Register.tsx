@@ -16,6 +16,11 @@ import PageTitles from '../../constants/PageTitles';
 import { auth } from '../../helpers/firebase';
 import GridWrap from './Register.styles';
 
+enum ErrorMessages {
+  'auth/email-already-in-use' = 'This email already exists',
+  'auth/weak-password' = 'Password should be at least 6 characters',
+}
+
 function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -26,13 +31,6 @@ function Register() {
       navigate('/admin');
     }
   }, [user, loading, error, navigate]);
-  if (error) {
-    return (
-      <div>
-        <p>Error: {error.message}</p>
-      </div>
-    );
-  }
   return (
     <PageWrapper title={PageTitles.Register}>
       <>
@@ -48,6 +46,7 @@ function Register() {
             buttonType={ButtonTypes.submit}
             buttonText="Sign up"
             fullWidth
+            error={error ? ErrorMessages[error.code as keyof typeof ErrorMessages] : undefined}
           >
             <GridWrap container spacing={2}>
               <Grid item xs={12} sm={6}>
