@@ -3,7 +3,9 @@ import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
 
 import FormWrapper from '../../components/FormWrapper/FormWrapper';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
@@ -11,9 +13,26 @@ import { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
 import Icons from '../../constants/Icons';
 import PageTitles from '../../constants/PageTitles';
+import { auth } from '../../helpers/firebase';
 import GridWrap from './Register.styles';
 
 function Register() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  useEffect(() => {
+    if (user && !loading && !error) {
+      navigate('/admin');
+    }
+  }, [user, loading, error, navigate]);
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error.message}</p>
+      </div>
+    );
+  }
   return (
     <PageWrapper title={PageTitles.Register}>
       <>
@@ -24,6 +43,7 @@ function Register() {
             headerText="Register a new account"
             onSubmit={(e) => {
               e.preventDefault();
+              createUserWithEmailAndPassword(email, password);
             }}
             buttonType={ButtonTypes.submit}
             buttonText="Sign up"
@@ -52,7 +72,18 @@ function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id="email" label="Email Address" name="email" autoComplete="email" />
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -63,6 +94,10 @@ function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
