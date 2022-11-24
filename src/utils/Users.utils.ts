@@ -1,9 +1,9 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { auth, db, storage } from '../helpers/firebase';
-import { EditUser, GetUser, RegisterUser, User } from '../types/Users.types';
+import { EditUser, FollowUser, GetUser, RegisterUser, User } from '../types/Users.types';
 
 export const getUser = ({
   userID,
@@ -14,6 +14,8 @@ export const getUser = ({
   setBio,
   setUser,
   navigate,
+  setFollowers,
+  setFollowing,
 }: GetUser) => {
   const docRef = doc(db, 'users', userID);
   getDoc(docRef).then((response) => {
@@ -37,6 +39,12 @@ export const getUser = ({
       }
       if (setUser) {
         setUser(user);
+      }
+      if (setFollowers) {
+        setFollowers(userData?.followers || []);
+      }
+      if (setFollowing) {
+        setFollowing(userData?.following || []);
       }
     } else if (navigate) {
       navigate('/user-not-found');
@@ -115,4 +123,20 @@ export const registerUser = ({
     .catch((error) => {
       setRegisterError(error);
     });
+};
+
+export const followUser = ({ userToFollow, currentUser, setIsFollowing }: FollowUser) => {
+  updateDoc(doc(db, 'users', userToFollow), { followers: arrayUnion(currentUser) }).then(() => {
+    updateDoc(doc(db, 'users', currentUser), { following: arrayUnion(userToFollow) }).then(() => {
+      setIsFollowing(true);
+    });
+  });
+};
+
+export const unfollowUser = ({ userToFollow, currentUser, setIsFollowing }: FollowUser) => {
+  updateDoc(doc(db, 'users', userToFollow), { followers: arrayRemove(currentUser) }).then(() => {
+    updateDoc(doc(db, 'users', currentUser), { following: arrayRemove(userToFollow) }).then(() => {
+      setIsFollowing(false);
+    });
+  });
 };
