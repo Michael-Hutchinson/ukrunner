@@ -1,5 +1,5 @@
-import { Container } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import { getAuth } from 'firebase/auth';
@@ -8,6 +8,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 
 import FormWrapper from '../../components/FormWrapper/FormWrapper';
+import { LinkText } from '../../components/FormWrapper/FormWrapper.styles';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
@@ -53,6 +54,7 @@ function Login() {
             buttonText="Sign in"
             fullWidth
             error={error ? ErrorMessages[error.code as keyof typeof ErrorMessages] : undefined}
+            linkText={<LinkText to="/register">Not got an account? Register here</LinkText>}
           >
             <>
               <TextField

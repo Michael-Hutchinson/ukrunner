@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { styled as muistyled } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const FormContainer = muistyled(Box)`
@@ -34,4 +35,12 @@ export const FormFooter = muistyled(Box)`
 export const ButtonSection = styled.section`
   display: flex;
   justify-content: space-between;
+`;
+
+export const LinkText = styled(Link)`
+  color: #000;
+  margin-bottom: 0.938rem;
+  display: flex;
+  justify-content: center;
+  text-decoration: underline;
 `;
