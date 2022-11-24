@@ -33,11 +33,11 @@ function Profile() {
   const [isFollowing, setIsFollowing] = useState<boolean>();
   const isLoggedInUser = user?.uid === slug;
   useEffect(() => {
-    if (user && followers) {
+    if (slug && followers) {
       setIsLoading(false);
-      setIsFollowing(followers.includes(user.uid));
+      setIsFollowing(user ? followers.includes(user.uid) : false);
     }
-  }, [followers, user]);
+  }, [followers, slug, user]);
   useEffect(() => {
     if (slug) {
       getUser({
