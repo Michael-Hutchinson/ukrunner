@@ -1,8 +1,9 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-import { db, storage } from '../helpers/firebase';
-import { EditUser, GetUser, User } from '../types/Users.types';
+import { auth, db, storage } from '../helpers/firebase';
+import { EditUser, GetUser, RegisterUser, User } from '../types/Users.types';
 
 export const getUser = ({
   userID,
@@ -82,12 +83,36 @@ export const editUser = ({
   } else {
     userData = {
       ...userData,
-      fileName: originalFileName,
-      profilePicture: originalProfilePicture,
+      fileName: originalFileName || '',
+      profilePicture: originalProfilePicture || '',
     };
     setDoc(doc(db, 'users', userID), userData).then(() => {
       setSuccess(true);
       setSuccessMessage('User profile edited');
     });
   }
+};
+
+export const registerUser = ({
+  firstName,
+  surname,
+  email,
+  password,
+  setRegisterError,
+  signInWithEmailAndPassword,
+}: RegisterUser) => {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const userID = userCredential.user.uid;
+      const userData: User = {
+        firstName,
+        surname,
+      };
+      setDoc(doc(db, 'users', userID), userData).then(() => {
+        signInWithEmailAndPassword(email, password);
+      });
+    })
+    .catch((error) => {
+      setRegisterError(error);
+    });
 };

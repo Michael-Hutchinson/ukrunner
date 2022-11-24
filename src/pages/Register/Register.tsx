@@ -4,7 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 
 import FormWrapper from '../../components/FormWrapper/FormWrapper';
@@ -14,6 +14,7 @@ import Title from '../../components/shared/Title/Title';
 import Icons from '../../constants/Icons';
 import PageTitles from '../../constants/PageTitles';
 import { auth } from '../../helpers/firebase';
+import { registerUser } from '../../utils/Users.utils';
 import GridWrap from './Register.styles';
 
 enum ErrorMessages {
@@ -23,9 +24,12 @@ enum ErrorMessages {
 
 function Register() {
   const navigate = useNavigate();
+  const [firstName, setFirstName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  const [registerError, setRegisterError] = useState<{ code: string; message: string }>();
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
   useEffect(() => {
     if (user && !loading && !error) {
       navigate('/admin');
@@ -41,12 +45,19 @@ function Register() {
             headerText="Register a new account"
             onSubmit={(e) => {
               e.preventDefault();
-              createUserWithEmailAndPassword(email, password);
+              registerUser({
+                firstName,
+                surname,
+                email,
+                password,
+                setRegisterError,
+                signInWithEmailAndPassword,
+              });
             }}
             buttonType={ButtonTypes.submit}
             buttonText="Sign up"
             fullWidth
-            error={error ? ErrorMessages[error.code as keyof typeof ErrorMessages] : undefined}
+            error={registerError ? ErrorMessages[registerError.code as keyof typeof ErrorMessages] : undefined}
           >
             <GridWrap container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -58,16 +69,24 @@ function Register() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="surname"
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={surname}
+                  onChange={(e) => {
+                    setSurname(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
