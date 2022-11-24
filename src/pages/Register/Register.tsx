@@ -8,6 +8,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 
 import FormWrapper from '../../components/FormWrapper/FormWrapper';
+import { LinkText } from '../../components/FormWrapper/FormWrapper.styles';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { ButtonTypes } from '../../components/shared/Button/Button';
 import Title from '../../components/shared/Title/Title';
@@ -58,6 +59,7 @@ function Register() {
             buttonText="Sign up"
             fullWidth
             error={registerError ? ErrorMessages[registerError.code as keyof typeof ErrorMessages] : undefined}
+            linkText={<LinkText to="/login">Already got an account? Login here</LinkText>}
           >
             <GridWrap container spacing={2}>
               <Grid item xs={12} sm={6}>

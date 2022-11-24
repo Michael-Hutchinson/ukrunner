@@ -16,6 +16,7 @@ interface IFormWrapper {
   disabled?: boolean;
   fullWidth?: boolean;
   cancelClick?: () => void;
+  linkText?: ReactElement;
 }
 
 function FormWrapper({
@@ -29,6 +30,7 @@ function FormWrapper({
   disabled,
   fullWidth,
   cancelClick,
+  linkText,
 }: IFormWrapper) {
   return (
     <FormContainer>
@@ -46,6 +48,7 @@ function FormWrapper({
           )}
           <Button buttonType={buttonType} buttonText={buttonText} disabled={disabled} fullWidth={fullWidth} />
         </ButtonSection>
+        {linkText}
         {error && (
           <Alert sx={{ mb: 2 }} severity="error">
             {error}
