@@ -3,7 +3,7 @@ import { NavigateFunction } from 'react-router-dom';
 export interface User {
   firstName: string;
   surname: string;
-  bio: string;
+  bio?: string;
   profilePicture?: string;
   fileName?: string;
 }
@@ -30,4 +30,13 @@ export interface GetUser {
   setBio?: (bio: string) => void;
   setUser?: (user: string) => void;
   navigate?: NavigateFunction;
+}
+
+export interface RegisterUser {
+  firstName: string;
+  surname: string;
+  email: string;
+  password: string;
+  setRegisterError: (registerError: { code: string; message: string }) => void;
+  signInWithEmailAndPassword: (email: string, password: string) => void;
 }
