@@ -14,7 +14,7 @@ import PageTitles from '../../constants/PageTitles';
 import { auth } from '../../helpers/firebase';
 import { IBlog } from '../../types/Blog.types';
 import { getBlogsByAuthor } from '../../utils/Blog.utils';
-import { getUser } from '../../utils/Users.utils';
+import { followUser, getUser, unfollowUser } from '../../utils/Users.utils';
 import { BlogCard, BlogFooter, ChipParent, ChipStyle, FooterText, Image, ImageCard } from './Profile.styles';
 
 function Profile() {
@@ -27,13 +27,36 @@ function Profile() {
   const [surname, setSurname] = useState<string>('');
   const [bio, setBio] = useState<string>('');
   const [blogs, setBlogs] = useState<IBlog[]>();
+  const [followers, setFollowers] = useState<string[] | null>(null);
+  const [following, setFollowing] = useState<string[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState<boolean>();
   const isLoggedInUser = user?.uid === slug;
   useEffect(() => {
+    if (slug && followers) {
+      setIsLoading(false);
+      setIsFollowing(user ? followers.includes(user.uid) : false);
+    }
+  }, [followers, slug, user]);
+  useEffect(() => {
     if (slug) {
-      getUser({ userID: slug, setProfilePicture, setFileName, setFirstName, setSurname, setBio, navigate });
+      getUser({
+        userID: slug,
+        setProfilePicture,
+        setFileName,
+        setFirstName,
+        setSurname,
+        setBio,
+        navigate,
+        setFollowers,
+        setFollowing,
+      });
       getBlogsByAuthor(setBlogs, slug);
     }
   }, [navigate, slug]);
+  if (isLoading) {
+    return <p>loading</p>;
+  }
   return (
     <PageWrapper title={PageTitles.Default}>
       <>
@@ -46,15 +69,42 @@ function Profile() {
                 {firstName} {surname}
               </h2>
               <p>{bio}</p>
-              {isLoggedInUser ? (
+              <p>Followers: {followers?.length}</p>
+              <p>Following: {following?.length}</p>
+              {isLoggedInUser && (
                 <Button
                   buttonType={ButtonTypes.button}
                   buttonText="Edit Profile"
+                  fullWidth
                   onClick={() => {
                     navigate(`/admin/profile`);
                   }}
                 />
-              ) : null}
+              )}
+              {user && !isLoggedInUser && !isFollowing && (
+                <Button
+                  buttonType={ButtonTypes.button}
+                  buttonText="Follow"
+                  fullWidth
+                  onClick={() => {
+                    if (slug) {
+                      followUser({ userToFollow: slug, currentUser: user.uid, setIsFollowing });
+                    }
+                  }}
+                />
+              )}
+              {user && !isLoggedInUser && isFollowing && (
+                <Button
+                  buttonType={ButtonTypes.button}
+                  buttonText="Unfollow"
+                  fullWidth
+                  onClick={() => {
+                    if (slug) {
+                      unfollowUser({ userToFollow: slug, currentUser: user.uid, setIsFollowing });
+                    }
+                  }}
+                />
+              )}
             </Grid>
             <Grid item md={9} xs={12}>
               {blogs?.map((blog) => (
