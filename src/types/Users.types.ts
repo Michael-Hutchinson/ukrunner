@@ -30,6 +30,8 @@ export interface GetUser {
   setBio?: (bio: string) => void;
   setUser?: (user: string) => void;
   navigate?: NavigateFunction;
+  setFollowers?: (followers: string[]) => void;
+  setFollowing?: (following: string[]) => void;
 }
 
 export interface RegisterUser {
@@ -39,4 +41,10 @@ export interface RegisterUser {
   password: string;
   setRegisterError: (registerError: { code: string; message: string }) => void;
   signInWithEmailAndPassword: (email: string, password: string) => void;
+}
+
+export interface FollowUser {
+  userToFollow: string;
+  currentUser: string;
+  setIsFollowing: (isFollowing: boolean) => void;
 }
