@@ -46,7 +46,7 @@ function FollowModal({ isOpen, handleClose, userID }: ModalProps) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {displayUsers ? (
+          {followers?.length ? (
             displayUsers.map((user) => (
               <div key={`${user.firstName} ${user.surname}`}>
                 <LinkTag
@@ -58,11 +58,11 @@ function FollowModal({ isOpen, handleClose, userID }: ModalProps) {
                 >
                   {user.firstName} {user.surname}
                 </LinkTag>
-                <p>{user.firstName}</p>
+                <p>{user.profilePicture}</p>
               </div>
             ))
           ) : (
-            <p>loading</p>
+            <p>you have no followers</p>
           )}
         </Box>
       </Modal>
