@@ -48,3 +48,10 @@ export interface FollowUser {
   currentUser: string;
   setIsFollowing: (isFollowing: boolean) => void;
 }
+
+export interface FollowerData {
+  userIDS: string[];
+  setDisplayUsers: (
+    displayUsers: { firstName: string; surname: string; profilePicture: string; userID: string }[],
+  ) => void;
+}
