@@ -63,12 +63,15 @@ function Profile() {
     <PageWrapper title={PageTitles.Default}>
       <>
         <Title h1Text={`${firstName}'s Profile Page`} smallText={`View all of ${firstName}'s blogs below`} />
-        <FollowModal
-          isOpen={isModalOpen}
-          handleClose={() => {
-            setIsModalOpen(false);
-          }}
-        />
+        {slug && (
+          <FollowModal
+            userID={slug}
+            isOpen={isModalOpen}
+            handleClose={() => {
+              setIsModalOpen(false);
+            }}
+          />
+        )}
         <Container>
           <Grid container spacing={2}>
             <Grid item md={3} xs={12}>
