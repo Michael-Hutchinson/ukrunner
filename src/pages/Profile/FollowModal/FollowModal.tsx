@@ -1,7 +1,9 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { getFollowers, getModalFollow } from '../../../utils/Users.utils';
+import LinkTag from './FollowModal.styles';
 
 const style = {
   position: 'absolute' as const,
@@ -17,9 +19,24 @@ const style = {
 interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
+  userID: string;
 }
 
-function FollowModal({ isOpen, handleClose }: ModalProps) {
+function FollowModal({ isOpen, handleClose, userID }: ModalProps) {
+  const [followers, setFollowers] = useState<string[]>();
+  const [displayUsers, setDisplayUsers] = useState<
+    { firstName: string; surname: string; profilePicture: string; userID: string }[]
+  >([]);
+  useEffect(() => {
+    if (isOpen) {
+      getFollowers(setFollowers, userID);
+    }
+  }, [isOpen, userID]);
+  useEffect(() => {
+    if (followers?.length) {
+      getModalFollow({ userIDS: followers, setDisplayUsers });
+    }
+  }, [followers]);
   return (
     <div>
       <Modal
@@ -29,12 +46,24 @@ function FollowModal({ isOpen, handleClose }: ModalProps) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          {displayUsers ? (
+            displayUsers.map((user) => (
+              <div key={`${user.firstName} ${user.surname}`}>
+                <LinkTag
+                  onClick={() => {
+                    setDisplayUsers([]);
+                    handleClose();
+                  }}
+                  to={`/profile/${user.userID}`}
+                >
+                  {user.firstName} {user.surname}
+                </LinkTag>
+                <p>{user.firstName}</p>
+              </div>
+            ))
+          ) : (
+            <p>loading</p>
+          )}
         </Box>
       </Modal>
     </div>
