@@ -15,7 +15,8 @@ import { auth } from '../../helpers/firebase';
 import { IBlog } from '../../types/Blog.types';
 import { getBlogsByAuthor } from '../../utils/Blog.utils';
 import { followUser, getUser, unfollowUser } from '../../utils/Users.utils';
-import FollowModal from './FollowModal/FollowModal';
+import FollowersModal from './Modal/FollowersModal/FollowersModal';
+import FollowingModal from './Modal/FollowingModal/FollowingModal';
 import { BlogCard, BlogFooter, ChipParent, ChipStyle, FooterText, Image, ImageCard } from './Profile.styles';
 
 function Profile() {
@@ -33,7 +34,8 @@ function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState<boolean>();
   const isLoggedInUser = user?.uid === slug;
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
+  const [isFollowersModalOpen, setIsFollowersModalOpen] = useState(false);
   useEffect(() => {
     if (slug && followers) {
       setIsLoading(false);
@@ -64,11 +66,20 @@ function Profile() {
       <>
         <Title h1Text={`${firstName}'s Profile Page`} smallText={`View all of ${firstName}'s blogs below`} />
         {slug && (
-          <FollowModal
+          <FollowingModal
             userID={slug}
-            isOpen={isModalOpen}
+            isOpen={isFollowingModalOpen}
             handleClose={() => {
-              setIsModalOpen(false);
+              setIsFollowingModalOpen(false);
+            }}
+          />
+        )}
+        {slug && (
+          <FollowersModal
+            userID={slug}
+            isOpen={isFollowersModalOpen}
+            handleClose={() => {
+              setIsFollowersModalOpen(false);
             }}
           />
         )}
@@ -82,7 +93,7 @@ function Profile() {
               <p>{bio}</p>
               <Button
                 onClick={() => {
-                  setIsModalOpen(true);
+                  setIsFollowersModalOpen(true);
                 }}
                 fullWidth
                 buttonType={ButtonTypes.button}
@@ -90,7 +101,7 @@ function Profile() {
               />
               <Button
                 onClick={() => {
-                  setIsModalOpen(true);
+                  setIsFollowingModalOpen(true);
                 }}
                 fullWidth
                 buttonType={ButtonTypes.button}

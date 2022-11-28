@@ -151,6 +151,16 @@ export const getFollowers = (setFollowers: (followers: string[]) => void, userID
   });
 };
 
+export const getFollowing = (setFollowing: (following: string[]) => void, userID: string) => {
+  const docRef = doc(db, 'users', userID);
+  getDoc(docRef).then((response) => {
+    if (response.data()) {
+      const followingData = response.data();
+      setFollowing(followingData?.following || []);
+    }
+  });
+};
+
 export const getModalFollow = async ({ userIDS, setDisplayUsers }: FollowerData) => {
   const users: { firstName: string; surname: string; profilePicture: string; userID: string }[] = [];
   for (let i = 0; i < userIDS.length; i += 1) {

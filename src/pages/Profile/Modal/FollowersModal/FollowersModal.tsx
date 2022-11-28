@@ -2,8 +2,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import React, { useEffect, useState } from 'react';
 
-import { getFollowers, getModalFollow } from '../../../utils/Users.utils';
-import LinkTag from './FollowModal.styles';
+import { getFollowers, getModalFollow } from '../../../../utils/Users.utils';
+import LinkTag from './FollowersModal.styles';
 
 const style = {
   position: 'absolute' as const,
@@ -22,7 +22,7 @@ interface ModalProps {
   userID: string;
 }
 
-function FollowModal({ isOpen, handleClose, userID }: ModalProps) {
+function FollowersModal({ isOpen, handleClose, userID }: ModalProps) {
   const [followers, setFollowers] = useState<string[]>();
   const [displayUsers, setDisplayUsers] = useState<
     { firstName: string; surname: string; profilePicture: string; userID: string }[]
@@ -46,9 +46,9 @@ function FollowModal({ isOpen, handleClose, userID }: ModalProps) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {displayUsers.length ? (
+          {followers?.length ? (
             <div>
-              {followers?.length ? (
+              {displayUsers?.length ? (
                 displayUsers.map((user) => (
                   <div key={`${user.firstName} ${user.surname}`}>
                     <LinkTag
@@ -64,11 +64,11 @@ function FollowModal({ isOpen, handleClose, userID }: ModalProps) {
                   </div>
                 ))
               ) : (
-                <p>you have no followers</p>
+                <p>loading</p>
               )}
             </div>
           ) : (
-            <p>loading</p>
+            <p>you have no followers</p>
           )}
         </Box>
       </Modal>
@@ -76,4 +76,4 @@ function FollowModal({ isOpen, handleClose, userID }: ModalProps) {
   );
 }
 
-export default FollowModal;
+export default FollowersModal;
