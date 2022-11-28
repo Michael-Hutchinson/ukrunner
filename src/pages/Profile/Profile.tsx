@@ -15,6 +15,8 @@ import { auth } from '../../helpers/firebase';
 import { IBlog } from '../../types/Blog.types';
 import { getBlogsByAuthor } from '../../utils/Blog.utils';
 import { followUser, getUser, unfollowUser } from '../../utils/Users.utils';
+import FollowersModal from './Modal/FollowersModal/FollowersModal';
+import FollowingModal from './Modal/FollowingModal/FollowingModal';
 import { BlogCard, BlogFooter, ChipParent, ChipStyle, FooterText, Image, ImageCard } from './Profile.styles';
 
 function Profile() {
@@ -32,6 +34,8 @@ function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState<boolean>();
   const isLoggedInUser = user?.uid === slug;
+  const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
+  const [isFollowersModalOpen, setIsFollowersModalOpen] = useState(false);
   useEffect(() => {
     if (slug && followers) {
       setIsLoading(false);
@@ -61,6 +65,24 @@ function Profile() {
     <PageWrapper title={PageTitles.Default}>
       <>
         <Title h1Text={`${firstName}'s Profile Page`} smallText={`View all of ${firstName}'s blogs below`} />
+        {slug && (
+          <FollowingModal
+            userID={slug}
+            isOpen={isFollowingModalOpen}
+            handleClose={() => {
+              setIsFollowingModalOpen(false);
+            }}
+          />
+        )}
+        {slug && (
+          <FollowersModal
+            userID={slug}
+            isOpen={isFollowersModalOpen}
+            handleClose={() => {
+              setIsFollowersModalOpen(false);
+            }}
+          />
+        )}
         <Container>
           <Grid container spacing={2}>
             <Grid item md={3} xs={12}>
@@ -69,8 +91,22 @@ function Profile() {
                 {firstName} {surname}
               </h2>
               <p>{bio}</p>
-              <p>Followers: {followers?.length}</p>
-              <p>Following: {following?.length}</p>
+              <Button
+                onClick={() => {
+                  setIsFollowersModalOpen(true);
+                }}
+                fullWidth
+                buttonType={ButtonTypes.button}
+                buttonText={`Followers: ${followers?.length.toString()}`}
+              />
+              <Button
+                onClick={() => {
+                  setIsFollowingModalOpen(true);
+                }}
+                fullWidth
+                buttonType={ButtonTypes.button}
+                buttonText={`Following: ${following?.length.toString()}`}
+              />
               {isLoggedInUser && (
                 <Button
                   buttonType={ButtonTypes.button}

@@ -3,7 +3,7 @@ import { arrayRemove, arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebas
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { auth, db, storage } from '../helpers/firebase';
-import { EditUser, FollowUser, GetUser, RegisterUser, User } from '../types/Users.types';
+import { EditUser, FollowerData, FollowUser, GetUser, RegisterUser, User } from '../types/Users.types';
 
 export const getUser = ({
   userID,
@@ -139,4 +139,43 @@ export const unfollowUser = ({ userToFollow, currentUser, setIsFollowing }: Foll
       setIsFollowing(false);
     });
   });
+};
+
+export const getFollowers = (setFollowers: (followers: string[]) => void, userID: string) => {
+  const docRef = doc(db, 'users', userID);
+  getDoc(docRef).then((response) => {
+    if (response.data()) {
+      const followerData = response.data();
+      setFollowers(followerData?.followers || []);
+    }
+  });
+};
+
+export const getFollowing = (setFollowing: (following: string[]) => void, userID: string) => {
+  const docRef = doc(db, 'users', userID);
+  getDoc(docRef).then((response) => {
+    if (response.data()) {
+      const followingData = response.data();
+      setFollowing(followingData?.following || []);
+    }
+  });
+};
+
+export const getModalFollow = async ({ userIDS, setDisplayUsers }: FollowerData) => {
+  const users: { firstName: string; surname: string; profilePicture: string; userID: string }[] = [];
+  for (let i = 0; i < userIDS.length; i += 1) {
+    const userDoc = doc(db, 'users', userIDS[i]);
+    await getDoc(userDoc).then((response) => {
+      if (response.data()) {
+        const data = response.data();
+        users.push({
+          firstName: data?.firstName,
+          surname: data?.surname,
+          profilePicture: data?.profilePicture,
+          userID: userIDS[i],
+        });
+      }
+    });
+  }
+  setDisplayUsers(users);
 };
