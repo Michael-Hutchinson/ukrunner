@@ -11,6 +11,9 @@ export const ActivitySection = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: auto;
+  @media (max-width: 48rem) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ActivityItem = styled.div`

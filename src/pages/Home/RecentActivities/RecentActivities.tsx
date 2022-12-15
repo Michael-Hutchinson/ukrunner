@@ -1,6 +1,9 @@
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NearMeIcon from '@mui/icons-material/NearMe';
+import TimerIcon from '@mui/icons-material/Timer';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -65,11 +68,11 @@ function RecentActivities() {
                   </TopSection>
                   <TopSection bottom>
                     <ActivitySubTitle small>
-                      {activity.average_heartrate}
-                      <sub>bpm</sub>
+                      {((activity.moving_time / 60 / activity.distance) * 1000).toFixed(2)}
+                      <sub>/km</sub>
                       <ParText>
-                        <FavoriteIcon fontSize="small" />
-                        Avg. Heartrate
+                        <TimerIcon fontSize="small" />
+                        Avg. Pace
                       </ParText>
                     </ActivitySubTitle>
                     <ActivitySubTitle small>
@@ -81,11 +84,14 @@ function RecentActivities() {
                       </ParText>
                     </ActivitySubTitle>
                     <ActivitySubTitle small>
-                      {activity.average_heartrate}
-                      <sub>bpm</sub>
+                      {activity.sport_type}
                       <ParText>
-                        <FavoriteIcon fontSize="small" />
-                        Avg. Heartrate
+                        {activity.type === ('Hike' || 'Run') ? (
+                          <DirectionsRunIcon fontSize="small" />
+                        ) : (
+                          <DirectionsBikeIcon fontSize="small" />
+                        )}
+                        Activity Type
                       </ParText>
                     </ActivitySubTitle>
                   </TopSection>
