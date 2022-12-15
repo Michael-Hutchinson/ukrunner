@@ -1,4 +1,5 @@
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -62,9 +63,32 @@ function RecentActivities() {
                       </ActivitySubTitle>
                     )}
                   </TopSection>
-                  <div>
-                    <p>Avg. Heartrate: {activity.average_heartrate}</p>
-                  </div>
+                  <TopSection bottom>
+                    <ActivitySubTitle small>
+                      {activity.average_heartrate}
+                      <sub>bpm</sub>
+                      <ParText>
+                        <FavoriteIcon fontSize="small" />
+                        Avg. Heartrate
+                      </ParText>
+                    </ActivitySubTitle>
+                    <ActivitySubTitle small>
+                      {activity.average_heartrate}
+                      <sub>bpm</sub>
+                      <ParText>
+                        <FavoriteIcon fontSize="small" />
+                        Avg. Heartrate
+                      </ParText>
+                    </ActivitySubTitle>
+                    <ActivitySubTitle small>
+                      {activity.average_heartrate}
+                      <sub>bpm</sub>
+                      <ParText>
+                        <FavoriteIcon fontSize="small" />
+                        Avg. Heartrate
+                      </ParText>
+                    </ActivitySubTitle>
+                  </TopSection>
                 </div>
                 {polyline && (
                   <ActivityImage

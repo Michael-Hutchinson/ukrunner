@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Section = styled.section`
   border-bottom: 1px solid var(--lightGrey);
@@ -45,9 +45,15 @@ export const ActivityImage = styled.svg`
   opacity: 0.1;
 `;
 
-export const ActivitySubTitle = styled.span`
+export const ActivitySubTitle = styled.span<{ small?: boolean }>`
   font-size: 3.2rem;
   font-weight: 600;
+  ${(props) =>
+    props.small &&
+    css`
+      font-size: 1.6rem;
+      text-align: left;
+    `}
   color: #454545;
   sub {
     vertical-align: baseline;
@@ -55,9 +61,15 @@ export const ActivitySubTitle = styled.span`
   }
 `;
 
-export const TopSection = styled.div`
+export const TopSection = styled.div<{ bottom?: boolean }>`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
+  ${(props) =>
+    props.bottom &&
+    css`
+      margin-bottom: 0;
+    `}
 `;
 
 export const ParText = styled.p`
