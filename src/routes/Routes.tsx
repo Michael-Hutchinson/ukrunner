@@ -13,14 +13,11 @@ import AdminProfile from '../pages/Admin/Profile/AdminProfile';
 import Blog from '../pages/Blog/Blog';
 import SingleBlog from '../pages/Blog/SingleBlog/SingleBlog';
 import Contact from '../pages/Contact/Contact';
-import Events from '../pages/Events/Events';
 import Home from '../pages/Home/Home';
 import Login from '../pages/Login/Login';
 import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import Profile from '../pages/Profile/Profile';
-import Race from '../pages/Race/Race';
 import Register from '../pages/Register/Register';
-import Shop from '../pages/Shop/Shop';
 import Training from '../pages/Training/Training';
 
 interface Error {
@@ -62,10 +59,7 @@ function RouteHandler() {
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<SingleBlog />} />
       <Route path="/profile/:slug" element={<Profile />} />
-      <Route path="/race" element={<Race />} />
       <Route path="/training" element={<Training />} />
-      <Route path="/events" element={<Events />} />
-      <Route path="/shop" element={<Shop />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<PageNotFound />} />
       <Route element={<ProtectedWrapper user={user} loading={loading} error={error} />}>
