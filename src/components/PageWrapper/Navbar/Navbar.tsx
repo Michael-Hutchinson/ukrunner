@@ -14,10 +14,7 @@ function Navbar() {
         <Links to="/">Home</Links>
         <Links to="/about">About</Links>
         <Links to="/blog">Blog</Links>
-        <Links to="/race">Race History</Links>
         <Links to="/training">Training</Links>
-        <Links to="/events">Events</Links>
-        <Links to="/shop">Shop</Links>
         <Links to="/contact">Contact</Links>
       </MobileLinks>
     </Nav>

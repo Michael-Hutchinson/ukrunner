@@ -16,17 +16,11 @@ export const NavLink = styled(Link)`
     grid-area: about;
     display: flex;
   }
-  &#race {
-    grid-area: race;
-  }
-  &#events {
-    grid-area: events;
-  }
   &#training {
     grid-area: training;
   }
-  &#shop {
-    grid-area: shop;
+  &#contact {
+    grid-area: contact;
   }
   position: relative;
 `;
@@ -38,7 +32,7 @@ export const Image = styled.img`
 
 export const ImageBox = styled.div`
   display: grid;
-  grid-template-areas: 'news news about about' 'race events training shop';
+  grid-template-areas: 'news about' 'training contact';
   padding: 20px 0 20px;
   @media (min-width: 48rem) {
     width: 46.875rem;
@@ -47,7 +41,7 @@ export const ImageBox = styled.div`
     width: 60.625rem;
   }
   @media (min-width: 75rem) {
-    width: 73.125rem;
+    width: 63.125rem;
   }
 `;
 

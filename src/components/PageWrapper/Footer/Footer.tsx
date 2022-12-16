@@ -17,22 +17,16 @@ function Footer() {
         <Title h2Text="Useful Links" smallText="Navigate using the links below" />
         <List>
           <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
             <Link to="/about">About</Link>
           </li>
           <li>
             <Link to="/blog">Blog</Link>
           </li>
           <li>
-            <Link to="/race">Race History</Link>
-          </li>
-          <li>
             <Link to="/training">Training</Link>
-          </li>
-          <li>
-            <Link to="/events">Events</Link>
-          </li>
-          <li>
-            <Link to="/shop">Shop</Link>
           </li>
           <li>
             <Link to="/contact">Contact</Link>
