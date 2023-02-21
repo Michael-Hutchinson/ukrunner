@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const PageFooter = styled.footer`
-  margin-top: 20px;
   background-color: #111;
   text-align: center;
   border-top: 8px solid var(--yellow);

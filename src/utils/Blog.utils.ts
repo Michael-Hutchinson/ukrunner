@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, Timestamp } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, query, setDoc, Timestamp } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { db, storage } from '../helpers/firebase';
@@ -203,5 +203,26 @@ export const getBlogsByAuthor = (setBlogs: (blog: IBlog[]) => void, authorID: st
     });
     const filterBlogs = blogs.filter((thisBlog) => thisBlog.author === authorID);
     setBlogs(filterBlogs);
+  });
+};
+
+export const getHomepageBlogs = (setBlogs: (blog: IBlog[]) => void) => {
+  const limitBlogs = query(collection(db, 'blog'), limit(3));
+  getDocs(limitBlogs).then((response) => {
+    const blogs: IBlog[] = [];
+    response.forEach((blog) => {
+      const singleBlog = blog.data();
+      const blogData = {
+        title: singleBlog?.title,
+        body: singleBlog?.body,
+        date: singleBlog?.date,
+        categories: singleBlog?.categories,
+        image: singleBlog?.image,
+        fileName: singleBlog?.fileName,
+        author: singleBlog?.author,
+      };
+      blogs.push(blogData);
+    });
+    setBlogs(blogs);
   });
 };
