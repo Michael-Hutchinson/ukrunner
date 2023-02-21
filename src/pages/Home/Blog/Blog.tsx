@@ -7,7 +7,7 @@ import Button, { ButtonTypes } from '../../../components/shared/Button/Button';
 import Title from '../../../components/shared/Title/Title';
 import { IBlog } from '../../../types/Blog.types';
 import { getHomepageBlogs } from '../../../utils/Blog.utils';
-import { Image, Item, Section } from './Blog.styles';
+import { Container, Image, Item, Section } from './Blog.styles';
 
 function Blog() {
   const [blogs, setBlogs] = useState<IBlog[]>();
@@ -18,7 +18,7 @@ function Blog() {
   return (
     <Section>
       <Title h2Text="Latest News" smallText="Keep up to date with my blog" />
-      <Grid style={{ maxWidth: '80%', margin: '0 auto' }} container spacing={2}>
+      <Container container spacing={2}>
         {blogs?.map((blog) => (
           <Grid item key={blog.title} xs={12} sm={12} md={4} lg={4}>
             <Item>
@@ -39,7 +39,7 @@ function Blog() {
             </Item>
           </Grid>
         ))}
-      </Grid>
+      </Container>
       <Button buttonType={ButtonTypes.button} buttonText="View all blogs" onClick={() => navigate('/blog')} />
     </Section>
   );

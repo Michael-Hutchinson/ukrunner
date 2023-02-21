@@ -1,5 +1,6 @@
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
 import { styled as MUIStyled } from '@mui/material/styles';
 import styled from 'styled-components';
 
@@ -20,4 +21,9 @@ export const Item = MUIStyled(Card)`
   height: 100%;
   display: flex;
   flex-direction: column;
+`;
+
+export const Container = MUIStyled(Grid)`
+  max-width: 80%;
+  margin: 0 auto
 `;
