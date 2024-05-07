@@ -29,7 +29,7 @@ export const getActivities = ({
   setActivities: (state: ActivityData[]) => void;
   pageNumber?: number;
 }) => {
-  fetch(`${callActivities}${accessToken}&page=${pageNumber || `1`}`)
+  fetch(`${callActivities}${accessToken}&page=${pageNumber ?? 1}`)
     .then((res) => res.json())
     .then((data) => {
       if (data.message === 'Authorization Error') {
