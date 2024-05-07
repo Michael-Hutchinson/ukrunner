@@ -3,7 +3,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 
 import { db, storage } from '../helpers/firebase';
 import { IBlog, IEditBlog, ISaveBlog } from '../types/Blog.types';
-import { getUser } from './Users.utils';
+import { fetchUserDetails, getUser } from './Users.utils';
 
 export const saveBlog = async ({
   title,
@@ -96,7 +96,7 @@ interface GetBlogParams {
   setSurname?: (surname: string) => void;
 }
 
-export const getBlog = ({
+export const getBlog = async ({
   blogID,
   setTitle,
   setBody,
@@ -109,53 +109,57 @@ export const getBlog = ({
   setFirstName,
   setSurname,
 }: GetBlogParams) => {
-  const docRef = doc(db, 'blog', blogID);
-  getDoc(docRef).then((response) => {
-    if (response.data()) {
-      const blogData = response.data();
-      setTitle(blogData?.title);
-      setBody(blogData?.body);
-      if (setImageURL) {
-        setImageURL(blogData?.image);
-      }
-      if (setCategories) {
-        setCategories(blogData?.categories);
-      }
-      if (setOriginalTitle) {
-        setOriginalTitle(blogData?.title);
-      }
-      if (setFileName) {
-        setFileName(blogData?.fileName);
-      }
-      if (setDate) {
-        setDate(blogData?.date);
-      }
-      if (setAuthor) {
-        getUser({ userID: blogData?.author, setFirstName, setSurname });
-        setAuthor(blogData?.author);
+  try {
+    const docRef = doc(db, 'blog', blogID);
+    const response = await getDoc(docRef);
+    const blogData = response.data();
+
+    if (blogData) {
+      const { title, body, image, categories, fileName, date, author } = blogData;
+      setTitle(title);
+      setBody(body);
+      setImageURL?.(image);
+      setCategories?.(categories);
+      setOriginalTitle?.(title);
+      setFileName?.(fileName);
+      setDate?.(date);
+
+      if (author) {
+        getUser({ userID: author, setFirstName, setSurname });
+        setAuthor?.(author);
       }
     }
-  });
+  } catch (error) {
+    console.error('Failed to fetch blog data:', error);
+  }
 };
 
-export const getBlogs = (setBlogs: (blog: IBlog[]) => void) => {
-  getDocs(collection(db, 'blog')).then((response) => {
-    const blogs: IBlog[] = [];
-    response.forEach((blog) => {
-      const singleBlog = blog.data();
-      const blogData = {
-        title: singleBlog?.title,
-        body: singleBlog?.body,
-        date: singleBlog?.date,
-        categories: singleBlog?.categories,
-        image: singleBlog?.image,
-        fileName: singleBlog?.fileName,
-        author: singleBlog?.author,
+export const getBlogs = async (setBlogs: (blog: IBlog[]) => void) => {
+  const response = await getDocs(collection(db, 'blog'));
+  const blogsPromises = response.docs.map(async (blog) => {
+    const singleBlog = blog.data();
+    try {
+      const authorDetails = await fetchUserDetails(singleBlog.author);
+      return {
+        title: singleBlog.title,
+        body: singleBlog.body,
+        date: singleBlog.date,
+        categories: singleBlog.categories,
+        image: singleBlog.image,
+        fileName: singleBlog.fileName,
+        author: singleBlog.author,
+        authorName: `${authorDetails?.firstName} ${authorDetails?.surname}`, // Concatenate first name and surname
+        authorProfilePicture: authorDetails?.profilePicture,
       };
-      blogs.push(blogData);
-    });
-    setBlogs(blogs);
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      return null; // Handle the error appropriately
+    }
   });
+
+  const blogs = await Promise.all(blogsPromises);
+  const validBlogs = blogs.filter((blog) => blog !== null) as IBlog[]; // Cast to IBlog[] after filtering out nulls
+  setBlogs(validBlogs);
 };
 
 export const deleteBlog = (
