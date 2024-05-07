@@ -39,19 +39,16 @@ function SingleBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(
-        slug,
+      getBlog({
+        blogID: slug,
         setTitle,
         setBody,
         setImageURL,
-        undefined,
-        undefined,
-        undefined,
         setDate,
         setAuthor,
         setFirstName,
         setSurname,
-      );
+      });
     }
     if (valid === false) {
       navigate('/blog');

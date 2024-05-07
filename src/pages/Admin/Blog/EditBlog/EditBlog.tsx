@@ -61,7 +61,15 @@ function EditBlog() {
   }, [titles, slug]);
   useEffect(() => {
     if (valid && slug) {
-      getBlog(slug, setTitle, setBody, setImageURL, setSelectedCategories, setOriginalTitle, setFileName);
+      getBlog({
+        blogID: slug,
+        setTitle,
+        setBody,
+        setImageURL,
+        setCategories: setSelectedCategories,
+        setOriginalTitle,
+        setFileName,
+      });
     }
     if (valid === false) {
       navigate('/admin/blog');
