@@ -5,7 +5,22 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 import { auth, db, storage } from '../helpers/firebase';
 import { EditUser, FollowerData, FollowUser, GetUser, RegisterUser, User } from '../types/Users.types';
 
-export const getUser = ({
+export const fetchUserDetails = async (userID: string) => {
+  const docRef = doc(db, 'users', userID);
+  const response = await getDoc(docRef);
+  const userData = response.data();
+  if (userData) {
+    return {
+      firstName: userData.firstName,
+      surname: userData.surname,
+      profilePicture: userData.profilePicture,
+      bio: userData.bio,
+    };
+  }
+  return null;
+};
+
+export const getUser = async ({
   userID,
   setFirstName,
   setSurname,
@@ -17,39 +32,27 @@ export const getUser = ({
   setFollowers,
   setFollowing,
 }: GetUser) => {
-  const docRef = doc(db, 'users', userID);
-  getDoc(docRef).then((response) => {
-    if (response.data()) {
-      const user = response.id;
-      const userData = response.data();
-      if (setFirstName) {
-        setFirstName(userData?.firstName);
-      }
-      if (setSurname) {
-        setSurname(userData?.surname);
-      }
-      if (setProfilePicture) {
-        setProfilePicture(userData?.profilePicture);
-      }
-      if (setBio) {
-        setBio(userData?.bio);
-      }
-      if (setFileName) {
-        setFileName(userData?.fileName);
-      }
-      if (setUser) {
-        setUser(user);
-      }
-      if (setFollowers) {
-        setFollowers(userData?.followers || []);
-      }
-      if (setFollowing) {
-        setFollowing(userData?.following || []);
-      }
-    } else if (navigate) {
-      navigate('/user-not-found');
+  try {
+    const docRef = doc(db, 'users', userID);
+    const response = await getDoc(docRef);
+    const userData = response.data();
+
+    if (userData) {
+      setFirstName?.(userData.firstName);
+      setSurname?.(userData.surname);
+      setProfilePicture?.(userData.profilePicture);
+      setBio?.(userData.bio);
+      setFileName?.(userData.fileName);
+      setUser?.(response.id);
+      setFollowers?.(userData.followers || []);
+      setFollowing?.(userData.following || []);
+    } else {
+      navigate?.('/user-not-found');
     }
-  });
+  } catch (error) {
+    console.error('Failed to fetch user data:', error);
+    navigate?.('/error');
+  }
 };
 
 export const editUser = ({
@@ -91,8 +94,8 @@ export const editUser = ({
   } else {
     userData = {
       ...userData,
-      fileName: originalFileName || '',
-      profilePicture: originalProfilePicture || '',
+      fileName: originalFileName ?? '',
+      profilePicture: originalProfilePicture ?? '',
     };
     setDoc(doc(db, 'users', userID), userData).then(() => {
       setSuccess(true);
