@@ -15,6 +15,7 @@ export interface IBlog {
   author: string;
   image?: string;
   fileName?: string;
+  authorName?: string;
 }
 
 type BlogProps = {
