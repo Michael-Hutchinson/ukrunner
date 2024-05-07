@@ -4,7 +4,7 @@ import { CardContent, Container, FormControl, Grid, InputLabel, MenuItem, Select
 import TextField from '@mui/material/TextField';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button, { ButtonTypes } from '../../components/shared/Button/Button';
@@ -62,7 +62,7 @@ function Blog() {
                       <ChipStyle key={cat} label={cat} />
                     ))}
                   </ChipParent>
-                  <ImageCard component="img" image={blog.image || 'https://source.unsplash.com/random'} alt="random" />
+                  <ImageCard component="img" image={blog.image ?? 'https://source.unsplash.com/random'} alt="random" />
                   <CardContent>
                     <Typography component="h2" variant="h5">
                       {blog.title}
@@ -77,7 +77,10 @@ function Blog() {
                     />
                   </CardContent>
                   <BlogFooter>
-                    <FooterText component="p">Last updated on {blog.date.toDate().toDateString()}.</FooterText>
+                    <FooterText component="p">
+                      Last updated on {blog.date.toDate().toDateString()} by{' '}
+                      <Link to={`/profile/${blog.author}`}>{blog.authorName}</Link>
+                    </FooterText>
                   </BlogFooter>
                 </BlogCard>
               ))}
