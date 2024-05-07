@@ -5,7 +5,7 @@ import { db, storage } from '../helpers/firebase';
 import { IBlog, IEditBlog, ISaveBlog } from '../types/Blog.types';
 import { getUser } from './Users.utils';
 
-export const saveBlog = ({
+export const saveBlog = async ({
   title,
   body,
   categories,
@@ -18,45 +18,30 @@ export const saveBlog = ({
   originalFileName,
 }: ISaveBlog) => {
   const splitTitle = title.toLowerCase().replaceAll(' ', '-');
-  let docData: IBlog = {
+  const docData: IBlog = {
     title,
     body,
     categories,
     date: Timestamp.fromDate(new Date()),
     author,
+    fileName: file ? fileName : originalFileName,
+    image: originalImageURL,
   };
+
   if (file && fileName) {
     const blogImageRef = ref(storage, fileName);
-    uploadBytes(blogImageRef, file).then(() => {
-      getDownloadURL(blogImageRef).then((imageURL) => {
-        docData = {
-          ...docData,
-          fileName,
-          image: imageURL,
-        };
-        if (originalFileName && originalImageURL) {
-          const deleteRef = ref(storage, originalFileName);
-          deleteObject(deleteRef);
-        }
-        setDoc(doc(db, 'blog', splitTitle), docData).then(() => {
-          navigate(`/admin/blog?success=true&message=${message}`);
-        });
-      });
-    });
-  } else {
-    docData = {
-      title,
-      body,
-      categories,
-      date: Timestamp.fromDate(new Date()),
-      author,
-      fileName: originalFileName,
-      image: originalImageURL,
-    };
-    setDoc(doc(db, 'blog', splitTitle), docData).then(() => {
-      navigate(`/admin/blog?success=true&message=${message}`);
-    });
+    await uploadBytes(blogImageRef, file);
+    const imageURL = await getDownloadURL(blogImageRef);
+    docData.image = imageURL;
+
+    if (originalFileName && originalImageURL) {
+      const deleteRef = ref(storage, originalFileName);
+      await deleteObject(deleteRef);
+    }
   }
+
+  await setDoc(doc(db, 'blog', splitTitle), docData);
+  navigate(`/admin/blog?success=true&message=${message}`);
 };
 
 export const getBlogTitles = (setTitles: (titles: string[]) => void) => {
@@ -97,19 +82,33 @@ export const editBlog = ({
   deleteDoc(doc(db, 'blog', newTitle));
 };
 
-export const getBlog = (
-  blogID: string,
-  setTitle: (title: string) => void,
-  setBody: (body: string) => void,
-  setImageURL?: (imageURL: string) => void,
-  setCategories?: (categories: string[]) => void,
-  setOriginalTitle?: (originalTitle: string) => void,
-  setFileName?: (fileName: string) => void,
-  setDate?: (date: Timestamp) => void,
-  setAuthor?: (author: string) => void,
-  setFirstName?: (firstName: string) => void,
-  setSurname?: (surname: string) => void,
-) => {
+interface GetBlogParams {
+  blogID: string;
+  setTitle: (title: string) => void;
+  setBody: (body: string) => void;
+  setImageURL?: (imageURL: string) => void;
+  setCategories?: (categories: string[]) => void;
+  setOriginalTitle?: (originalTitle: string) => void;
+  setFileName?: (fileName: string) => void;
+  setDate?: (date: Timestamp) => void;
+  setAuthor?: (author: string) => void;
+  setFirstName?: (firstName: string) => void;
+  setSurname?: (surname: string) => void;
+}
+
+export const getBlog = ({
+  blogID,
+  setTitle,
+  setBody,
+  setImageURL,
+  setCategories,
+  setOriginalTitle,
+  setFileName,
+  setDate,
+  setAuthor,
+  setFirstName,
+  setSurname,
+}: GetBlogParams) => {
   const docRef = doc(db, 'blog', blogID);
   getDoc(docRef).then((response) => {
     if (response.data()) {
@@ -188,7 +187,7 @@ export const getBlogCategories = (setCategories: (categories: string[]) => void)
 export const getBlogsByAuthor = (setBlogs: (blog: IBlog[]) => void, authorID: string) => {
   getDocs(collection(db, 'blog')).then(async (response) => {
     const blogs: IBlog[] = [];
-    await response.forEach((blog) => {
+    response.forEach((blog) => {
       const singleBlog = blog.data();
       const blogData = {
         title: singleBlog?.title,
