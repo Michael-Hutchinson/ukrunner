@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import { styled as MUIStyled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const ImageCard = MUIStyled(CardMedia)({
@@ -68,4 +69,8 @@ export const ChipStyle = MUIStyled(Chip)`
   font-size: 10px;
   font-weight: bold;
   color: #FFFFFF;
+`;
+
+export const ALink = styled(Link)`
+  color: #757575;
 `;

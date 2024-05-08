@@ -4,7 +4,7 @@ import { CardContent, Container, FormControl, Grid, InputLabel, MenuItem, Select
 import TextField from '@mui/material/TextField';
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Button, { ButtonTypes } from '../../components/shared/Button/Button';
@@ -13,6 +13,7 @@ import PageTitles from '../../constants/PageTitles';
 import { IBlog } from '../../types/Blog.types';
 import { getBlogCategories, getBlogs } from '../../utils/Blog.utils';
 import {
+  ALink,
   BlogCard,
   BlogFooter,
   ChipParent,
@@ -79,7 +80,7 @@ function Blog() {
                   <BlogFooter>
                     <FooterText component="p">
                       Last updated on {blog.date.toDate().toDateString()} by{' '}
-                      <Link to={`/profile/${blog.author}`}>{blog.authorName}</Link>
+                      <ALink to={`/profile/${blog.author}`}>{blog.authorName}</ALink>
                     </FooterText>
                   </BlogFooter>
                 </BlogCard>
