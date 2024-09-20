@@ -4,12 +4,12 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import TimerIcon from '@mui/icons-material/Timer';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button, { ButtonTypes } from '../../../components/shared/Button/Button';
 import Title from '../../../components/shared/Title/Title';
-import { StravaContext } from '../../../helpers/context';
+import { useStrava } from '../../../helpers/StravaContext';
 import {
   ActivityImage,
   ActivityInner,
@@ -24,13 +24,13 @@ import {
 import convertPolylineIntoRouteInfo from './RecentActivities.utils';
 
 function RecentActivities() {
-  const activityData = useContext(StravaContext);
+  const { activities } = useStrava();
   const navigate = useNavigate();
   return (
     <Section>
       <Title h2Text="Activities" smallText="All my strava activities" />
       <ActivitySection>
-        {activityData?.activities?.slice(0, 2).map((activity) => {
+        {activities?.slice(0, 2).map((activity) => {
           const polyline = activity.map.summary_polyline
             ? convertPolylineIntoRouteInfo(activity.map.summary_polyline)
             : null;
@@ -86,7 +86,7 @@ function RecentActivities() {
                     <ActivitySubTitle small>
                       {activity.sport_type}
                       <ParText>
-                        {activity.type === ('Hike' || 'Run') ? (
+                        {activity.type === 'Hike' || activity.type === 'Run' ? (
                           <DirectionsRunIcon fontSize="small" />
                         ) : (
                           <DirectionsBikeIcon fontSize="small" />
