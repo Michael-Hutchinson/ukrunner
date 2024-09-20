@@ -1,13 +1,13 @@
 import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import Title from '../../components/shared/Title/Title';
 import Icons from '../../constants/Icons';
 import PageTitles from '../../constants/PageTitles';
-import { StravaContext } from '../../helpers/context';
+import { useStrava } from '../../helpers/StravaContext';
 import AboutImage from '../../images/about.png';
 import {
   ButtonTab,
@@ -22,7 +22,7 @@ import {
 } from './About.styles';
 
 function About() {
-  const statsData = useContext(StravaContext);
+  const statsData = useStrava();
   const data = statsData?.stats;
   const runningActivities = data?.all_run_totals?.count || 0;
   const runningDistance = (data?.all_run_totals.distance || 0) / 1000;
