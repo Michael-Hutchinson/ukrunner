@@ -8,7 +8,7 @@ interface ITitleProps {
   smallText: string;
 }
 
-function Title({ h1Text, h2Text, smallText }: ITitleProps) {
+function Title({ h1Text, h2Text, smallText }: Readonly<ITitleProps>) {
   return (
     <Section>
       {h1Text && <h1>{h1Text}</h1>}
