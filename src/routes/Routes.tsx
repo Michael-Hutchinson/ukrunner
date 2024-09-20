@@ -1,4 +1,3 @@
-import { User } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
@@ -20,60 +19,54 @@ import Profile from '../pages/Profile/Profile';
 import Register from '../pages/Register/Register';
 import Training from '../pages/Training/Training';
 
-interface Error {
-  cause?: unknown;
+const useAuth = () => {
+  const [user, loading, error] = useAuthState(auth);
+  return { user, loading, error };
+};
+
+interface AuthWrapperProps {
+  requireAuth: boolean;
+  redirectTo: string;
 }
 
-interface WrapperProps {
-  user: User | null | undefined;
-  loading: boolean;
-  error: Error | undefined;
-}
+function AuthWrapper({ requireAuth, redirectTo }: Readonly<AuthWrapperProps>) {
+  const { user, loading, error } = useAuth();
 
-function PrivateWrapper({ user, loading, error }: WrapperProps) {
-  if (loading) {
-    return <p>Loading</p>;
-  }
-  if (user && !loading && !error) {
-    return <Outlet />;
-  }
-  return <Navigate to="/login" />;
-}
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
-function ProtectedWrapper({ user, loading, error }: WrapperProps) {
-  if (loading) {
-    return <p>Loading</p>;
-  }
-  if (user && !loading && !error) {
-    return <Navigate to="/admin" />;
-  }
+  if (requireAuth && !user) return <Navigate to={redirectTo} replace />;
+  if (!requireAuth && user) return <Navigate to="/admin" replace />;
+
   return <Outlet />;
 }
 
 function RouteHandler() {
-  const [user, loading, error] = useAuthState(auth);
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog/:slug" element={<SingleBlog />} />
-      <Route path="/profile/:slug" element={<Profile />} />
-      <Route path="/training" element={<Training />} />
-      <Route path="/contact" element={<Contact />} />
+      <Route path="blog" element={<Blog />} />
+      <Route path="blog/:slug" element={<SingleBlog />} />
+      <Route path="profile/:slug" element={<Profile />} />
+      <Route path="training" element={<Training />} />
+      <Route path="contact" element={<Contact />} />
+
+      <Route element={<AuthWrapper requireAuth={false} redirectTo="/admin" />}>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Route>
+
+      <Route element={<AuthWrapper requireAuth redirectTo="/login" />}>
+        <Route path="admin" element={<Admin />} />
+        <Route path="admin/profile" element={<AdminProfile />} />
+        <Route path="admin/blog" element={<AdminBlog />} />
+        <Route path="admin/blog/create" element={<CreateBlog />} />
+        <Route path="admin/blog/edit" element={<Navigate to="/admin/blog" />} />
+        <Route path="admin/blog/edit/:slug" element={<EditBlog />} />
+      </Route>
+
       <Route path="*" element={<PageNotFound />} />
-      <Route element={<ProtectedWrapper user={user} loading={loading} error={error} />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Route>
-      <Route element={<PrivateWrapper user={user} loading={loading} error={error} />}>
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/profile" element={<AdminProfile />} />
-        <Route path="/admin/blog" element={<AdminBlog />} />
-        <Route path="/admin/blog/create" element={<CreateBlog />} />
-        <Route path="/admin/blog/edit" element={<Navigate to="/admin/blog" />} />
-        <Route path="/admin/blog/edit/:slug" element={<EditBlog />} />
-      </Route>
     </Routes>
   );
 }
