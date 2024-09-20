@@ -18,7 +18,7 @@ interface IButtonProps {
   margin?: string;
 }
 
-function Button({ buttonType, buttonText, onClick, disabled, fullWidth, icon, margin }: IButtonProps) {
+function Button({ buttonType, buttonText, onClick, disabled, fullWidth, icon, margin }: Readonly<IButtonProps>) {
   return (
     <Cta
       type={buttonType}
