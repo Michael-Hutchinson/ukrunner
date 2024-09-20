@@ -1,159 +1,71 @@
-import { ActivityData, AthleteData, StatsData } from './strava';
+import axios from 'axios';
 
-const clientID = import.meta.env.VITE_CLIENTID;
-const clientSecret = import.meta.env.VITE_CLIENTSECRET;
-const callActivities = `https://www.strava.com/api/v3/athlete/activities?per_page=30&access_token=`;
-const callStats = `https://www.strava.com/api/v3/athletes/7944495/stats?access_token=`;
-const callAthlete = 'https://www.strava.com/api/v3/athlete?access_token=';
+import { ActivityData, StatsData } from '../types/Strava.types';
 
-export const getStats = ({ accessToken, setStats }: { accessToken: string; setStats: (state: StatsData) => void }) => {
-  fetch(`${callStats}${accessToken}`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.message === 'Authorization Error') {
-        localStorage.removeItem('accessToken');
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        getAccessToken({ setStats });
-      } else {
-        setStats(data);
-      }
-    });
-};
+interface AuthData {
+  access_token: string;
+  expires_at: number;
+  refresh_token: string;
+}
 
-export const getActivities = ({
-  accessToken,
-  setActivities,
-  pageNumber,
-}: {
-  accessToken: string;
-  setActivities: (state: ActivityData[]) => void;
-  pageNumber?: number;
-}) => {
-  fetch(`${callActivities}${accessToken}&page=${pageNumber ?? 1}`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.message === 'Authorization Error') {
-        localStorage.removeItem('accessToken');
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        getAccessToken({ setActivities });
-      } else {
-        setActivities(data);
-      }
-    });
-};
+const refreshAccessToken = async (refreshToken: string): Promise<AuthData> => {
+  const clientId = import.meta.env.VITE_CLIENTID;
+  const clientSecret = import.meta.env.VITE_CLIENTSECRET;
 
-export const getAthlete = ({
-  accessToken,
-  setAthlete,
-}: {
-  accessToken: string;
-  setAthlete: (state: AthleteData) => void;
-}) => {
-  fetch(`${callAthlete}${accessToken}`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.message === 'Authorization Error') {
-        localStorage.removeItem('accessToken');
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        getAccessToken({ setAthlete });
-      } else {
-        setAthlete(data);
-      }
-    });
-};
-
-const getSingleAccessToken = async () => {
-  const refreshToken = import.meta.env.VITE_REFRESHTOKEN;
-  const callRefresh = `https://www.strava.com/oauth/token?client_id=${clientID}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
-  const accessToken = await fetch(callRefresh, {
-    method: 'POST',
+  const response = await axios.post<AuthData>('https://www.strava.com/oauth/token', {
+    client_id: clientId,
+    client_secret: clientSecret,
+    refresh_token: refreshToken,
+    grant_type: 'refresh_token',
   });
-  const getAccess = await accessToken.json();
-  return getAccess.access_token;
+
+  return response.data;
 };
 
-const fetchAccessToken = ({
-  accessToken,
-  setActivities,
-  pageNumber,
-  currentActivities,
-  setLoading,
-}: {
-  accessToken: string;
-  setActivities: (state: ActivityData[]) => void;
-  pageNumber: number;
-  currentActivities: ActivityData[];
-  setLoading: (state: boolean) => void;
-}) => {
-  fetch(`${callActivities}${accessToken}&page=${pageNumber}`)
-    .then((res) => res.json())
-    .then((data) => {
-      const allActivities = [...currentActivities, ...data];
-      setActivities(allActivities);
-      setLoading(false);
-    });
-};
+const getValidAccessToken = async (): Promise<string> => {
+  let authData: AuthData | null = JSON.parse(localStorage.getItem('stravaAuth') ?? 'null');
 
-export const getPaginatedActivities = ({
-  accessToken,
-  setActivities,
-  pageNumber,
-  currentActivities,
-  setLoading,
-}: {
-  accessToken: string;
-  setActivities: (state: ActivityData[]) => void;
-  pageNumber: number;
-  currentActivities: ActivityData[];
-  setLoading: (state: boolean) => void;
-}) => {
-  if (accessToken === '') {
-    getSingleAccessToken().then((newAccessToken) => {
-      fetchAccessToken({ accessToken: newAccessToken, setActivities, pageNumber, currentActivities, setLoading });
-    });
-  } else {
-    fetchAccessToken({ accessToken, setActivities, pageNumber, currentActivities, setLoading });
+  if (!authData || authData.expires_at * 1000 < Date.now()) {
+    // If the token is expired or doesn't exist, refresh it
+    const refreshToken = authData?.refresh_token ?? import.meta.env.VITE_REFRESHTOKEN;
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
+
+    authData = await refreshAccessToken(refreshToken);
+    localStorage.setItem('stravaAuth', JSON.stringify(authData));
   }
+
+  return authData.access_token;
 };
 
-export const getAccessToken = ({
-  setActivities,
-  setAthlete,
-  setStats,
-}: {
-  setActivities?: (state: ActivityData[]) => void;
-  setAthlete?: (state: AthleteData) => void;
-  setStats?: (state: StatsData) => void;
-}) => {
-  const refreshToken = import.meta.env.VITE_REFRESHTOKEN;
-  const callRefresh = `https://www.strava.com/oauth/token?client_id=${clientID}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
-  const currentAccessToken = localStorage.getItem('accessToken');
-  if (!currentAccessToken || currentAccessToken === 'undefined') {
-    fetch(callRefresh, {
-      method: 'POST',
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        localStorage.setItem('accessToken', result.access_token);
-        if (setActivities) {
-          getActivities({ accessToken: result.access_token, setActivities });
-        }
-        if (setAthlete) {
-          getAthlete({ accessToken: result.access_token, setAthlete });
-        }
-        if (setStats) {
-          getStats({ accessToken: result.access_token, setStats });
-        }
-      });
-  } else {
-    if (setActivities) {
-      getActivities({ accessToken: currentAccessToken, setActivities });
-    }
-    if (setAthlete) {
-      getAthlete({ accessToken: currentAccessToken, setAthlete });
-    }
-    if (setStats) {
-      getStats({ accessToken: currentAccessToken, setStats });
-    }
-  }
+const fetchAthleteData = async () => {
+  const accessToken = await getValidAccessToken();
+  const response = await axios.get('https://www.strava.com/api/v3/athlete', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return response.data;
+};
+
+interface FetchActivitiesParams {
+  perPage?: number;
+  page?: number;
+}
+
+export const fetchActivities = async ({ perPage, page }: FetchActivitiesParams) => {
+  const accessToken = await getValidAccessToken();
+  const response = await axios.get<ActivityData[]>('https://www.strava.com/api/v3/athlete/activities', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+    params: { per_page: perPage, page },
+  });
+  return response.data;
+};
+
+export const fetchStats = async () => {
+  const accessToken = await getValidAccessToken();
+  const athlete = await fetchAthleteData();
+  const response = await axios.get<StatsData>(`https://www.strava.com/api/v3/athletes/${athlete.id}/stats`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return response.data;
 };
