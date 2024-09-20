@@ -22,7 +22,7 @@ interface ModalProps {
   userID: string;
 }
 
-function FollowersModal({ isOpen, handleClose, userID }: ModalProps) {
+function FollowersModal({ isOpen, handleClose, userID }: Readonly<ModalProps>) {
   const [followers, setFollowers] = useState<string[]>();
   const [displayUsers, setDisplayUsers] = useState<
     { firstName: string; surname: string; profilePicture: string; userID: string }[]
@@ -60,7 +60,6 @@ function FollowersModal({ isOpen, handleClose, userID }: ModalProps) {
                     >
                       {user.firstName} {user.surname}
                     </LinkTag>
-                    <p>{user.profilePicture}</p>
                   </div>
                 ))
               ) : (
