@@ -164,21 +164,28 @@ export const getFollowing = (setFollowing: (following: string[]) => void, userID
   });
 };
 
-export const getModalFollow = async ({ userIDS, setDisplayUsers }: FollowerData) => {
-  const users: { firstName: string; surname: string; profilePicture: string; userID: string }[] = [];
-  for (let i = 0; i < userIDS.length; i += 1) {
-    const userDoc = doc(db, 'users', userIDS[i]);
-    await getDoc(userDoc).then((response) => {
-      if (response.data()) {
-        const data = response.data();
-        users.push({
-          firstName: data?.firstName,
-          surname: data?.surname,
-          profilePicture: data?.profilePicture,
-          userID: userIDS[i],
-        });
-      }
+export const getModalFollow = ({ userIDS, setDisplayUsers }: FollowerData) => {
+  const userPromises = userIDS.map(async (element) => {
+    const userDoc = doc(db, 'users', element);
+    const response = await getDoc(userDoc);
+    if (response.exists()) {
+      const data = response.data();
+      return {
+        firstName: data?.firstName,
+        surname: data?.surname,
+        profilePicture: data?.profilePicture,
+        userID: element,
+      };
+    }
+    return null;
+  });
+
+  Promise.all(userPromises)
+    .then((results) => {
+      const users = results.filter((user): user is NonNullable<typeof user> => user !== null);
+      setDisplayUsers(users);
+    })
+    .catch((error) => {
+      console.error('Error fetching user data:', error);
     });
-  }
-  setDisplayUsers(users);
 };
