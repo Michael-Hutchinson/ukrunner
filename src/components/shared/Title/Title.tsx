@@ -19,8 +19,3 @@ function Title({ h1Text, h2Text, smallText }: ITitleProps) {
 }
 
 export default Title;
-
-Title.defaultProps = {
-  h1Text: '',
-  h2Text: '',
-};
