@@ -8,7 +8,7 @@ interface AuthData {
   refresh_token: string;
 }
 
-const refreshAccessToken = async (refreshToken: string): Promise<AuthData> => {
+const refreshAccessToken = async (refreshToken: string) => {
   const clientId = import.meta.env.VITE_CLIENTID;
   const clientSecret = import.meta.env.VITE_CLIENTSECRET;
 
@@ -22,7 +22,7 @@ const refreshAccessToken = async (refreshToken: string): Promise<AuthData> => {
   return response.data;
 };
 
-const getValidAccessToken = async (): Promise<string> => {
+const getValidAccessToken = async () => {
   let authData: AuthData | null = JSON.parse(localStorage.getItem('stravaAuth') ?? 'null');
 
   if (!authData || authData.expires_at * 1000 < Date.now()) {
