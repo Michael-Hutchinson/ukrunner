@@ -23,7 +23,7 @@
     "@types/mapbox__sphericalmercator": "^1.2.0",
     "axios": "^1.7.7",
     "eslint-plugin-simple-import-sort": "^8.0.0",
-    "firebase": "^9.12.1",
+    "firebase": "^10.9.0",
     "html-react-parser": "^3.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
